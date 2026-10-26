@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 2: Biến và Kiểu dữ liệu trong C++</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+
+    <div class="chapter-progress-inner">
+        
+        <a href="trangchu.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">1</span>
+            <span class="step-label"> Trang chủ</span>
+        </a>
+         <div class="step-line"></div>
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+<h1>Chương 2: Biến và Kiểu dữ liệu trong C++</h1>
+
+<h2>2.1. Biến (Variable)</h2>
+
+<h3>2.1.1. Khái niệm</h3>
+
+<p><strong>Biến</strong> là một vùng nhớ được đặt tên, dùng để lưu trữ dữ liệu trong quá trình chương trình hoạt động. Giá trị của biến có thể thay đổi trong suốt quá trình thực thi.</p>
+
+<p>Mỗi biến trong C++ có:</p>
+
+<ul>
+<li><strong>Tên</strong> (identifier) — định danh để tham chiếu đến vùng nhớ</li>
+<li><strong>Kiểu dữ liệu</strong> (type) — quy định loại giá trị và kích thước bộ nhớ</li>
+<li><strong>Giá trị</strong> (value) — dữ liệu thực tế được lưu</li>
+<li><strong>Địa chỉ</strong> (address) — vị trí trong bộ nhớ (lấy bằng toán tử <code>&amp;</code>)</li>
+</ul>
+
+<h3>2.1.2. Khai báo biến</h3>
+
+<p>Cú pháp tổng quát trong C++:</p>
+
+<pre><code>kieu_du_lieu ten_bien;               // Khai báo
+kieu_du_lieu ten_bien = gia_tri;     // Khởi tạo
+kieu_du_lieu ten_bien1, ten_bien2;   // Nhiều biến cùng kiểu</code></pre>
+
+<p>Ví dụ:</p>
+
+<pre><code>int tuoi;                  // Khai báo, chưa khởi tạo
+int tuoi2 = 20;            // Khai báo + khởi tạo
+double diem_tb = 8.5;
+char ky_tu = 'A';
+bool la_sinh_vien = true;
+int a = 1, b = 2, c = 3;   // Nhiều biến cùng kiểu</code></pre>
+
+<p><strong>Lưu ý:</strong> Trong C++, biến <strong>phải được khai báo trước khi sử dụng</strong>. Nếu không khởi tạo, biến cục bộ sẽ có giá trị <em>rác</em> (garbage value) — không xác định.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x;                          // Chưa khởi tạo — giá trị rác
+    cout &lt;&lt; "x = " &lt;&lt; x &lt;&lt; endl;    // Có thể in ra số bất kỳ!
+
+    int y = 0;                      // Khởi tạo tường minh — an toàn
+    cout &lt;&lt; "y = " &lt;&lt; y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<h3>2.1.3. Quy tắc đặt tên biến</h3>
+
+<p><strong>Bắt buộc:</strong></p>
+
+<ul>
+<li>Chỉ chứa chữ cái (<code>a-z</code>, <code>A-Z</code>), chữ số (<code>0-9</code>) và dấu gạch dưới <code>_</code></li>
+<li><strong>Không</strong> bắt đầu bằng chữ số</li>
+<li><strong>Không</strong> trùng với từ khóa của C++ (<code>int</code>, <code>return</code>, <code>class</code>, <code>for</code>, ...)</li>
+<li><strong>Không</strong> chứa khoảng trắng và ký tự đặc biệt (<code>@</code>, <code>#</code>, <code>$</code>, <code>%</code>, <code>-</code>, <code>.</code>, ...)</li>
+<li>Phân biệt chữ hoa và chữ thường (<em>case-sensitive</em>): <code>tuoi</code> ≠ <code>Tuoi</code></li>
+</ul>
+
+<p><strong>Khuyến nghị (quy ước cộng đồng):</strong></p>
+
+<ul>
+<li>Tên biến nên có ý nghĩa, mô tả đúng mục đích</li>
+<li>Dùng <strong>snake_case</strong> cho biến thường: <code>diem_trung_binh</code></li>
+<li>Dùng <strong>PascalCase</strong> cho tên class/struct: <code>SinhVien</code></li>
+<li>Hằng số viết <strong>IN HOA</strong>: <code>MAX_SIZE</code>, <code>PI</code></li>
+<li>Tránh đặt tên biến trùng với hàm thư viện: <code>size</code>, <code>count</code>, <code>swap</code>, <code>max</code>, <code>min</code>...</li>
+</ul>
+
+<p><strong>Ví dụ hợp lệ và không hợp lệ:</strong></p>
+
+<ul>
+<li><code>tuoi</code> — hợp lệ</li>
+<li><code>_diem</code> — hợp lệ (bắt đầu bằng <code>_</code>)</li>
+<li><code>ho_ten_1</code> — hợp lệ</li>
+<li><code>1tuoi</code> — <strong>không hợp lệ</strong> (bắt đầu bằng số)</li>
+<li><code>ho ten</code> — <strong>không hợp lệ</strong> (có khoảng trắng)</li>
+<li><code>ho-ten</code> — <strong>không hợp lệ</strong> (có dấu gạch ngang)</li>
+<li><code>int</code> — <strong>không hợp lệ</strong> (trùng từ khóa)</li>
+</ul>
+
+<h3>2.1.4. Phân loại biến theo phạm vi</h3>
+
+<h4>a) Biến cục bộ (Local variable)</h4>
+
+<ul>
+<li>Khai báo bên trong hàm hoặc block <code>{ }</code></li>
+<li>Chỉ tồn tại và truy cập được trong phạm vi khai báo</li>
+<li>Tự động hủy khi ra khỏi block</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 10;              // Biến cục bộ của main
+    {
+        int y = 20;          // Biến cục bộ trong block
+        cout &lt;&lt; x + y &lt;&lt; endl;  // 30 — OK
+    }
+    // cout &lt;&lt; y;            // LỖI: y không tồn tại ngoài block
+    return 0;
+}</code></pre>
+
+<h4>b) Biến toàn cục (Global variable)</h4>
+
+<ul>
+<li>Khai báo bên ngoài tất cả các hàm</li>
+<li>Truy cập được ở mọi nơi trong chương trình</li>
+<li>Tồn tại đến khi chương trình kết thúc</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int dem = 0;                 // Biến toàn cục
+
+void tang() {
+    dem++;                   // Truy cập được biến toàn cục
+}
+
+int main() {
+    tang();
+    tang();
+    cout &lt;&lt; dem &lt;&lt; endl;      // 2
+    return 0;
+}</code></pre>
+
+<h4>c) Biến static</h4>
+
+<ul>
+<li>Biến <strong>static cục bộ</strong> giữ giá trị giữa các lần gọi hàm</li>
+<li>Biến <strong>static toàn cục</strong> chỉ có phạm vi trong file hiện tại</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void counter() {
+    static int count = 0;    // Chỉ khởi tạo 1 lần duy nhất
+    count++;
+    cout &lt;&lt; "Lan goi thu " &lt;&lt; count &lt;&lt; endl;
+}
+
+int main() {
+    counter();               // 1
+    counter();               // 2
+    counter();               // 3
+    return 0;
+}</code></pre>
+
+<h3>2.1.5. Khởi tạo biến trong C++11</h3>
+
+<p>Từ C++11, có thêm cú pháp khởi tạo bằng dấu ngoặc nhọn <code>{ }</code> (uniform initialization):</p>
+
+<pre><code>int a = 10;              // C-style
+int b(10);               // Constructor-style
+int c{10};               // Uniform initialization (C++11)
+int d = {10};            // Kết hợp
+
+// Ưu điểm: tránh "narrowing conversion"
+int x{3.14};             // LỖI: không cho ép double sang int ngầm
+int y = 3.14;            // OK: chỉ cảnh báo (hoặc mất dữ liệu)</code></pre>
+
+<hr>
+
+<h2>2.2. Kiểu dữ liệu (Data Type)</h2>
+
+<h3>2.2.1. Khái niệm</h3>
+
+<p><strong>Kiểu dữ liệu</strong> xác định:</p>
+
+<ul>
+<li>Loại giá trị mà biến có thể lưu trữ</li>
+<li>Kích thước bộ nhớ cần cấp phát</li>
+<li>Phạm vi giá trị</li>
+<li>Các phép toán có thể thực hiện trên biến</li>
+</ul>
+
+<h3>2.2.2. Phân loại kiểu dữ liệu</h3>
+
+<pre>
+Kiểu dữ liệu C++
+├── Kiểu nguyên thủy (Primitive / Fundamental)
+│   ├── Số nguyên   (short, int, long, long long)
+│   ├── Số thực     (float, double, long double)
+│   ├── Ký tự       (char, wchar_t, char16_t, char32_t)
+│   ├── Logic       (bool)
+│   └── Void        (void)
+└── Kiểu dẫn xuất (Derived)
+    ├── Con trỏ     (pointer)
+    ├── Mảng        (array)
+    ├── Tham chiếu  (reference)
+    └── Hàm         (function)
+</pre>
+
+<h3>2.2.3. Kiểu số nguyên (Integer)</h3>
+
+<p>C++ cung cấp nhiều kiểu số nguyên với kích thước và phạm vi khác nhau:</p>
+
+<ul>
+<li><strong>short</strong> — 2 byte — phạm vi: -32,768 → 32,767</li>
+<li><strong>int</strong> — 4 byte — phạm vi: -2,147,483,648 → 2,147,483,647</li>
+<li><strong>long</strong> — 4 hoặc 8 byte (tùy nền tảng)</li>
+<li><strong>long long</strong> — 8 byte — phạm vi: -9.2×10<sup>18</sup> → 9.2×10<sup>18</sup></li>
+<li><strong>unsigned</strong> (không dấu) — gấp đôi phạm vi dương, không có số âm</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 100;
+    int b = -25;
+    long long c = 1000000000000LL;   // Hậu tố LL cho long long
+    unsigned int d = 4000000000U;    // Hậu tố U cho unsigned
+
+    cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b &lt;&lt; " " &lt;&lt; c &lt;&lt; " " &lt;&lt; d &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Lưu ý về tràn số (overflow):</strong></p>
+
+<pre><code>int x = 2147483647;    // INT_MAX
+x = x + 1;             // Tràn số → thành -2147483648
+cout &lt;&lt; x &lt;&lt; endl;</code></pre>
+
+<h3>2.2.4. Kiểu số thực (Floating-point)</h3>
+
+<ul>
+<li><strong>float</strong> — 4 byte — độ chính xác ~7 chữ số thập phân — hậu tố <code>f</code></li>
+<li><strong>double</strong> — 8 byte — độ chính xác ~15 chữ số — mặc định</li>
+<li><strong>long double</strong> — 10/12/16 byte (tùy nền tảng) — độ chính xác cao nhất</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    float f = 3.14f;              // Hậu tố f bắt buộc cho float
+    double d = 3.14159265358979;
+    long double ld = 3.14159265358979L;
+
+    double khoa_hoc = 1.5e3;      // 1500.0 (ký pháp khoa học)
+
+    cout &lt;&lt; f &lt;&lt; endl;
+    cout &lt;&lt; d &lt;&lt; endl;
+    cout &lt;&lt; khoa_hoc &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Lưu ý về sai số:</strong></p>
+
+<pre><code>double a = 0.1;
+double b = 0.2;
+cout &lt;&lt; (a + b) &lt;&lt; endl;   // 0.30000000000000004 (không chính xác tuyệt đối!)
+
+// So sánh số thực: dùng epsilon
+#include &lt;cmath&gt;
+if (fabs(a + b - 0.3) &lt; 1e-9) {
+    cout &lt;&lt; "Bang nhau" &lt;&lt; endl;
+}</code></pre>
+
+<h3>2.2.5. Kiểu ký tự (Character)</h3>
+
+<ul>
+<li><strong>char</strong> — 1 byte — lưu một ký tự ASCII (hoặc số nguyên -128 → 127)</li>
+<li><strong>wchar_t</strong> — 2 hoặc 4 byte — ký tự rộng (Unicode)</li>
+<li><strong>char16_t / char32_t</strong> — C++11 — Unicode UTF-16/UTF-32</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char c = 'A';           // Dấu nháy đơn cho ký tự
+    char newline = '\n';    // Ký tự đặc biệt (escape)
+    char tab = '\t';
+
+    cout &lt;&lt; c &lt;&lt; endl;      // A
+    cout &lt;&lt; (int)c &lt;&lt; endl; // 65 — mã ASCII
+
+    // char thực chất là số nguyên nhỏ
+    char d = 'A' + 1;
+    cout &lt;&lt; d &lt;&lt; endl;      // B
+    return 0;
+}</code></pre>
+
+<p><strong>Bảng ký tự escape thông dụng:</strong></p>
+
+<ul>
+<li><code>\n</code> — xuống dòng (newline)</li>
+<li><code>\t</code> — tab ngang</li>
+<li><code>\\</code> — dấu gạch chéo ngược</li>
+<li><code>\'</code> — dấu nháy đơn</li>
+<li><code>\"</code> — dấu nháy kép</li>
+<li><code>\0</code> — ký tự null (kết thúc chuỗi)</li>
+</ul>
+
+<h3>2.2.6. Kiểu logic (Boolean)</h3>
+
+<ul>
+<li><strong>bool</strong> — 1 byte — chỉ có 2 giá trị: <code>true</code> hoặc <code>false</code></li>
+<li>Trong C++, <code>true</code> = 1, <code>false</code> = 0</li>
+<li>Bất kỳ giá trị khác 0 khi chuyển sang <code>bool</code> đều thành <code>true</code></li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    bool a = true;
+    bool b = false;
+    bool c = 10;      // true (khác 0)
+    bool d = 0;       // false
+
+    cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b &lt;&lt; endl;   // 1 0
+    cout &lt;&lt; boolalpha;                // In "true"/"false"
+    cout &lt;&lt; a &lt;&lt; " " &lt;&lt; b &lt;&lt; endl;   // true false
+    return 0;
+}</code></pre>
+
+<h3>2.2.7. Kiểu void</h3>
+
+<ul>
+<li><strong>void</strong> — "không có kiểu" — dùng cho hàm không trả về giá trị hoặc con trỏ void</li>
+</ul>
+
+<pre><code>void in_thong_bao() {
+    cout &lt;&lt; "Hello" &lt;&lt; endl;
+    // Không return giá trị
+}
+
+void* p = nullptr;    // Con trỏ void (trỏ tới bất kỳ kiểu nào)</code></pre>
+
+<h3>2.2.8. Từ khóa auto (C++11)</h3>
+
+<p>Từ C++11, <code>auto</code> cho phép trình biên dịch <strong>tự suy luận kiểu</strong> từ giá trị khởi tạo:</p>
+
+<pre><code>auto x = 10;              // int
+auto y = 3.14;            // double
+auto z = 'A';             // char
+auto s = "Hello";         // const char*
+auto b = true;            // bool
+
+// Hữu ích với kiểu phức tạp
+auto so_lon = 10000000000LL;   // long long</code></pre>
+
+<p><strong>Lưu ý:</strong> <code>auto</code> <strong>bắt buộc phải có giá trị khởi tạo</strong>:</p>
+
+<pre><code>auto x;          // LỖI: không suy luận được
+auto y = 10;     // OK</code></pre>
+
+<h3>2.2.9. Toán tử sizeof</h3>
+
+<p><code>sizeof</code> trả về kích thước (tính bằng byte) của kiểu hoặc biến:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "sizeof(int)    = " &lt;&lt; sizeof(int)    &lt;&lt; " bytes" &lt;&lt; endl;
+    cout &lt;&lt; "sizeof(double) = " &lt;&lt; sizeof(double) &lt;&lt; " bytes" &lt;&lt; endl;
+    cout &lt;&lt; "sizeof(char)   = " &lt;&lt; sizeof(char)   &lt;&lt; " bytes" &lt;&lt; endl;
+    cout &lt;&lt; "sizeof(bool)   = " &lt;&lt; sizeof(bool)   &lt;&lt; " bytes" &lt;&lt; endl;
+
+    int a = 100;
+    cout &lt;&lt; "sizeof(a)      = " &lt;&lt; sizeof(a) &lt;&lt; " bytes" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Kết quả tham khảo (trên hầu hết nền tảng 64-bit):</strong></p>
+
+<pre>
+sizeof(int)    = 4 bytes
+sizeof(double) = 8 bytes
+sizeof(char)   = 1 bytes
+sizeof(bool)   = 1 bytes
+sizeof(a)      = 4 bytes
+</pre>
+
+<hr>
+
+<h2>2.3. Hằng số (Constant)</h2>
+
+<h3>2.3.1. Hằng số với const</h3>
+
+<p>Từ khóa <code>const</code> khai báo biến <strong>không thể thay đổi giá trị</strong> sau khi khởi tạo:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    const double PI = 3.14159;
+    const int MAX_SIZE = 100;
+
+    // PI = 3.14;   // LỖI: không thể gán lại
+    cout &lt;&lt; "PI = " &lt;&lt; PI &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Quy tắc:</strong> <code>const</code> <strong>bắt buộc phải được khởi tạo ngay khi khai báo</strong>:</p>
+
+<pre><code>const int x;        // LỖI
+const int y = 10;   // OK</code></pre>
+
+<h3>2.3.2. Hằng số với #define</h3>
+
+<p>Cách cũ (C-style) — dùng chỉ thị tiền xử lý:</p>
+
+<pre><code>#define PI 3.14159
+#define MAX_SIZE 100
+
+// Lưu ý: #define chỉ là "thay thế văn bản", không có kiểu dữ liệu</code></pre>
+
+<p><strong>So sánh <code>const</code> và <code>#define</code>:</strong></p>
+
+<ul>
+<li><code>const</code> — có kiểu dữ liệu, được kiểm tra bởi compiler, phạm vi rõ ràng</li>
+<li><code>#define</code> — không có kiểu, chỉ thay thế văn bản, dễ gây lỗi khó hiểu</li>
+<li><strong>Khuyến nghị:</strong> dùng <code>const</code> hoặc <code>constexpr</code> thay cho <code>#define</code></li>
+</ul>
+
+<h3>2.3.3. constexpr (C++11)</h3>
+
+<p><code>constexpr</code> khai báo hằng số <strong>tính được tại thời điểm biên dịch</strong> — tối ưu hiệu năng:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+constexpr int SQUARE(int x) {
+    return x * x;
+}
+
+int main() {
+    constexpr int PI_INT = 3;
+    constexpr int area = SQUARE(5);    // Tính tại compile-time
+    cout &lt;&lt; "area = " &lt;&lt; area &lt;&lt; endl;  // 25
+    return 0;
+}</code></pre>
+
+<h3>2.3.4. Literal (giá trị hằng viết trực tiếp)</h3>
+
+<ul>
+<li><strong>Số nguyên:</strong> <code>42</code>, <code>0xFF</code> (hex), <code>0b1010</code> (nhị phân, C++14), <code>052</code> (bát phân)</li>
+<li><strong>Số thực:</strong> <code>3.14</code>, <code>1.5e3</code>, <code>3.14f</code></li>
+<li><strong>Ký tự:</strong> <code>'A'</code>, <code>'\n'</code></li>
+<li><strong>Chuỗi:</strong> <code>"Hello"</code>, <code>"Xin chao\n"</code></li>
+<li><strong>Logic:</strong> <code>true</code>, <code>false</code></li>
+<li><strong>Con trỏ null:</strong> <code>nullptr</code> (C++11)</li>
+</ul>
+
+<hr>
+
+<h2>2.4. Ép kiểu (Type Conversion)</h2>
+
+<h3>2.4.1. Chuyển đổi ngầm định (Implicit)</h3>
+
+<p>Trình biên dịch tự chuyển từ kiểu nhỏ sang kiểu lớn hơn (không mất dữ liệu):</p>
+
+<pre><code>int    a = 5;
+double b = a;         // int → double (tự động, an toàn)
+double c = 3.9;
+int    d = c;         // double → int (ngầm định, MẤT phần lẻ → 3)
+
+char   e = 'A';
+int    f = e;         // char → int (ASCII: 65)</code></pre>
+
+<p><strong>Thứ tự chuyển đổi ngầm định:</strong></p>
+
+<pre>
+bool → char → short → int → long → long long → float → double → long double
+                  ↑
+              unsigned (biến thể)
+</pre>
+
+<h3>2.4.2. Chuyển đổi tường minh (Explicit / Casting)</h3>
+
+<h4>a) C-style cast (cũ)</h4>
+
+<pre><code>double x = 3.99;
+int y = (int)x;       // 3</code></pre>
+
+<h4>b) C++-style cast (khuyến nghị)</h4>
+
+<p>C++ cung cấp 4 toán tử ép kiểu an toàn hơn:</p>
+
+<ul>
+<li><strong>static_cast</strong> — ép kiểu thông thường (số ↔ số, con trỏ trong cùng hierarchy)</li>
+<li><strong>dynamic_cast</strong> — ép kiểu an toàn trong đa hình (kiểm tra runtime)</li>
+<li><strong>const_cast</strong> — bỏ tính <code>const</code></li>
+<li><strong>reinterpret_cast</strong> — ép kiểu "thô" (bit pattern), nguy hiểm</li>
+</ul>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    double x = 3.99;
+    int y = static_cast&lt;int&gt;(x);       // 3
+    cout &lt;&lt; y &lt;&lt; endl;
+
+    int a = 65;
+    char c = static_cast&lt;char&gt;(a);     // 'A'
+    cout &lt;&lt; c &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<h3>2.4.3. Một số ví dụ về ép kiểu</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    // Số nguyên → số thực
+    int a = 10, b = 3;
+    double c = a / b;                    // 3 (chia nguyên!)
+    double d = (double)a / b;            // 3.3333
+    double e = static_cast&lt;double&gt;(a) / b;
+
+    cout &lt;&lt; c &lt;&lt; endl;    // 3
+    cout &lt;&lt; d &lt;&lt; endl;    // 3.33333
+    cout &lt;&lt; e &lt;&lt; endl;    // 3.33333
+
+    // Ký tự ↔ số nguyên
+    char ch = 'A';
+    int ma = ch;                          // 65
+    char tiep = static_cast&lt;char&gt;(ma + 1); // 'B'
+
+    cout &lt;&lt; ma &lt;&lt; " " &lt;&lt; tiep &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Cảnh báo:</strong> Ép kiểu có thể gây <strong>mất dữ liệu</strong>:</p>
+
+<pre><code>double big = 1e20;
+int    small = static_cast&lt;int&gt;(big);    // Kết quả không xác định!
+
+long long large = 5000000000LL;
+int       loss  = static_cast&lt;int&gt;(large);  // Tràn số!</code></pre>
+
+<hr>
+
+<h2>2.5. Nhập / Xuất dữ liệu</h2>
+
+<h3>2.5.1. Xuất dữ liệu với cout</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int tuoi = 20;
+    double diem = 8.5;
+    string ten = "Nguyen Van A";
+
+    // Cách 1: nối bằng &lt;&lt;
+    cout &lt;&lt; "Ten: " &lt;&lt; ten &lt;&lt; ", Tuoi: " &lt;&lt; tuoi &lt;&lt; endl;
+
+    // Cách 2: dùng \n (nhanh hơn endl)
+    cout &lt;&lt; "Diem: " &lt;&lt; diem &lt;&lt; "\n";
+
+    // Định dạng số thực
+    cout &lt;&lt; fixed &lt;&lt; setprecision(2);   // 2 chữ số sau dấu chấm
+    cout &lt;&lt; "Diem: " &lt;&lt; diem &lt;&lt; endl;   // 8.50
+    return 0;
+}</code></pre>
+
+<p><strong>So sánh <code>endl</code> và <code>\n</code>:</strong></p>
+
+<ul>
+<li><code>endl</code> — xuống dòng <strong>và</strong> xả bộ đệm (flush buffer) — chậm hơn</li>
+<li><code>\n</code> — chỉ xuống dòng — nhanh hơn, khuyến nghị dùng trong vòng lặp lớn</li>
+</ul>
+
+<h3>2.5.2. Nhập dữ liệu với cin</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int tuoi;
+    double diem;
+    char ky_tu;
+
+    cout &lt;&lt; "Nhap tuoi: ";
+    cin &gt;&gt; tuoi;
+
+    cout &lt;&lt; "Nhap diem: ";
+    cin &gt;&gt; diem;
+
+    cout &lt;&lt; "Nhap ky tu: ";
+    cin &gt;&gt; ky_tu;
+
+    cout &lt;&lt; "Tuoi: " &lt;&lt; tuoi &lt;&lt; ", Diem: " &lt;&lt; diem
+         &lt;&lt; ", Ky tu: " &lt;&lt; ky_tu &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Lưu ý:</strong> <code>cin &gt;&gt;</code> dừng đọc tại khoảng trắng đầu tiên → <strong>không đọc được chuỗi có dấu cách</strong>.</p>
+
+<h3>2.5.3. Đọc chuỗi với getline</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string ho_ten;
+
+    cout &lt;&lt; "Nhap ho ten: ";
+    getline(cin, ho_ten);          // Đọc cả dòng, bao gồm dấu cách
+
+    cout &lt;&lt; "Xin chao " &lt;&lt; ho_ten &lt;&lt; "!" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<h3>2.5.4. Lỗi thường gặp khi trộn cin và getline</h3>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    int tuoi;
+    string ho_ten;
+
+    cout &lt;&lt; "Nhap tuoi: ";
+    cin &gt;&gt; tuoi;                    // Đọc số, để lại '\n' trong buffer
+
+    cout &lt;&lt; "Nhap ho ten: ";
+    getline(cin, ho_ten);           // LỖI: đọc luôn '\n' còn sót → chuỗi rỗng!
+
+    cout &lt;&lt; "Ten: [" &lt;&lt; ho_ten &lt;&lt; "]" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Cách sửa:</strong> thêm <code>cin.ignore()</code> trước <code>getline</code>:</p>
+
+<pre><code>cin &gt;&gt; tuoi;
+cin.ignore();                       // Bỏ qua ký tự '\n' còn sót
+getline(cin, ho_ten);               // Bây giờ đọc đúng</code></pre>
+
+<hr>
+
+<h2>2.6. Các lỗi thường gặp của người mới</h2>
+
+<ul>
+<li><strong>Giá trị rác</strong> — khai báo biến không khởi tạo, sau đó dùng → kết quả không xác định. Cách sửa: luôn khởi tạo biến khi khai báo</li>
+<li><strong>Tràn số</strong> — gán giá trị vượt phạm vi kiểu (ví dụ <code>int</code> nhận 3 tỷ). Cách sửa: dùng <code>long long</code> hoặc kiểm tra phạm vi</li>
+<li><strong>Chia nguyên</strong> — <code>int / int</code> luôn ra <code>int</code>. Cách sửa: ép một vế sang <code>double</code>: <code>(double)a / b</code></li>
+<li><strong>So sánh số thực</strong> — <code>0.1 + 0.2 == 0.3</code> là <strong>false</strong>. Cách sửa: so sánh với epsilon: <code>fabs(a - b) &lt; 1e-9</code></li>
+<li><strong>Dùng biến ngoài phạm vi</strong> — biến cục bộ không truy cập được ngoài block. Cách sửa: khai báo ở phạm vi rộng hơn nếu cần</li>
+<li><strong>getline sau cin &gt;&gt;</strong> — chuỗi bị rỗng do còn <code>'\n'</code> trong buffer. Cách sửa: thêm <code>cin.ignore()</code></li>
+<li><strong>Quên hậu tố</strong> — <code>float f = 3.14;</code> gây cảnh báo (3.14 mặc định là <code>double</code>). Cách sửa: viết <code>3.14f</code></li>
+<li><strong>Nhầm <code>=</code> với <code>==</code></strong> — <code>if (x = 5)</code> là gán, không phải so sánh</li>
+<li><strong>Trùng tên biến với hàm thư viện</strong> — <code>int size = 10;</code> có thể gây xung đột. Cách sửa: đổi tên khác</li>
+</ul>
+
+<hr>
+
+<h2>2.7. Bài tập chương 2</h2>
+
+<p><strong>Bài 1:</strong> Khai báo các biến sau và in ra màn hình theo định dạng cho trước:</p>
+
+<ul>
+<li><code>ho_ten</code> (string) — tên của bạn</li>
+<li><code>tuoi</code> (int) — tuổi</li>
+<li><code>chieu_cao</code> (double) — chiều cao (m)</li>
+<li><code>can_nang</code> (double) — cân nặng (kg)</li>
+<li><code>la_sinh_vien</code> (bool) — true/false</li>
+</ul>
+
+<p>In ra theo mẫu:</p>
+
+<pre>
+Ho ten: ...
+Tuoi: ...
+Chieu cao: ... m
+Can nang: ... kg
+La sinh vien: ...
+</pre>
+
+<p><strong>Bài 2:</strong> Viết chương trình in kích thước (byte) của các kiểu dữ liệu: <code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>long long</code>, <code>float</code>, <code>double</code>, <code>bool</code> bằng toán tử <code>sizeof</code>.</p>
+
+<p><strong>Bài 3:</strong> Viết chương trình nhập vào bán kính hình tròn <code>r</code>, tính và in chu vi, diện tích. Dùng hằng số <code>const double PI = 3.14159</code>.</p>
+
+<p><strong>Bài 4:</strong> Nhập nhiệt độ C, chuyển sang Fahrenheit theo công thức <code>F = C * 9/5 + 32</code>. In kết quả với 2 chữ số thập phân (dùng <code>fixed</code> và <code>setprecision</code>).</p>
+
+<p><strong>Bài 5:</strong> Nhập cân nặng (kg) và chiều cao (m), tính chỉ số BMI = cân_nặng / (chiều_cao × chiều_cao). In kết quả với 2 chữ số thập phân.</p>
+
+<p><strong>Bài 6:</strong> Nhập vào một số nguyên có 3 chữ số (100–999). In ra chữ số hàng trăm, hàng chục, hàng đơn vị và tổng của chúng.</p>
+
+<p><strong>Bài 7:</strong> Cho hai biến <code>a = 5</code>, <code>b = 10</code>. Hoán đổi giá trị để <code>a = 10</code>, <code>b = 5</code>. Làm bằng <strong>3 cách</strong> (biến trung gian, cộng-trừ, hoặc <code>std::swap</code>).</p>
+
+<p><strong>Bài 8:</strong> Viết chương trình nhập vào họ tên đầy đủ (có dấu cách) và tuổi. In ra câu: <code>"Chao [ten], ban [tuoi] tuoi."</code>. Nhớ dùng <code>getline</code> và <code>cin.ignore()</code> đúng chỗ.</p>
+
+<p><strong>Bài 9:</strong> Tìm và sửa lỗi trong đoạn code sau:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    const int MAX = 100;
+    MAX = 200;
+
+    int x;
+    cout &lt;&lt; x &lt;&lt; endl;
+
+    int 1abc = 5;
+
+    double d = 3.14;
+    int i = d;
+
+    return 0;
+}</code></pre>
+
+<p><strong>Gợi ý:</strong> Có 4 lỗi — gán lại hằng <code>MAX</code>, dùng biến chưa khởi tạo <code>x</code>, tên biến bắt đầu bằng số <code>1abc</code>, ép kiểu ngầm định gây cảnh báo <code>int i = d</code>.</p>
+
+<p><strong>Bài 10:</strong> Viết chương trình nhập vào một số giây nguyên <code>t</code>, chuyển sang dạng <code>giờ:phút:giây</code>. Ví dụ: <code>t = 3661</code> → <code>1:1:1</code>.</p>
+
+<hr>
+
+<h2>2.8. Tóm tắt chương</h2>
+
+<ul>
+<li><strong>Biến</strong> là vùng nhớ có tên, kiểu dữ liệu và giá trị thay đổi được. Trong C++, biến phải <strong>khai báo trước khi dùng</strong>.</li>
+<li><strong>Quy tắc đặt tên:</strong> chữ, số, <code>_</code>; không bắt đầu bằng số; không trùng từ khóa; phân biệt hoa/thường.</li>
+<li><strong>Phân loại theo phạm vi:</strong> biến cục bộ (local), biến toàn cục (global), biến static.</li>
+<li><strong>Các kiểu dữ liệu cơ bản:</strong> <code>int</code>, <code>long long</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>bool</code>, <code>void</code>.</li>
+<li><strong>auto</strong> (C++11) — tự suy luận kiểu từ giá trị khởi tạo; <strong>sizeof</strong> — lấy kích thước kiểu/biến.</li>
+<li><strong>Hằng số:</strong> dùng <code>const</code> hoặc <code>constexpr</code> (khuyến nghị) thay cho <code>#define</code>.</li>
+<li><strong>Ép kiểu:</strong> ngầm định (compiler tự làm) và tường minh (<code>static_cast&lt;T&gt;</code> — an toàn hơn C-style cast).</li>
+<li><strong>Nhập/xuất:</strong> <code>cout &lt;&lt;</code> để xuất, <code>cin &gt;&gt;</code> để nhập, <code>getline(cin, s)</code> để đọc cả dòng có dấu cách.</li>
+<li><strong>Lưu ý:</strong> luôn khởi tạo biến, cẩn thận chia nguyên, so sánh số thực bằng epsilon, và dùng <code>cin.ignore()</code> khi trộn <code>cin &gt;&gt;</code> với <code>getline</code>.</li>
+</ul>
+
+<hr>
+
+<h2>2.9. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Tài liệu chuẩn C++ đầy đủ nhất (mục "Fundamental types", "Type conversions")</li>
+<li><strong>cplusplus.com</strong> — Hướng dẫn cơ bản về Variables and Types</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup (Chương 6: Types and Declarations)</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo (Chương 2: Variables and Basic Types)</li>
+<li>Sách: <em>"Effective Modern C++"</em> — Scott Meyers (Item 5, 6: auto)</li>
+<li><strong>learncpp.com</strong> — Chương 4: Variable assignment and initialization; Chương 5: Data types</li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 3 — Toán tử và Biểu thức trong C++</em> — sẽ đi sâu vào các toán tử số học, logic, so sánh, bitwise, thứ tự ưu tiên và cách xây dựng biểu thức.</p>
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

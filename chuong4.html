@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 4: Vòng lặp</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+
+    <div class="chapter-progress-inner">
+        
+        <a href="trangchu.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">1</span>
+            <span class="step-label"> Trang chủ</span>
+        </a>
+         <div class="step-line"></div>
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+<h1>Chương 4: Vòng lặp</h1>
+
+<h2>4.1. Tổng quan về vòng lặp</h2>
+
+<h3>4.1.1. Vì sao cần vòng lặp?</h3>
+
+<p>Trong các chương trước, chương trình của chúng ta thực hiện các câu lệnh <strong>tuần tự</strong> hoặc <strong>rẽ nhánh</strong> — mỗi câu lệnh chỉ được chạy một lần. Tuy nhiên, rất nhiều bài toán thực tế đòi hỏi phải <strong>lặp đi lặp lại</strong> một công việc nào đó:</p>
+
+<ul>
+<li>In danh sách 100 sinh viên trong lớp → in 100 lần.</li>
+<li>Tính tổng các số từ 1 đến 1000 → cộng 1000 lần.</li>
+<li>Kiểm tra từng ký tự trong một chuỗi văn bản dài.</li>
+<li>Nhập dữ liệu cho đến khi người dùng gõ "exit".</li>
+<li>Duyệt qua từng phần tử của một mảng, danh sách.</li>
+</ul>
+
+<p>Nếu không có vòng lặp, ta phải <strong>viết lặp lại cùng một đoạn code</strong> rất nhiều lần — vừa dài dòng, vừa dễ sai, vừa không linh hoạt (muốn in 1000 số phải sửa code).</p>
+
+<p><strong>Ví dụ mở đầu:</strong> In các số từ 1 đến 5.</p>
+
+<p>Cách 1 — Không dùng vòng lặp (dài dòng, thủ công):</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; 1 &lt;&lt; " ";
+    cout &lt;&lt; 2 &lt;&lt; " ";
+    cout &lt;&lt; 3 &lt;&lt; " ";
+    cout &lt;&lt; 4 &lt;&lt; " ";
+    cout &lt;&lt; 5 &lt;&lt; " ";
+    return 0;
+}</code></pre>
+
+<p>Cách 2 — Dùng vòng lặp (ngắn gọn, linh hoạt):</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    for (int i = 1; i &lt;= 5; i++) {
+        cout &lt;&lt; i &lt;&lt; " ";
+    }
+    return 0;
+}</code></pre>
+
+<p>Muốn in đến 1000? Chỉ cần đổi <code>i &lt;= 5</code> thành <code>i &lt;= 1000</code>.</p>
+
+<p><strong>Vòng lặp</strong> (loop) là cấu trúc điều khiển cho phép <strong>thực hiện lặp đi lặp lại một khối lệnh</strong> nhiều lần, thường dựa trên một <strong>điều kiện dừng</strong> nào đó.</p>
+
+<p><strong>Lợi ích của vòng lặp:</strong></p>
+<ul>
+<li><strong>Code ngắn gọn</strong> — không phải viết lặp lại.</li>
+<li><strong>Dễ đọc, dễ bảo trì</strong> — sửa một chỗ áp dụng cho mọi lần lặp.</li>
+<li><strong>Linh hoạt</strong> — chỉ cần đổi điều kiện/số lần lặp, không cần sửa cấu trúc.</li>
+<li><strong>Xử lý dữ liệu lớn</strong> — hàng nghìn, hàng triệu phần tử.</li>
+</ul>
+
+<h3>4.1.2. Các loại vòng lặp trong C++</h3>
+
+<p>C++ cung cấp ba cấu trúc lặp chính:</p>
+<ol>
+<li><code>for</code> — lặp với <strong>số lần biết trước</strong> (hoặc tính được từ dữ liệu).</li>
+<li><code>while</code> — lặp khi <strong>điều kiện còn đúng</strong>, kiểm tra điều kiện <strong>trước</strong> mỗi lần lặp.</li>
+<li><code>do…while</code> — lặp khi điều kiện còn đúng, nhưng <strong>thực hiện ít nhất 1 lần</strong> rồi mới kiểm tra.</li>
+</ol>
+
+<p>Ngoài ra, C++11 còn có <strong>range-based for</strong> — dùng để duyệt qua từng phần tử của mảng, vector, chuỗi (sẽ học kỹ ở Chương 6).</p>
+
+<h3>4.1.3. Vị trí của vòng lặp trong chương trình</h3>
+
+<p>Vòng lặp có thể xuất hiện ở <strong>bất kỳ đâu</strong> trong thân hàm — sau khi khai báo biến, có thể lồng trong vòng lặp khác, trong câu lệnh điều kiện, hoặc chứa câu lệnh điều kiện bên trong.</p>
+
+<pre>
+    Khai báo biến
+          ↓
+    Nhập dữ liệu
+          ↓
+    Vòng lặp  ← lặp lại khối lệnh N lần / đến khi điều kiện sai
+          ↓
+    Xuất kết quả
+</pre>
+
+<hr>
+
+<h2>4.2. Vòng lặp for</h2>
+
+<h3>4.2.1. Cú pháp</h3>
+
+<pre><code>for (khởi_tạo; điều_kiện; cập_nhật) {
+    // khối lệnh lặp
+}</code></pre>
+
+<p>Trong đó:</p>
+<ul>
+<li><code>khởi_tạo</code> — khai báo và gán giá trị ban đầu cho <strong>biến đếm</strong> (chạy duy nhất 1 lần).</li>
+<li><code>điều_kiện</code> — biểu thức logic; vòng lặp tiếp tục khi còn <strong>đúng</strong>.</li>
+<li><code>cập_nhật</code> — câu lệnh thay đổi biến đếm sau mỗi lần lặp (ví dụ <code>i++</code>, <code>i += 2</code>, <code>i--</code>).</li>
+</ul>
+
+<h3>4.2.2. Nguyên tắc hoạt động</h3>
+
+<p>Thứ tự thực hiện:</p>
+<ol>
+<li>Thực hiện <strong>khởi_tạo</strong> (chỉ 1 lần duy nhất khi vào vòng lặp).</li>
+<li>Kiểm tra <strong>điều_kiện</strong>:
+   <ul>
+   <li>Nếu <strong>đúng</strong> → thực hiện khối lệnh lặp.</li>
+   <li>Nếu <strong>sai</strong> → kết thúc vòng lặp, chuyển sang câu lệnh phía sau.</li>
+   </ul>
+</li>
+<li>Sau khi khối lệnh kết thúc → thực hiện <strong>cập_nhật</strong>.</li>
+<li>Quay lại bước 2.</li>
+</ol>
+
+<p><strong>Sơ đồ khối:</strong></p>
+
+<pre>
+       ┌─────────────────┐
+       │   khởi tạo i    │  (1 lần)
+       └────────┬────────┘
+                ▼
+       ┌─────────────────┐
+       │  điều kiện ?    │◄─────────────┐
+       └────────┬────────┘              │
+           Đúng │ Sai                   │
+                ▼                       │
+       ┌─────────────────┐              │
+       │   khối lệnh     │              │
+       └────────┬────────┘              │
+                ▼                       │
+       ┌─────────────────┐              │
+       │  cập nhật i     │──────────────┘
+       └─────────────────┘
+                │ (khi điều kiện sai)
+                ▼
+            (tiếp theo)
+</pre>
+
+<h3>4.2.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> In các số từ 1 đến 5.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    for (int i = 1; i &lt;= 5; i++) {
+        cout &lt;&lt; i &lt;&lt; " ";
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}
+// Kết quả: 1 2 3 4 5</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Tính tổng S = 1 + 2 + … + n.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    int s = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        s += i;
+    }
+    cout &lt;&lt; "S = " &lt;&lt; s &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 3:</strong> In các số chẵn từ 2 đến 10.</p>
+
+<pre><code>for (int i = 2; i &lt;= 10; i += 2) {
+    cout &lt;&lt; i &lt;&lt; " ";
+}
+// Kết quả: 2 4 6 8 10</code></pre>
+
+<p><strong>Ví dụ 4:</strong> Đếm ngược từ 10 về 1.</p>
+
+<pre><code>for (int i = 10; i &gt;= 1; i--) {
+    cout &lt;&lt; i &lt;&lt; " ";
+}
+// Kết quả: 10 9 8 7 6 5 4 3 2 1</code></pre>
+
+<p><strong>Ví dụ 5:</strong> Tính giai thừa n! (dùng <code>long long</code> để tránh tràn số).</p>
+
+<pre><code>long long gt = 1;
+for (int i = 2; i &lt;= n; i++) {
+    gt *= i;
+}
+cout &lt;&lt; n &lt;&lt; "! = " &lt;&lt; gt &lt;&lt; endl;</code></pre>
+
+<h3>4.2.4. Các biến thể của for</h3>
+
+<p><strong>Biến thể 1:</strong> Nhiều biến đếm — dùng dấu phẩy.</p>
+
+<pre><code>for (int i = 1, j = 10; i &lt;= j; i++, j--) {
+    cout &lt;&lt; i &lt;&lt; " " &lt;&lt; j &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Biến thể 2:</strong> Vòng lặp không có khối lệnh ngoặc nhọn (chỉ 1 câu lệnh).</p>
+
+<pre><code>for (int i = 0; i &lt; 5; i++)
+    cout &lt;&lt; i;   // chỉ in ra</code></pre>
+
+<p><strong>Biến thể 3:</strong> Vòng lặp vô hạn (cẩn thận!).</p>
+
+<pre><code>for (;;) {
+    // Lặp mãi mãi — chỉ thoát bằng break/return
+}</code></pre>
+
+<p><strong>Biến thể 4:</strong> Range-based for (C++11) — duyệt qua từng phần tử.</p>
+
+<pre><code>int arr[] = {3, 7, 2, 9};
+for (int x : arr) {
+    cout &lt;&lt; x &lt;&lt; " ";
+}
+// Kết quả: 3 7 2 9</code></pre>
+
+<h3>4.2.5. Lưu ý khi dùng for</h3>
+
+<ul>
+<li><strong>Luôn khởi tạo biến đếm</strong> trước hoặc trong <code>for</code>. Nếu không, biến có giá trị rác.</li>
+<li><strong>Kiểm tra điều kiện dừng</strong> cẩn thận, tránh lỗi "lệch một" (off-by-one):
+   <ul>
+   <li><code>i &lt; n</code> — chạy n lần (i = 0..n-1).</li>
+   <li><code>i &lt;= n</code> — chạy n+1 lần (i = 0..n).</li>
+   </ul>
+</li>
+<li><strong>Cập nhật biến đếm đúng chiều</strong>: tăng thì dùng <code>i++</code>, giảm thì dùng <code>i--</code>.</li>
+<li><strong>Không sửa biến đếm trong thân vòng lặp</strong> — dễ gây lỗi khó phát hiện.</li>
+<li>Nếu số lần lặp có thể rất lớn → dùng <code>long long</code> cho biến đếm để tránh tràn.</li>
+</ul>
+
+<hr>
+
+<h2>4.3. Vòng lặp while</h2>
+
+<h3>4.3.1. Cú pháp</h3>
+
+<pre><code>while (điều_kiện) {
+    // khối lệnh lặp
+}</code></pre>
+
+<h3>4.3.2. Nguyên tắc hoạt động</h3>
+
+<ol>
+<li>Kiểm tra <strong>điều_kiện</strong>.</li>
+<li>Nếu <strong>đúng</strong> → thực hiện khối lệnh → quay lại bước 1.</li>
+<li>Nếu <strong>sai</strong> → thoát vòng lặp.</li>
+</ol>
+
+<p><strong>Sơ đồ khối:</strong></p>
+
+<pre>
+            ┌─────────────────┐
+            │   điều kiện ?   │◄────────────┐
+            └────────┬────────┘             │
+              Đúng   │   Sai                │
+                     ▼                      │
+            ┌─────────────────┐             │
+            │   khối lệnh     │─────────────┘
+            └─────────────────┘
+                     │ (khi sai)
+                     ▼
+                 (tiếp theo)
+</pre>
+
+<p><strong>Lưu ý quan trọng:</strong></p>
+<ul>
+<li>Nếu điều kiện <strong>sai ngay từ đầu</strong> → khối lệnh <strong>không chạy lần nào</strong>.</li>
+<li>Trong thân vòng lặp <strong>phải có lệnh thay đổi điều kiện</strong>, nếu không sẽ thành <strong>vòng lặp vô hạn</strong>.</li>
+</ul>
+
+<h3>4.3.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> In các số từ 1 đến 5 (viết lại bằng while).</p>
+
+<pre><code>int i = 1;
+while (i &lt;= 5) {
+    cout &lt;&lt; i &lt;&lt; " ";
+    i++;   // BẮT BUỘC: cập nhật biến điều kiện
+}
+// Kết quả: 1 2 3 4 5</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Tính tổng các chữ số của n (khi chưa biết n có bao nhiêu chữ số).</p>
+
+<pre><code>int n, s = 0;
+cout &lt;&lt; "Nhap n: ";
+cin &gt;&gt; n;
+
+while (n &gt; 0) {
+    s += n % 10;    // cộng chữ số cuối
+    n /= 10;        // bỏ chữ số cuối
+}
+cout &lt;&lt; "Tong chu so = " &lt;&lt; s &lt;&lt; endl;</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Nhập mật khẩu đến khi đúng.</p>
+
+<pre><code>string mk;
+while (mk != "123456") {
+    cout &lt;&lt; "Nhap mat khau: ";
+    cin &gt;&gt; mk;
+}
+cout &lt;&lt; "Dang nhap thanh cong!" &lt;&lt; endl;</code></pre>
+
+<p><strong>Ví dụ 4:</strong> Tính tổng các số chẵn từ 1 đến n.</p>
+
+<pre><code>int i = 2, s = 0;
+while (i &lt;= n) {
+    s += i;
+    i += 2;
+}
+cout &lt;&lt; "Tong chan = " &lt;&lt; s &lt;&lt; endl;</code></pre>
+
+<h3>4.3.4. Lưu ý và nguy cơ vòng lặp vô hạn</h3>
+
+<p><strong>Ví dụ SAI — vòng lặp vô hạn:</strong></p>
+
+<pre><code>int i = 1;
+while (i &lt;= 5) {
+    cout &lt;&lt; i &lt;&lt; " ";
+    // THIẾU i++ → i luôn = 1 → treo máy!
+}</code></pre>
+
+<p><strong>Cách sửa:</strong></p>
+<pre><code>int i = 1;
+while (i &lt;= 5) {
+    cout &lt;&lt; i &lt;&lt; " ";
+    i++;   // ← BẮT BUỘC
+}</code></pre>
+
+<p><strong>Một số nguyên nhân khác gây vô hạn:</strong></p>
+<ul>
+<li>Điều kiện luôn đúng, không bao giờ sai (<code>while (true)</code> mà không có <code>break</code>).</li>
+<li>Cập nhật sai chiều: <code>i--</code> khi điều kiện là <code>i &lt;= 5</code>.</li>
+<li>Cập nhật biến điều kiện nhưng điều kiện dùng biến khác.</li>
+<li>Sửa biến điều kiện ở chỗ khác ngoài ý muốn.</li>
+</ul>
+
+<hr>
+
+<h2>4.4. Vòng lặp do…while</h2>
+
+<h3>4.4.1. Cú pháp</h3>
+
+<pre><code>do {
+    // khối lệnh lặp
+} while (điều_kiện);   // ← chú ý dấu ; cuối</code></pre>
+
+<h3>4.4.2. Nguyên tắc hoạt động</h3>
+
+<ol>
+<li>Thực hiện khối lệnh <strong>ít nhất 1 lần</strong>.</li>
+<li>Kiểm tra điều kiện.</li>
+<li>Nếu <strong>đúng</strong> → quay lại bước 1. Nếu <strong>sai</strong> → thoát.</li>
+</ol>
+
+<p><strong>Sơ đồ khối:</strong></p>
+
+<pre>
+            ┌─────────────────┐
+            │   khối lệnh     │  (1 lần đầu tiên)
+            └────────┬────────┘
+                     ▼
+            ┌─────────────────┐
+            │   điều kiện ?   │
+            └────────┬────────┘
+              Đúng   │   Sai
+                     ▼
+            ┌─────────────────┐
+            │  lặp khối lệnh  │
+            └────────┬────────┘
+                     │ (khi sai)
+                     ▼
+                 (tiếp theo)
+</pre>
+
+<p>Thực tế dễ hiểu hơn: <strong>làm trước, hỏi sau</strong>. Do đó vòng lặp do…while <strong>luôn chạy ít nhất 1 lần</strong>.</p>
+
+<h3>4.4.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Nhập mật khẩu đến khi đúng (yêu cầu phải nhập ít nhất 1 lần).</p>
+
+<pre><code>string mk;
+do {
+    cout &lt;&lt; "Nhap mat khau: ";
+    cin &gt;&gt; mk;
+} while (mk != "123456");
+cout &lt;&lt; "Dang nhap thanh cong!" &lt;&lt; endl;</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Menu chương trình — chỉ thoát khi chọn 0.</p>
+
+<pre><code>int chon;
+do {
+    cout &lt;&lt; "\n===== MENU =====" &lt;&lt; endl;
+    cout &lt;&lt; "1. Tinh tong" &lt;&lt; endl;
+    cout &lt;&lt; "2. Tinh hieu" &lt;&lt; endl;
+    cout &lt;&lt; "0. Thoat" &lt;&lt; endl;
+    cout &lt;&lt; "Chon: ";
+    cin &gt;&gt; chon;
+
+    // xử lý lựa chọn
+} while (chon != 0);</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Kiểm tra dữ liệu nhập hợp lệ (nhập lại nếu sai).</p>
+
+<pre><code>int tuoi;
+do {
+    cout &lt;&lt; "Nhap tuoi (0-150): ";
+    cin &gt;&gt; tuoi;
+} while (tuoi &lt; 0 || tuoi &gt; 150);</code></pre>
+
+<h3>4.4.4. So sánh while và do…while</h3>
+
+<pre>
++------------------------+-----------------------+-----------------------+
+|      Tiêu chí          |        while          |       do…while        |
++------------------------+-----------------------+-----------------------+
+| Kiểm tra điều kiện     | Trước khi thực hiện   | Sau khi thực hiện     |
+| Số lần chạy tối thiểu  | 0                     | 1                     |
+| Dùng khi               | Điều kiện có thể      | Cần chạy ít nhất      |
+|                        | sai ngay từ đầu       | 1 lần (menu, nhập)    |
++------------------------+-----------------------+-----------------------+
+</pre>
+
+<p><strong>Quy tắc chọn:</strong></p>
+<ul>
+<li>Nếu <strong>không chắc</strong> điều kiện có đúng ngay lần đầu hay không → dùng <code>while</code>.</li>
+<li>Nếu <strong>chắc chắn</strong> cần thực hiện ít nhất 1 lần (menu, nhập liệu lặp lại) → dùng <code>do…while</code>.</li>
+</ul>
+
+<hr>
+
+<h2>4.5. So sánh ba loại vòng lặp</h2>
+
+<h3>4.5.1. Bảng so sánh tổng quát</h3>
+
+<pre>
++-------------+------------------+------------------+------------------+
+|  Tiêu chí   |       for        |      while       |    do…while      |
++-------------+------------------+------------------+------------------+
+| Số lần biết  | Có (thường)      | Không (thường)   | Không (thường)   |
+| trước?       |                  |                  |                  |
++-------------+------------------+------------------+------------------+
+| Kiểm tra ĐK  | Trước            | Trước            | Sau              |
++-------------+------------------+------------------+------------------+
+| Chạy tối     | 0                | 0                | 1                |
+| thiểu         |                  |                  |                  |
++-------------+------------------+------------------+------------------+
+| Biến đếm     | Trong ngoặc for  | Ngoài vòng lặp   | Ngoài vòng lặp   |
++-------------+------------------+------------------+------------------+
+| Cập nhật i   | Trong ngoặc for  | Trong thân       | Trong thân       |
++-------------+------------------+------------------+------------------+
+| Dùng khi     | Biết số lần lặp  | Chưa biết số     | Cần chạy ≥ 1 lần |
+|              |                  | lần, kiểm tra    | (menu, nhập)     |
+|              |                  | trước            |                  |
++-------------+------------------+------------------+------------------+
+</pre>
+
+<h3>4.5.2. Khi nào dùng loại nào?</h3>
+
+<p><strong>Dùng <code>for</code>:</strong></p>
+<ul>
+<li>Biết chính xác số lần lặp.</li>
+<li>Duyệt qua dãy số có quy luật (1..n, chẵn, lẻ, bước nhảy đều).</li>
+<li>Duyệt mảng, chuỗi (kết hợp với chỉ số).</li>
+</ul>
+
+<p><strong>Dùng <code>while</code>:</strong></p>
+<ul>
+<li>Chưa biết trước số lần lặp.</li>
+<li>Lặp đến khi gặp điều kiện dừng (ví dụ: nhập đến khi gặp số 0).</li>
+<li>Điều kiện phụ thuộc vào dữ liệu bên trong vòng lặp.</li>
+</ul>
+
+<p><strong>Dùng <code>do…while</code>:</strong></p>
+<ul>
+<li>Cần thực hiện ít nhất 1 lần (menu, nhập liệu lặp lại).</li>
+<li>Kiểm tra điều kiện ở cuối (nhập xong mới biết đúng/sai).</li>
+</ul>
+
+<p><strong>Ví dụ minh họa:</strong> In các số từ 1 đến 5 có thể viết bằng cả 3 cách:</p>
+
+<pre><code>// Cách 1: for
+for (int i = 1; i &lt;= 5; i++) cout &lt;&lt; i &lt;&lt; " ";
+
+// Cách 2: while
+int i = 1;
+while (i &lt;= 5) { cout &lt;&lt; i &lt;&lt; " "; i++; }
+
+// Cách 3: do…while
+int i = 1;
+do { cout &lt;&lt; i &lt;&lt; " "; i++; } while (i &lt;= 5);</code></pre>
+
+<p>Ba cách cho cùng kết quả — nhưng <code>for</code> là lựa chọn <strong>tự nhiên nhất</strong> khi biết trước số lần lặp.</p>
+
+<hr>
+
+<h2>4.6. Lệnh break và continue</h2>
+
+<h3>4.6.1. Lệnh break</h3>
+
+<p><strong>Tác dụng:</strong> Thoát <strong>ngay lập tức</strong> khỏi vòng lặp gần nhất chứa nó (không kiểm tra điều kiện nữa).</p>
+
+<p><strong>Ví dụ 1:</strong> Dừng khi tìm được số thỏa mãn.</p>
+
+<pre><code>for (int i = 1; i &lt;= 100; i++) {
+    if (i * i &gt; 50) {
+        cout &lt;&lt; "So dau tien co binh phuong &gt; 50: " &lt;&lt; i &lt;&lt; endl;
+        break;    // thoát vòng lặp ngay
+    }
+}
+// Kết quả: 8 (vì 7*7=49 &lt;= 50, 8*8=64 &gt; 50)</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Tìm ước chung đầu tiên &gt; 1.</p>
+
+<pre><code>for (int i = 2; i &lt;= n; i++) {
+    if (n % i == 0) {
+        cout &lt;&lt; "Uoc dau tien &gt; 1: " &lt;&lt; i &lt;&lt; endl;
+        break;
+    }
+}</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Vòng lặp vô hạn có break — mẫu thiết kế phổ biến.</p>
+
+<pre><code>while (true) {
+    int x;
+    cout &lt;&lt; "Nhap x (0 de thoat): ";
+    cin &gt;&gt; x;
+    if (x == 0) break;
+    cout &lt;&lt; "Ban nhap: " &lt;&lt; x &lt;&lt; endl;
+}</code></pre>
+
+<h3>4.6.2. Lệnh continue</h3>
+
+<p><strong>Tác dụng:</strong> <strong>Bỏ qua phần còn lại</strong> của lần lặp hiện tại, <strong>nhảy sang lần lặp kế tiếp</strong> (vẫn kiểm tra điều kiện và chạy cập nhật nếu có).</p>
+
+<p><strong>Ví dụ 1:</strong> In các số lẻ từ 1 đến 10.</p>
+
+<pre><code>for (int i = 1; i &lt;= 10; i++) {
+    if (i % 2 == 0) continue;    // bỏ qua số chẵn
+    cout &lt;&lt; i &lt;&lt; " ";
+}
+// Kết quả: 1 3 5 7 9</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Tính tổng các số không chia hết cho 3.</p>
+
+<pre><code>int s = 0;
+for (int i = 1; i &lt;= n; i++) {
+    if (i % 3 == 0) continue;
+    s += i;
+}
+cout &lt;&lt; "Tong = " &lt;&lt; s &lt;&lt; endl;</code></pre>
+
+<p><strong>Ví dụ 3:</strong> In các số từ 1 đến 10 trừ số 5.</p>
+
+<pre><code>for (int i = 1; i &lt;= 10; i++) {
+    if (i == 5) continue;
+    cout &lt;&lt; i &lt;&lt; " ";
+}
+// Kết quả: 1 2 3 4 6 7 8 9 10</code></pre>
+
+<h3>4.6.3. Lưu ý với continue trong while</h3>
+
+<p><strong>Ví dụ SAI — gây vòng lặp vô hạn:</strong></p>
+
+<pre><code>int i = 1;
+while (i &lt;= 10) {
+    if (i % 2 == 0) continue;    // Sai i không tăng → treo máy
+    cout &lt;&lt; i &lt;&lt; " ";
+    i++;
+}</code></pre>
+
+<p>Khi <code>i = 2</code>, gặp <code>continue</code> → nhảy sang lần lặp tiếp theo mà <strong>không chạy lệnh <code>i++</code></strong> → <code>i</code> vẫn = 2 → <code>continue</code> mãi → treo máy.</p>
+
+<p><strong>Cách sửa 1:</strong> Đưa <code>i++</code> lên trước <code>continue</code>:</p>
+
+<pre><code>int i = 1;
+while (i &lt;= 10) {
+    i++;    // ← đưa lên trước
+    if (i % 2 == 0) continue;
+    cout &lt;&lt; i &lt;&lt; " ";
+}</code></pre>
+
+<p><strong>Cách sửa 2:</strong> Dùng <code>for</code> — biến đếm luôn được cập nhật tự động:</p>
+
+<pre><code>for (int i = 1; i &lt;= 10; i++) {
+    if (i % 2 == 0) continue;
+    cout &lt;&lt; i &lt;&lt; " ";
+}</code></pre>
+
+<h3>4.6.4. Bảng so sánh break và continue</h3>
+
+<pre>
++-------------+----------------------------------------+
+|   Lệnh      |              Tác dụng                  |
++-------------+----------------------------------------+
+|  break      | Thoát hoàn toàn vòng lặp gần nhất      |
++-------------+----------------------------------------+
+|  continue   | Bỏ qua lần lặp hiện tại, sang lần kế  |
++-------------+----------------------------------------+
+</pre>
+
+<p><strong>Ghi chú:</strong> Với vòng lặp lồng nhau, <code>break</code> và <code>continue</code> chỉ ảnh hưởng đến <strong>vòng lặp gần nhất</strong> chứa nó (không ảnh hưởng vòng ngoài).</p>
+
+<hr>
+
+<h2>4.7. Vòng lặp lồng nhau</h2>
+
+<h3>4.7.1. Khái niệm</h3>
+
+<p><strong>Vòng lặp lồng nhau</strong> là vòng lặp được đặt <strong>bên trong</strong> một vòng lặp khác. Kỹ thuật này dùng để xử lý bài toán <strong>hai chiều</strong> (bảng, ma trận, hình vẽ...).</p>
+
+<pre><code>for (int i = 1; i &lt;= m; i++) {       // vòng ngoài
+    for (int j = 1; j &lt;= n; j++) {   // vòng trong
+        // khối lệnh
+    }
+}</code></pre>
+
+<p><strong>Nguyên tắc:</strong> Vòng ngoài chạy 1 lần → vòng trong chạy <strong>hết toàn bộ</strong> → vòng ngoài chạy lần 2 → vòng trong chạy hết → ...</p>
+
+<p><strong>Tổng số lần lặp của khối lệnh</strong> = (số lần vòng ngoài) × (số lần vòng trong) = m × n.</p>
+
+<h3>4.7.2. Ví dụ: Bảng cửu chương</h3>
+
+<pre><code>for (int i = 2; i &lt;= 9; i++) {
+    cout &lt;&lt; "=== Bang cuu chuong " &lt;&lt; i &lt;&lt; " ===" &lt;&lt; endl;
+    for (int j = 1; j &lt;= 10; j++) {
+        cout &lt;&lt; i &lt;&lt; " x " &lt;&lt; j &lt;&lt; " = " &lt;&lt; i * j &lt;&lt; endl;
+    }
+    cout &lt;&lt; endl;
+}</code></pre>
+
+<h3>4.7.3. Ví dụ: Vẽ hình chữ nhật dấu sao</h3>
+
+<p><strong>Hình chữ nhật 4 hàng, 6 cột:</strong></p>
+
+<pre><code>int m = 4, n = 6;
+for (int i = 1; i &lt;= m; i++) {
+    for (int j = 1; j &lt;= n; j++) {
+        cout &lt;&lt; "* ";
+    }
+    cout &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Kết quả:</strong></p>
+<pre>
+* * * * * *
+* * * * * *
+* * * * * *
+* * * * * *
+</pre>
+
+<h3>4.7.4. Ví dụ: Tam giác vuông dấu sao</h3>
+
+<pre><code>int n = 5;
+for (int i = 1; i &lt;= n; i++) {
+    for (int j = 1; j &lt;= i; j++) {
+        cout &lt;&lt; "* ";
+    }
+    cout &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Kết quả:</strong></p>
+<pre>
+*
+* *
+* * *
+* * * *
+* * * * *
+</pre>
+
+<h3>4.7.5. Ví dụ: Kim tự tháp dấu sao</h3>
+
+<pre><code>int n = 5;
+for (int i = 1; i &lt;= n; i++) {
+    // in khoảng trắng
+    for (int j = 1; j &lt;= n - i; j++) cout &lt;&lt; " ";
+    // in dấu sao
+    for (int j = 1; j &lt;= 2 * i - 1; j++) cout &lt;&lt; "*";
+    cout &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Kết quả:</strong></p>
+<pre>
+    *
+   ***
+  *****
+ *******
+*********
+</pre>
+
+<h3>4.7.6. Ví dụ: Bảng số i × j</h3>
+
+<pre><code>for (int i = 1; i &lt;= 5; i++) {
+    for (int j = 1; j &lt;= 5; j++) {
+        cout &lt;&lt; i * j &lt;&lt; "\t";
+    }
+    cout &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Kết quả:</strong></p>
+<pre>
+1   2   3   4   5
+2   4   6   8   10
+3   6   9   12  15
+4   8   12  16  20
+5   10  15  20  25
+</pre>
+
+<h3>4.7.7. Lưu ý về vòng lặp lồng nhau</h3>
+
+<ul>
+<li><strong>Chú ý chi phí:</strong> 3 vòng lặp lồng nhau mỗi vòng n lần → n³ lần lặp. Với n = 1000 là 1 tỷ lần — rất chậm.</li>
+<li><strong><code>break</code> chỉ thoát vòng gần nhất</strong>, không thoát cả 2 vòng. Muốn thoát cả 2 → dùng biến cờ (flag) hoặc <code>return</code>:</li>
+</ul>
+
+<pre><code>// Dùng biến cờ
+bool found = false;
+for (int i = 1; i &lt;= 10 &amp;&amp; !found; i++) {
+    for (int j = 1; j &lt;= 10; j++) {
+        if (i * j == 42) {
+            found = true;
+            break;   // thoát vòng trong
+        }
+    }
+    // vòng ngoài tự động dừng nhờ điều kiện !found
+}</code></pre>
+
+<ul>
+<li><strong>Đặt tên biến rõ ràng:</strong> vòng ngoài thường dùng <code>i</code>, <code>r</code> (row), vòng trong <code>j</code>, <code>c</code> (column).</li>
+<li><strong>Luôn thụt lề</strong> để phân biệt các tầng.</li>
+</ul>
+
+<hr>
+
+<h2>4.8. Các thuật toán cơ bản với vòng lặp</h2>
+
+<p>Đây là những "bộ công cụ" cần thuộc lòng — sẽ gặp lại rất nhiều trong các bài toán lớn hơn.</p>
+
+<h3>4.8.1. Tính tổng dãy số</h3>
+
+<pre><code>// S = 1 + 2 + ... + n
+int s = 0;
+for (int i = 1; i &lt;= n; i++) s += i;
+
+// S = 1 + 1/2 + 1/3 + ... + 1/n
+double s = 0;
+for (int i = 1; i &lt;= n; i++) s += 1.0 / i;</code></pre>
+
+<h3>4.8.2. Tính giai thừa n!</h3>
+
+<pre><code>long long gt = 1;
+for (int i = 2; i &lt;= n; i++) gt *= i;</code></pre>
+
+<p><strong>Lưu ý:</strong> Giai thừa tăng rất nhanh. <code>int</code> chỉ chứa được đến <code>12!</code>, <code>long long</code> chứa được đến <code>20!</code>. Với n lớn hơn cần dùng thư viện big integer.</p>
+
+<h3>4.8.3. Dãy Fibonacci</h3>
+
+<pre><code>// In n số Fibonacci đầu tiên (bắt đầu từ 0, 1)
+long long a = 0, b = 1;
+for (int i = 1; i &lt;= n; i++) {
+    cout &lt;&lt; a &lt;&lt; " ";
+    long long c = a + b;
+    a = b;
+    b = c;
+}</code></pre>
+
+<h3>4.8.4. Kiểm tra số nguyên tố</h3>
+
+<pre><code>bool laNguyenTo(int n) {
+    if (n &lt; 2) return false;
+    for (int i = 2; i * i &lt;= n; i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}</code></pre>
+
+<p><strong>Tối ưu:</strong> Chỉ cần duyệt đến √n (vì nếu n có ước &gt; √n thì cũng có ước &lt; √n).</p>
+
+<h3>4.8.5. Ước chung lớn nhất — Bội chung nhỏ nhất</h3>
+
+<pre><code>// Thuật toán Euclid
+int a, b;
+cin &gt;&gt; a &gt;&gt; b;
+
+int x = a, y = b;
+while (y != 0) {
+    int r = x % y;
+    x = y;
+    y = r;
+}
+int ucln = x;                    // UCLN
+int bcnn = a / ucln * b;         // BCNN (chia trước để tránh tràn)
+
+cout &lt;&lt; "UCLN = " &lt;&lt; ucln &lt;&lt; endl;
+cout &lt;&lt; "BCNN = " &lt;&lt; bcnn &lt;&lt; endl;</code></pre>
+
+<h3>4.8.6. Đảo số, đếm chữ số</h3>
+
+<pre><code>// Đảo ngược số
+int n, dao = 0;
+cin &gt;&gt; n;
+int t = n;
+while (t &gt; 0) {
+    dao = dao * 10 + t % 10;
+    t /= 10;
+}
+cout &lt;&lt; "Dao nguoc: " &lt;&lt; dao &lt;&lt; endl;
+
+// Đếm số chữ số
+int dem = 0;
+t = n;
+while (t &gt; 0) { dem++; t /= 10; }
+cout &lt;&lt; "Co " &lt;&lt; dem &lt;&lt; " chu so" &lt;&lt; endl;</code></pre>
+
+<h3>4.8.7. Số hoàn hảo và số Armstrong</h3>
+
+<pre><code>// Số hoàn hảo: tổng các ước (không kể chính nó) = chính nó
+int s = 0;
+for (int i = 1; i &lt; n; i++) {
+    if (n % i == 0) s += i;
+}
+bool hoanHao = (s == n);
+
+// Số Armstrong (narcissistic): 153 = 1³ + 5³ + 3³
+int t = n, s = 0;
+while (t &gt; 0) {
+    int d = t % 10;
+    s += d * d * d;
+    t /= 10;
+}
+bool armstrong = (s == n);   // chỉ đúng với số có 3 chữ số</code></pre>
+
+<h3>4.8.8. Đếm số ước</h3>
+
+<pre><code>// Đếm số ước của n
+int dem = 0;
+for (int i = 1; i * i &lt;= n; i++) {
+    if (n % i == 0) {
+        dem += (i * i == n) ? 1 : 2;   // nếu i = √n thì chỉ +1
+    }
+}
+cout &lt;&lt; "So uoc: " &lt;&lt; dem &lt;&lt; endl;</code></pre>
+
+<hr>
+
+<h2>4.9. Các lỗi thường gặp</h2>
+
+<ul>
+<li><strong>Vòng lặp vô hạn</strong> — quên cập nhật biến điều kiện, hoặc cập nhật sai chiều. Ví dụ:
+<pre><code>while (i &lt;= 5) { cout &lt;&lt; i; }   // ❌ thiếu i++</code></pre>
+Cách sửa: thêm <code>i++</code>, hoặc dùng <code>for</code>.
+</li>
+
+<li><strong>Lỗi lệch 1 (off-by-one)</strong> — nhầm <code>&lt;</code> với <code>&lt;=</code>.
+<pre><code>for (int i = 1; i &lt; n; i++) cout &lt;&lt; i;   // in 1..n-1, KHÔNG in n
+</code></pre>
+Cần in đến n → dùng <code>i &lt;= n</code>.
+</li>
+
+<li><strong>Quên khởi tạo biến tích lũy</strong> — biến tổng, tích, đếm phải khởi tạo:
+<pre><code>int s;              // ❌ giá trị rác
+for (...) s += i;
+// Sửa: int s = 0;</code></pre>
+Với tích: <code>long long gt = 1;</code> (không phải 0, vì 0 × gì cũng = 0).
+</li>
+
+<li><strong>Dấu <code>;</code> thừa sau <code>for</code>/<code>while</code></strong> — biến vòng lặp thành rỗng:
+<pre><code>for (int i = 0; i &lt; 10; i++);    // ❌ dấu ; → vòng lặp rỗng
+{
+    cout &lt;&lt; i;   // luôn chạy 1 lần với giá trị cuối của i
+}
+</code></pre>
+</li>
+
+<li><strong>Quên <code>;</code> sau <code>do…while</code></strong>:
+<pre><code>do { ... } while (x &gt; 0)   // ❌ lỗi cú pháp
+// Sửa: } while (x &gt; 0);</code></pre>
+</li>
+
+<li><strong>Dùng <code>break</code> trong vòng lồng sai kỳ vọng</strong> — <code>break</code> chỉ thoát vòng gần nhất, không thoát cả 2.
+</li>
+
+<li><strong><code>continue</code> trong <code>while</code> trước lệnh cập nhật</strong> — gây vô hạn (đã phân tích ở 4.6.3).
+</li>
+
+<li><strong>Tràn số</strong> — giai thừa, Fibonacci, tổng lớn cần <code>long long</code>:
+<pre><code>int gt = 1;                         // ❌ tràn khi n &gt; 12
+long long gt = 1;                   // ✓
+</code></pre>
+</li>
+
+<li><strong>Chia nguyên nhầm</strong> — trong C++, <code>5 / 2 = 2</code> (không phải 2.5). Cần số thực: <code>5.0 / 2</code> hoặc <code>(double)5 / 2</code>.
+</li>
+
+<li><strong>Thụt lề sai</strong> — code chạy được nhưng dễ gây lỗi logic khi bảo trì. Luôn thụt lề 4 dấu cách mỗi tầng.
+</li>
+</ul>
+
+<p><strong>Mẹo debug vòng lặp:</strong></p>
+<ul>
+<li>Thêm <code>cout</code> trong thân vòng lặp để in giá trị biến đếm và biến điều kiện.</li>
+<li>Chạy tay (trace) với n nhỏ (n = 3, 4) để kiểm tra logic.</li>
+<li>Đặt <strong>giới hạn an toàn</strong> khi thử: <code>for (int i = 0; i &lt; 1000 &amp;&amp; ...; i++)</code> để tránh treo máy.</li>
+</ul>
+
+<hr>
+
+<h2>4.10. Bài tập chương 4</h2>
+
+<h3>4.10.1. Bài tập trắc nghiệm</h3>
+
+<p><strong>Câu 1:</strong> Vòng lặp <code>for (int i = 0; i &lt; 5; i++)</code> thực hiện khối lệnh bao nhiêu lần?</p>
+<ul>
+<li>A. 4</li>
+<li>B. 5</li>
+<li>C. 6</li>
+<li>D. Vô hạn</li>
+</ul>
+
+<p><strong>Câu 2:</strong> Cấu trúc nào sau đây <strong>luôn thực hiện khối lệnh ít nhất 1 lần</strong>?</p>
+<ul>
+<li>A. <code>for</code></li>
+<li>B. <code>while</code></li>
+<li>C. <code>do…while</code></li>
+<li>D. Cả 3</li>
+</ul>
+
+<p><strong>Câu 3:</strong> Lệnh <code>break</code> trong vòng lặp có tác dụng:</p>
+<ul>
+<li>A. Bỏ qua lần lặp hiện tại</li>
+<li>B. Thoát khỏi vòng lặp gần nhất</li>
+<li>C. Khởi động lại vòng lặp</li>
+<li>D. Không có tác dụng</li>
+</ul>
+
+<p><strong>Câu 4:</strong> Đoạn code sau in ra gì?</p>
+<pre><code>for (int i = 1; i &lt;= 3; i++)
+    for (int j = 1; j &lt;= 2; j++)
+        cout &lt;&lt; i &lt;&lt; j &lt;&lt; " ";</code></pre>
+<ul>
+<li>A. <code>11 12 21 22 31 32</code></li>
+<li>B. <code>12 22 32</code></li>
+<li>C. <code>11 22 33</code></li>
+<li>D. <code>12 12 12</code></li>
+</ul>
+
+<p><strong>Câu 5:</strong> Vòng lặp sau có vấn đề gì?</p>
+<pre><code>int i = 1;
+while (i &lt;= 5) cout &lt;&lt; i &lt;&lt; " ";</code></pre>
+<ul>
+<li>A. Không in gì</li>
+<li>B. In 1 2 3 4 5</li>
+<li>C. Vòng lặp vô hạn</li>
+<li>D. Lỗi biên dịch</li>
+</ul>
+
+<p><strong>Câu 6:</strong> <code>continue</code> khác <code>break</code> ở điểm nào?</p>
+<ul>
+<li>A. <code>continue</code> thoát vòng lặp, <code>break</code> thì không</li>
+<li>B. <code>continue</code> bỏ qua lần hiện tại, <code>break</code> thoát hẳn</li>
+<li>C. Không khác gì</li>
+<li>D. Cả hai đều thoát vòng lặp</li>
+</ul>
+
+<p><strong>Câu 7:</strong> Vòng <code>for</code> nào in đúng các số chẵn từ 2 đến 10?</p>
+<ul>
+<li>A. <code>for (i=2; i&lt;=10; i++)</code></li>
+<li>B. <code>for (i=2; i&lt;=10; i+=2)</code></li>
+<li>C. <code>for (i=1; i&lt;=10; i*=2)</code></li>
+<li>D. <code>for (i=0; i&lt;10; i+=2)</code></li>
+</ul>
+
+<p><strong>Câu 8:</strong> Sau khi chạy đoạn code, <code>s</code> bằng bao nhiêu?</p>
+<pre><code>int s = 0;
+for (int i = 1; i &lt;= 5; i++) s += i * i;</code></pre>
+<ul>
+<li>A. 15</li>
+<li>B. 55</li>
+<li>C. 25</li>
+<li>D. 30</li>
+</ul>
+
+<p><strong>Câu 9:</strong> Trong <code>do…while</code>, điều kiện được kiểm tra khi nào?</p>
+<ul>
+<li>A. Trước mỗi lần lặp</li>
+<li>B. Sau mỗi lần lặp</li>
+<li>C. Không bao giờ</li>
+<li>D. Chỉ lần đầu</li>
+</ul>
+
+<p><strong>Câu 10:</strong> Đoạn code sau in ra gì?</p>
+<pre><code>for (int i = 1; i &lt;= 5; i++) {
+    if (i == 3) continue;
+    cout &lt;&lt; i;
+}</code></pre>
+<ul>
+<li>A. 12</li>
+<li>B. 1245</li>
+<li>C. 123</li>
+<li>D. 45</li>
+</ul>
+
+<p><strong>Đáp án:</strong> 1-B, 2-C, 3-B, 4-A, 5-C, 6-B, 7-B, 8-B, 9-B, 10-B.</p>
+
+<h3>4.10.2. Bài tập cơ bản</h3>
+
+<p><strong>Bài 1:</strong> In các số từ 1 đến 100, mỗi số cách nhau 1 khoảng trắng.</p>
+
+<p><strong>Bài 2:</strong> In các số từ 100 về 1.</p>
+
+<p><strong>Bài 3:</strong> Nhập n, in các số chẵn từ 2 đến n.</p>
+
+<p><strong>Bài 4:</strong> Tính tổng S = 1 + 2 + … + n.</p>
+
+<p><strong>Bài 5:</strong> Tính tổng các số lẻ từ 1 đến n.</p>
+
+<p><strong>Bài 6:</strong> Đếm xem từ 1 đến n có bao nhiêu số chia hết cho 3.</p>
+
+<p><strong>Bài 7:</strong> In bảng cửu chương của một số k nhập từ bàn phím.</p>
+
+<p><strong>Bài 8:</strong> Nhập số nguyên dương n, tính n!.</p>
+
+<p><strong>Bài 9:</strong> In 20 số Fibonacci đầu tiên.</p>
+
+<p><strong>Bài 10:</strong> Nhập n, đếm số chữ số của n.</p>
+
+<h3>4.10.3. Bài tập vận dụng</h3>
+
+<p><strong>Bài 11:</strong> Kiểm tra n có phải số nguyên tố không.</p>
+
+<p><strong>Bài 12:</strong> Tìm ƯCLN và BCNN của hai số a, b.</p>
+
+<p><strong>Bài 13:</strong> Đảo ngược một số nguyên dương.</p>
+
+<p><strong>Bài 14:</strong> Kiểm tra n có phải <strong>số hoàn hảo</strong> (tổng các ước nhỏ hơn nó bằng chính nó).</p>
+
+<p><strong>Bài 15:</strong> In tất cả số nguyên tố nhỏ hơn n.</p>
+
+<p><strong>Bài 16:</strong> Tính tổng các chữ số của n.</p>
+
+<p><strong>Bài 17:</strong> Đếm xem trong đoạn [1, n] có bao nhiêu số <strong>đối xứng</strong> (palindrome), ví dụ 121, 1331.</p>
+
+<p><strong>Bài 18:</strong> In dãy Collatz từ n: nếu chẵn → n/2, nếu lẻ → 3n+1, đến khi n = 1; đếm số bước.</p>
+
+<p><strong>Bài 19:</strong> Vẽ các hình sau bằng vòng lặp lồng nhau: hình vuông, tam giác vuông, tam giác cân, hình thoi.</p>
+
+<p><strong>Bài 20:</strong> Tính S = 1 + 1/2 + 1/3 + … + 1/n (kết quả số thực).</p>
+
+<h3>4.10.4. Bài tập nâng cao</h3>
+
+<p><strong>Bài 21:</strong> Nhập số nguyên n (0 ≤ n ≤ 10⁹), <strong>đếm số ước số</strong> của n. Gợi ý: duyệt <code>i</code> từ 1 đến √n.</p>
+
+<p><strong>Bài 22:</strong> In ra <strong>100 số nguyên tố đầu tiên</strong>.</p>
+
+<p><strong>Bài 23:</strong> Tính S = 1! + 2! + … + n!.</p>
+
+<p><strong>Bài 24:</strong> Tìm số nguyên dương n nhỏ nhất sao cho 1 + 2 + … + n &gt; 10000.</p>
+
+<p><strong>Bài 25:</strong> Nhập vào dãy số cho đến khi gặp 0 thì dừng; tính tổng các số đã nhập.</p>
+
+<p><strong>Bài 26:</strong> In <strong>bảng cửu chương từ 2 đến 9</strong> theo dạng cột đẹp.</p>
+
+<p><strong>Bài 27:</strong> Vẽ hình kim tự tháp dấu sao cao n dòng.</p>
+
+<p><strong>Bài 28:</strong> Tính tổng các chữ số của n cho đến khi tổng chỉ còn <strong>một chữ số</strong> (digital root).</p>
+
+<p><strong>Bài 29:</strong> Nhập a, b. In tất cả số nguyên tố trong [a, b].</p>
+
+<p><strong>Bài 30:</strong> Trò chơi đoán số: chương trình "nghĩ" một số ngẫu nhiên từ 1..100, người dùng đoán đến khi đúng; mỗi lần đoán sai máy báo "lớn hơn" / "nhỏ hơn" và đếm số lần đoán.</p>
+
+<hr>
+
+<h2>4.11. Hướng dẫn giải một số bài tập tiêu biểu</h2>
+
+<p><strong>Bài 8 — Tính n!:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    long long gt = 1;
+    for (int i = 2; i &lt;= n; i++) {
+        gt *= i;
+    }
+
+    cout &lt;&lt; n &lt;&lt; "! = " &lt;&lt; gt &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 11 — Kiểm tra số nguyên tố:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    bool laNguyenTo = (n &gt;= 2);
+    for (int i = 2; i * i &lt;= n; i++) {
+        if (n % i == 0) {
+            laNguyenTo = false;
+            break;
+        }
+    }
+
+    if (laNguyenTo)
+        cout &lt;&lt; n &lt;&lt; " la so nguyen to" &lt;&lt; endl;
+    else
+        cout &lt;&lt; n &lt;&lt; " khong phai so nguyen to" &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 12 — ƯCLN, BCNN:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a, b;
+    cout &lt;&lt; "Nhap a, b: ";
+    cin &gt;&gt; a &gt;&gt; b;
+
+    int x = a, y = b;
+    while (y != 0) {
+        int r = x % y;
+        x = y;
+        y = r;
+    }
+    int ucln = x;
+    int bcnn = a / ucln * b;   // chia trước tránh tràn
+
+    cout &lt;&lt; "UCLN = " &lt;&lt; ucln &lt;&lt; endl;
+    cout &lt;&lt; "BCNN = " &lt;&lt; bcnn &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 18 — Dãy Collatz:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    int buoc = 0;
+    cout &lt;&lt; n;
+    while (n != 1) {
+        if (n % 2 == 0) n /= 2;
+        else n = 3 * n + 1;
+        cout &lt;&lt; " -> " &lt;&lt; n;
+        buoc++;
+    }
+    cout &lt;&lt; endl &lt;&lt; "So buoc: " &lt;&lt; buoc &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 22 — 100 số nguyên tố đầu tiên:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int dem = 0;
+    int x = 2;
+
+    while (dem &lt; 100) {
+        bool laNguyenTo = true;
+        for (int i = 2; i * i &lt;= x; i++) {
+            if (x % i == 0) {
+                laNguyenTo = false;
+                break;
+            }
+        }
+        if (laNguyenTo) {
+            cout &lt;&lt; x &lt;&lt; " ";
+            dem++;
+        }
+        x++;
+    }
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 24 — Tìm n nhỏ nhất sao cho 1+2+…+n &gt; 10000:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n = 0;
+    int s = 0;
+
+    while (s &lt;= 10000) {
+        n++;
+        s += n;
+    }
+
+    cout &lt;&lt; "n nho nhat: " &lt;&lt; n &lt;&lt; endl;      // 141
+    cout &lt;&lt; "Tong tai n do: " &lt;&lt; s &lt;&lt; endl;   // 10011
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 27 — Kim tự tháp dấu sao:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap chieu cao: ";
+    cin &gt;&gt; n;
+
+    for (int i = 1; i &lt;= n; i++) {
+        // In khoảng trắng bên trái
+        for (int j = 1; j &lt;= n - i; j++) cout &lt;&lt; " ";
+        // In dấu sao
+        for (int j = 1; j &lt;= 2 * i - 1; j++) cout &lt;&lt; "*";
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 28 — Digital root:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    while (n &gt;= 10) {
+        int s = 0;
+        while (n &gt; 0) {
+            s += n % 10;
+            n /= 10;
+        }
+        n = s;
+    }
+    cout &lt;&lt; "Digital root = " &lt;&lt; n &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2>4.12. Tóm tắt chương</h2>
+
+<ul>
+<li><strong>Vòng lặp</strong> cho phép thực hiện lặp lại một khối lệnh nhiều lần — tránh viết code trùng lặp, xử lý được dữ liệu lớn.</li>
+<li>Có <strong>3 cấu trúc lặp</strong> chính:
+   <ul>
+   <li><strong><code>for</code></strong> — biết trước số lần lặp; kiểm tra điều kiện <strong>trước</strong> mỗi lần.</li>
+   <li><strong><code>while</code></strong> — chưa biết trước số lần lặp; kiểm tra điều kiện <strong>trước</strong> mỗi lần.</li>
+   <li><strong><code>do…while</code></strong> — chạy <strong>ít nhất 1 lần</strong>; kiểm tra điều kiện <strong>sau</strong> mỗi lần.</li>
+   </ul>
+</li>
+<li><strong>Chọn loại vòng lặp</strong>:
+   <ul>
+   <li>Biết số lần → <code>for</code>.</li>
+   <li>Chưa biết, kiểm tra trước → <code>while</code>.</li>
+   <li>Cần chạy ít nhất 1 lần → <code>do…while</code>.</li>
+   </ul>
+</li>
+<li><strong><code>break</code></strong> — thoát ngay vòng lặp gần nhất.</li>
+<li><strong><code>continue</code></strong> — bỏ qua lần hiện tại, sang lần kế tiếp. Cẩn thận với <code>while</code>: đặt <code>continue</code> sau lệnh cập nhật biến điều kiện.</li>
+<li><strong>Vòng lặp lồng nhau</strong> — xử lý dữ liệu 2 chiều: bảng, hình vẽ, ma trận. Vòng ngoài m lần × vòng trong n lần = m × n lần.</li>
+<li><strong>Lỗi thường gặp</strong>: vòng lặp vô hạn, lỗi lệch 1, quên khởi tạo biến tích lũy, dấu <code>;</code> thừa sau <code>for</code>/<code>while</code>, thiếu <code>;</code> sau <code>do…while</code>, tràn số.</li>
+<li><strong>Thuật toán cơ bản</strong> cần thuộc: tổng dãy, giai thừa, Fibonacci, kiểm tra nguyên tố, ƯCLN (Euclid), đảo số, đếm chữ số, số hoàn hảo, số Armstrong.</li>
+<li><strong>Luôn</strong>: khởi tạo biến đúng, kiểm tra điều kiện dừng, cập nhật biến điều kiện, thụt lề nhất quán, chạy thử với n nhỏ.</li>
+</ul>
+
+<hr>
+
+<h2>4.13. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Trang chi tiết về <code>for</code>, <code>while</code>, <code>do…while</code>, <code>break</code>, <code>continue</code></li>
+<li><strong>cplusplus.com</strong> — Hướng dẫn cơ bản về cấu trúc lặp</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo — Chương 5 (Statements)</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup — Chương về Statements</li>
+<li>Sách: <em>"Programming: Principles and Practice Using C++"</em> — Bjarne Stroustrup — Chương 4 (Computation)</li>
+<li><strong>learncpp.com</strong> — Chương 8: Control Flow (loops)</li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 5 — Hàm trong C++</em> — sẽ giới thiệu cách <strong>đóng gói code</strong> thành hàm để tái sử dụng, truyền tham số, trả về giá trị, hàm đệ quy, và các kỹ thuật tổ chức chương trình lớn.</p>
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

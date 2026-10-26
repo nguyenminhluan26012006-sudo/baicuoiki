@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 3: Câu lệnh điều kiện</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+
+    <div class="chapter-progress-inner">
+        
+        <a href="trangchu.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">1</span>
+            <span class="step-label"> Trang chủ</span>
+        </a>
+         <div class="step-line"></div>
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+
+<h1>Chương 3: Câu lệnh điều kiện</h1>
+
+<h2>3.1. Tổng quan về câu lệnh điều kiện</h2>
+
+<h3>3.1.1. Vì sao cần câu lệnh điều kiện?</h3>
+
+<p>Trong các chương trước, chương trình của chúng ta luôn thực hiện <strong>tuần tự</strong> từ trên xuống dưới — mỗi câu lệnh đều được chạy đúng một lần, không có sự lựa chọn. Tuy nhiên, hầu hết bài toán thực tế đều yêu cầu chương trình phải <strong>rẽ nhánh</strong>: tùy vào dữ liệu đầu vào hoặc trạng thái mà thực hiện công việc khác nhau.</p>
+
+<p>Ví dụ thực tế:</p>
+<ul>
+<li>Nếu trời mưa → mang áo mưa; ngược lại → mặc áo thường.</li>
+<li>Nếu điểm ≥ 5 → đỗ; ngược lại → trượt.</li>
+<li>Nếu số dư tài khoản đủ → cho phép rút tiền; ngược lại → thông báo lỗi.</li>
+</ul>
+
+<p><strong>Câu lệnh điều kiện</strong> (conditional statement) cho phép chương trình:</p>
+<ul>
+<li>Kiểm tra một <strong>biểu thức điều kiện</strong> (trả về <code>true</code> hoặc <code>false</code>).</li>
+<li>Quyết định <strong>khối lệnh</strong> nào sẽ được thực thi dựa trên kết quả đó.</li>
+</ul>
+
+<h3>3.1.2. Các dạng câu lệnh điều kiện trong C++</h3>
+
+<p>C++ cung cấp các dạng câu lệnh điều kiện sau:</p>
+<ol>
+<li><code>if</code> — dạng thiếu (chỉ xét khi điều kiện đúng)</li>
+<li><code>if … else</code> — dạng đủ (xét cả hai trường hợp)</li>
+<li><code>if … else if … else</code> — nhiều nhánh</li>
+<li><code>if</code> lồng nhau (nested <code>if</code>)</li>
+<li>Toán tử điều kiện ba ngôi <code>? :</code> (ternary operator)</li>
+<li><code>switch … case</code> — so khớp với nhiều giá trị cụ thể</li>
+</ol>
+
+<h3>3.1.3. Vị trí của câu lệnh điều kiện trong chương trình</h3>
+
+<p>Câu lệnh điều kiện có thể xuất hiện ở <strong>bất kỳ đâu</strong> trong thân hàm — sau khi đã khai báo biến, và có thể lồng trong các câu lệnh điều kiện khác hoặc trong vòng lặp (sẽ học ở Chương 4).</p>
+
+<pre>
+    Khai báo biến
+          ↓
+    Nhập dữ liệu
+          ↓
+    Câu lệnh điều kiện  ← kiểm tra và rẽ nhánh
+          ↓
+    Xuất kết quả
+</pre>
+
+<hr>
+
+<h2>3.2. Biểu thức điều kiện (biểu thức logic)</h2>
+
+<h3>3.2.1. Khái niệm</h3>
+
+<p><strong>Biểu thức điều kiện</strong> là biểu thức mà khi tính toán sẽ cho ra một trong hai giá trị: <code>true</code> (đúng) hoặc <code>false</code> (sai). Đây là kiểu dữ liệu <code>bool</code> trong C++ (đã học ở Chương 2).</p>
+
+<p>Trong C++, <code>true</code> tương đương với giá trị số <strong>1</strong> (hoặc bất kỳ số khác 0), <code>false</code> tương đương với <strong>0</strong>.</p>
+
+<h3>3.2.2. Các toán tử so sánh</h3>
+
+<p>Các toán tử này dùng để so sánh hai giá trị và trả về <code>bool</code>:</p>
+
+<ul>
+<li><code>==</code> — bằng (equal to)</li>
+<li><code>!=</code> — khác (not equal to)</li>
+<li><code>&gt;</code> — lớn hơn</li>
+<li><code>&lt;</code> — nhỏ hơn</li>
+<li><code>&gt;=</code> — lớn hơn hoặc bằng</li>
+<li><code>&lt;=</code> — nhỏ hơn hoặc bằng</li>
+</ul>
+
+<p><strong>Ví dụ:</strong> Giả sử <code>a = 5</code>, <code>b = 3</code>:</p>
+
+<ul>
+<li><code>a == b</code> → <code>false</code></li>
+<li><code>a != b</code> → <code>true</code></li>
+<li><code>a &gt; b</code> → <code>true</code></li>
+<li><code>a &lt; b</code> → <code>false</code></li>
+<li><code>a &gt;= b</code> → <code>true</code></li>
+<li><code>a &lt;= b</code> → <code>false</code></li>
+</ul>
+
+<p><strong>Lưu ý cực kỳ quan trọng:</strong> Phân biệt <code>=</code> (gán) với <code>==</code> (so sánh). Đây là lỗi phổ biến nhất của người mới học C++.</p>
+
+<pre><code>int a = 5;       // Gán: a nhận giá trị 5
+if (a == 5) {    // So sánh: a có bằng 5 không?
+    // ...
+}
+// if (a = 5) là SAI — vừa gán vừa kiểm tra (luôn đúng)</code></pre>
+
+<h3>3.2.3. Các toán tử logic</h3>
+
+<p>Dùng để <strong>kết hợp nhiều biểu thức điều kiện</strong> lại với nhau:</p>
+
+<ul>
+<li><code>&amp;&amp;</code> — AND (VÀ): chỉ đúng khi <strong>cả hai</strong> cùng đúng</li>
+<li><code>||</code> — OR (HOẶC): chỉ sai khi <strong>cả hai</strong> cùng sai</li>
+<li><code>!</code> — NOT (PHỦ ĐỊNH): đảo ngược giá trị <code>true</code> ↔ <code>false</code></li>
+</ul>
+
+<p><strong>Bảng chân trị:</strong></p>
+
+<pre>
++-------+-------+-----------+----------+--------+
+|   A   |   B   |  A &amp;&amp; B   |  A || B  |  ! A   |
++-------+-------+-----------+----------+--------+
+| true  | true  |   true    |   true   | false  |
+| true  | false |   false   |   true   | false  |
+| false | true  |   false   |   true   | true   |
+| false | false |   false   |   false  | true   |
++-------+-------+-----------+----------+--------+
+</pre>
+
+<p><strong>Ví dụ:</strong></p>
+
+<pre><code>int tuoi = 20;
+bool co_giay_phep = true;
+
+if (tuoi &gt;= 18 &amp;&amp; co_giay_phep) {
+    cout &lt;&lt; "Duoc phep lai xe";
+}</code></pre>
+
+<h3>3.2.4. Thứ tự ưu tiên toán tử</h3>
+
+<p>Khi một biểu thức có nhiều toán tử, C++ tính theo thứ tự ưu tiên (từ cao xuống thấp):</p>
+<ol>
+<li><code>!</code> (phủ định)</li>
+<li>Các toán tử số học: <code>*</code>, <code>/</code>, <code>%</code>, sau đó <code>+</code>, <code>-</code></li>
+<li>Các toán tử so sánh: <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, sau đó <code>==</code>, <code>!=</code></li>
+<li><code>&amp;&amp;</code></li>
+<li><code>||</code></li>
+<li>Phép gán <code>=</code></li>
+</ol>
+
+<p><strong>Ví dụ:</strong> <code>5 &gt; 3 &amp;&amp; 2 &lt; 1</code> được hiểu là <code>(5 &gt; 3) &amp;&amp; (2 &lt; 1)</code> → <code>true &amp;&amp; false</code> → <code>false</code>.</p>
+
+<p><strong>Khuyến nghị:</strong> Luôn dùng dấu ngoặc đơn <code>()</code> khi có từ 3 toán tử trở lên để tránh nhầm lẫn.</p>
+
+<h3>3.2.5. Giá trị "truthy" và "falsy" trong C++</h3>
+
+<p>Trong C++, khi dùng một giá trị không phải <code>bool</code> trong điều kiện:</p>
+<ul>
+<li><strong>0</strong> → <code>false</code></li>
+<li><strong>Mọi số khác 0</strong> → <code>true</code></li>
+<li><strong>Con trỏ <code>nullptr</code></strong> → <code>false</code></li>
+<li><strong>Con trỏ khác <code>nullptr</code></strong> → <code>true</code></li>
+</ul>
+
+<pre><code>int x = 5;
+if (x) {                 // tương đương if (x != 0)
+    cout &lt;&lt; "x khac 0";
+}
+
+if (!x) {                // tương đương if (x == 0)
+    cout &lt;&lt; "x bang 0";
+}</code></pre>
+
+<hr>
+
+<h2>3.3. Câu lệnh if — dạng thiếu</h2>
+
+<h3>3.3.1. Cú pháp</h3>
+
+<pre><code>if (điều_kiện) {
+    // khối lệnh được thực hiện nếu điều_kiện đúng
+}</code></pre>
+
+<p>Trong đó:</p>
+<ul>
+<li><code>điều_kiện</code> là một <strong>biểu thức logic</strong> (trả về <code>true</code>/<code>false</code>)</li>
+<li>Cặp <code>{ }</code> bao quanh <strong>khối lệnh</strong> cần thực hiện</li>
+</ul>
+
+<h3>3.3.2. Nguyên tắc hoạt động</h3>
+
+<ul>
+<li>Nếu điều kiện <strong>đúng</strong> (<code>true</code>) → thực hiện toàn bộ khối lệnh.</li>
+<li>Nếu điều kiện <strong>sai</strong> (<code>false</code>) → <strong>bỏ qua</strong> khối lệnh, chương trình chạy tiếp câu lệnh phía sau <code>if</code>.</li>
+</ul>
+
+<p><strong>Sơ đồ khối:</strong></p>
+
+<pre>
+       ┌─────────────────┐
+       │   điều_kiện ?   │
+       └────────┬────────┘
+           Đúng │ Sai
+                ▼
+       ┌─────────────────┐
+       │    khối lệnh    │
+       └────────┬────────┘
+                │
+                ▼
+            (tiếp theo)
+</pre>
+
+<h3>3.3.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Kiểm tra một số có dương không.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    if (n &gt; 0) {
+        cout &lt;&lt; n &lt;&lt; " la so duong" &lt;&lt; endl;
+    }
+
+    cout &lt;&lt; "Ket thuc chuong trinh" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Kiểm tra điểm đỗ (≥ 5).</p>
+
+<pre><code>float diem;
+cout &lt;&lt; "Nhap diem: ";
+cin &gt;&gt; diem;
+
+if (diem &gt;= 5.0) {
+    cout &lt;&lt; "Ban da do!" &lt;&lt; endl;
+    cout &lt;&lt; "Chuc mung!" &lt;&lt; endl;
+}</code></pre>
+
+<h3>3.3.4. Lưu ý khi viết if dạng thiếu</h3>
+
+<ul>
+<li>Nếu khối lệnh chỉ có <strong>một câu lệnh duy nhất</strong>, có thể bỏ cặp <code>{ }</code>:</li>
+</ul>
+
+<pre><code>if (n &gt; 0) cout &lt;&lt; "Duong";</code></pre>
+
+<p>Tuy nhiên, <strong>khuyến nghị luôn dùng <code>{ }</code></strong> để tránh lỗi khó phát hiện khi mở rộng code sau này.</p>
+
+<ul>
+<li>Không đặt dấu <code>;</code> ngay sau điều kiện <code>if</code> (rất dễ nhầm):</li>
+</ul>
+
+<pre><code>if (n &gt; 0);                    // SAI — dấu ; biến if thành rỗng
+{
+    cout &lt;&lt; "Duong";           // câu lệnh này LUÔN chạy
+}</code></pre>
+
+<hr>
+
+<h2>3.4. Câu lệnh if … else — dạng đủ</h2>
+
+<h3>3.4.1. Cú pháp</h3>
+
+<pre><code>if (điều_kiện) {
+    // khối lệnh 1 — chạy khi điều_kiện ĐÚNG
+} else {
+    // khối lệnh 2 — chạy khi điều_kiện SAI
+}</code></pre>
+
+<h3>3.4.2. Nguyên tắc hoạt động</h3>
+
+<p>Luôn có <strong>đúng một</strong> trong hai khối lệnh được thực hiện — không thể cả hai, cũng không thể không có khối nào.</p>
+
+<p><strong>Sơ đồ khối:</strong></p>
+
+<pre>
+            ┌─────────────────┐
+            │   điều_kiện ?   │
+            └────────┬────────┘
+              Đúng   │   Sai
+           ┌─────────┴─────────┐
+           ▼                   ▼
+      ┌─────────┐         ┌─────────┐
+      │ khối 1  │         │ khối 2  │
+      └────┬────┘         └────┬────┘
+           └─────────┬─────────┘
+                     ▼
+                 (tiếp theo)
+</pre>
+
+<h3>3.4.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Kiểm tra số chẵn/lẻ.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    if (n % 2 == 0) {
+        cout &lt;&lt; n &lt;&lt; " la so chan" &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; n &lt;&lt; " la so le" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Tìm số lớn hơn trong hai số.</p>
+
+<pre><code>int a, b;
+cout &lt;&lt; "Nhap a, b: ";
+cin &gt;&gt; a &gt;&gt; b;
+
+if (a &gt; b) {
+    cout &lt;&lt; "So lon hon la: " &lt;&lt; a &lt;&lt; endl;
+} else {
+    cout &lt;&lt; "So lon hon la: " &lt;&lt; b &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Kiểm tra số âm/không âm.</p>
+
+<pre><code>if (n &gt;= 0) {
+    cout &lt;&lt; "n khong am" &lt;&lt; endl;
+} else {
+    cout &lt;&lt; "n la so am" &lt;&lt; endl;
+}</code></pre>
+
+<h3>3.4.4. Biến thể viết gọn</h3>
+
+<p>Nếu mỗi nhánh chỉ có <strong>một câu lệnh duy nhất</strong>:</p>
+
+<pre><code>if (n % 2 == 0)
+    cout &lt;&lt; "Chan";
+else
+    cout &lt;&lt; "Le";</code></pre>
+
+<hr>
+
+<h2>3.5. Câu lệnh if … else if … else — nhiều nhánh</h2>
+
+<h3>3.5.1. Cú pháp</h3>
+
+<p>Khi có <strong>từ 3 trường hợp trở lên</strong> cần xét, ta dùng <code>else if</code>:</p>
+
+<pre><code>if (điều_kiện_1) {
+    // khối lệnh 1
+} else if (điều_kiện_2) {
+    // khối lệnh 2
+} else if (điều_kiện_3) {
+    // khối lệnh 3
+} else {
+    // khối lệnh mặc định
+}</code></pre>
+
+<h3>3.5.2. Nguyên tắc hoạt động</h3>
+
+<ul>
+<li>Các điều kiện được kiểm tra <strong>tuần tự từ trên xuống</strong>.</li>
+<li>Khi gặp điều kiện <strong>đúng đầu tiên</strong> → thực hiện khối lệnh tương ứng và <strong>thoát</strong> khỏi toàn bộ cấu trúc <code>if</code>.</li>
+<li>Nếu <strong>không điều kiện nào đúng</strong> → thực hiện khối <code>else</code> (nếu có).</li>
+<li>Khối <code>else</code> là <strong>tùy chọn</strong> — có thể bỏ qua.</li>
+</ul>
+
+<h3>3.5.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Xếp loại học lực.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    float diem;
+    cout &lt;&lt; "Nhap diem: ";
+    cin &gt;&gt; diem;
+
+    if (diem &gt;= 9.0) {
+        cout &lt;&lt; "Xuat sac" &lt;&lt; endl;
+    } else if (diem &gt;= 8.0) {
+        cout &lt;&lt; "Gioi" &lt;&lt; endl;
+    } else if (diem &gt;= 6.5) {
+        cout &lt;&lt; "Kha" &lt;&lt; endl;
+    } else if (diem &gt;= 5.0) {
+        cout &lt;&lt; "Trung binh" &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; "Yeu" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Phân tích:</strong> Ở ví dụ trên, <strong>không cần</strong> viết <code>diem &gt;= 8.0 &amp;&amp; diem &lt; 9.0</code> vì nếu đã đến nhánh <code>else if (diem &gt;= 8.0)</code> thì chắc chắn <code>diem &lt; 9.0</code> (do nhánh trên đã sai).</p>
+
+<p><strong>Ví dụ 2:</strong> Xác định số dương/âm/không.</p>
+
+<pre><code>int n;
+cin &gt;&gt; n;
+
+if (n &gt; 0) {
+    cout &lt;&lt; "So duong";
+} else if (n &lt; 0) {
+    cout &lt;&lt; "So am";
+} else {
+    cout &lt;&lt; "Bang 0";
+}</code></pre>
+
+<h3>3.5.4. Quy tắc sắp xếp điều kiện</h3>
+
+<p><strong>Nguyên tắc vàng:</strong> Điều kiện <strong>chặt (hẹp) hơn</strong> phải đặt <strong>trước</strong>, điều kiện <strong>lỏng (rộng) hơn</strong> đặt sau.</p>
+
+<p><strong>Ví dụ SAI:</strong></p>
+
+<pre><code>// Kết quả không như mong đợi!
+if (diem &gt;= 5.0) {
+    cout &lt;&lt; "Trung binh tro len";
+} else if (diem &gt;= 9.0) {
+    cout &lt;&lt; "Xuat sac";     // KHÔNG BAO GIỜ chạy được!
+}</code></pre>
+
+<p>Lý do: nếu <code>diem = 9.5</code>, điều kiện <code>diem &gt;= 5.0</code> đã đúng nên chương trình thoát khỏi <code>if</code> ngay, không xét nhánh xuất sắc.</p>
+
+<h3>3.5.5. So sánh với dùng điều kiện kết hợp</h3>
+
+<p>Có thể viết nhánh điều kiện bằng cách dùng <code>&amp;&amp;</code> thay vì <code>else if</code>, nhưng cách này dài dòng hơn và dễ sai:</p>
+
+<pre><code>// Cách 1: Dùng else if (KHUYẾN NGHỊ)
+if (diem &gt;= 9.0) {
+    // ...
+} else if (diem &gt;= 8.0) {
+    // ...
+}
+
+// Cách 2: Dùng điều kiện kết hợp (dài, dễ nhầm)
+if (diem &gt;= 9.0) {
+    // ...
+} else if (diem &gt;= 8.0 &amp;&amp; diem &lt; 9.0) {
+    // ...
+}</code></pre>
+
+<hr>
+
+<h2>3.6. Câu lệnh if lồng nhau (Nested if)</h2>
+
+<h3>3.6.1. Khái niệm</h3>
+
+<p><strong>if lồng nhau</strong> là câu lệnh <code>if</code> (hoặc <code>if…else</code>, <code>if…else if…else</code>) được đặt <strong>bên trong</strong> một câu lệnh <code>if</code> khác. Kỹ thuật này dùng khi cần kiểm tra nhiều điều kiện phân cấp: chỉ khi điều kiện ngoài đúng mới xét đến điều kiện trong.</p>
+
+<h3>3.6.2. Cú pháp</h3>
+
+<pre><code>if (điều_kiện_ngoài) {
+    // khối lệnh ngoài
+    
+    if (điều_kiện_trong) {
+        // khối lệnh trong
+    } else {
+        // ...
+    }
+} else {
+    // ...
+}</code></pre>
+
+<h3>3.6.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Kiểm tra một năm có phải năm nhuận không.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int nam;
+    cout &lt;&lt; "Nhap nam: ";
+    cin &gt;&gt; nam;
+
+    if (nam % 4 == 0) {
+        if (nam % 100 == 0) {
+            if (nam % 400 == 0) {
+                cout &lt;&lt; "Nam nhuan" &lt;&lt; endl;
+            } else {
+                cout &lt;&lt; "Khong phai nam nhuan" &lt;&lt; endl;
+            }
+        } else {
+            cout &lt;&lt; "Nam nhuan" &lt;&lt; endl;
+        }
+    } else {
+        cout &lt;&lt; "Khong phai nam nhuan" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p>Cách viết gọn hơn bằng điều kiện kết hợp:</p>
+
+<pre><code>if ((nam % 400 == 0) || (nam % 4 == 0 &amp;&amp; nam % 100 != 0)) {
+    cout &lt;&lt; "Nam nhuan" &lt;&lt; endl;
+} else {
+    cout &lt;&lt; "Khong phai nam nhuan" &lt;&lt; endl;
+}</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Kiểm tra tam giác hợp lệ và xác định loại tam giác.</p>
+
+<pre><code>float a, b, c;
+cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+
+if (a + b &gt; c &amp;&amp; b + c &gt; a &amp;&amp; a + c &gt; b) {
+    if (a == b &amp;&amp; b == c) {
+        cout &lt;&lt; "Tam giac deu";
+    } else if (a == b || b == c || a == c) {
+        cout &lt;&lt; "Tam giac can";
+    } else {
+        cout &lt;&lt; "Tam giac thuong";
+    }
+} else {
+    cout &lt;&lt; "Khong phai 3 canh tam giac";
+}</code></pre>
+
+<h3>3.6.4. Cảnh báo về lồng if</h3>
+
+<ul>
+<li><strong>Lồng quá nhiều tầng</strong> (từ 3 tầng trở lên) làm code khó đọc, khó bảo trì.</li>
+<li>Nên <strong>dùng điều kiện kết hợp</strong> (<code>&amp;&amp;</code>, <code>||</code>) nếu có thể.</li>
+<li>Nếu buộc phải lồng nhiều, hãy <strong>tách thành hàm riêng</strong>.</li>
+<li>Luôn <strong>thụt lề nhất quán</strong> (thường 4 dấu cách mỗi tầng) để dễ đọc.</li>
+</ul>
+
+<hr>
+
+<h2>3.7. Toán tử điều kiện ba ngôi</h2>
+
+<h3>3.7.1. Cú pháp</h3>
+
+<p>Toán tử <code>? :</code> (ternary operator) cho phép viết gọn <code>if…else</code> khi cả hai nhánh đều là <strong>biểu thức đơn giản</strong>:</p>
+
+<pre><code>biến = (điều_kiện) ? giá_trị_nếu_đúng : giá_trị_nếu_sai;</code></pre>
+
+<h3>3.7.2. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Tìm max của hai số.</p>
+
+<pre><code>int a = 5, b = 8;
+
+// Cách 1: Dùng if…else
+int max_val;
+if (a &gt; b) {
+    max_val = a;
+} else {
+    max_val = b;
+}
+
+// Cách 2: Dùng toán tử ba ngôi (gọn hơn)
+int max_val = (a &gt; b) ? a : b;</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Kiểm tra chẵn/lẻ — in trực tiếp.</p>
+
+<pre><code>int n = 7;
+cout &lt;&lt; n &lt;&lt; " la so " &lt;&lt; ((n % 2 == 0) ? "chan" : "le") &lt;&lt; endl;</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Trị tuyệt đối.</p>
+
+<pre><code>int x = -5;
+int abs_x = (x &gt;= 0) ? x : -x;    // abs_x = 5</code></pre>
+
+<h3>3.7.3. Ưu và nhược điểm</h3>
+
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Viết gọn, đặc biệt hữu ích trong biểu thức (ví dụ trong <code>cout</code>).</li>
+<li>Rõ ràng khi logic đơn giản.</li>
+</ul>
+
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Khó đọc khi lồng nhiều tầng: <code>(a &gt; b) ? ((a &gt; c) ? a : c) : ((b &gt; c) ? b : c)</code></li>
+<li>Không dùng được cho khối lệnh nhiều câu.</li>
+<li>Không nên lạm dụng — ưu tiên <code>if…else</code> khi cần rõ ràng.</li>
+</ul>
+
+<hr>
+
+<h2>3.8. Câu lệnh switch … case</h2>
+
+<h3>3.8.1. Khái niệm</h3>
+
+<p><code>switch … case</code> dùng khi cần <strong>so sánh một biến với nhiều giá trị hằng số cụ thể</strong>. Đây là dạng thay thế cho chuỗi <code>if…else if</code> dài dòng khi mỗi nhánh kiểm tra cùng một biến với các giá trị khác nhau.</p>
+
+<p><strong>Khi nào dùng switch thay vì if?</strong></p>
+<ul>
+<li>Kiểm tra <strong>một biến duy nhất</strong> với nhiều giá trị rời rạc (ví dụ: 1, 2, 3, 4).</li>
+<li>Giá trị so sánh phải là <strong>hằng số</strong> (số nguyên, ký tự, enum).</li>
+<li><strong>Không</strong> dùng được cho biểu thức phức tạp như <code>x &gt; 5 &amp;&amp; x &lt; 10</code>.</li>
+</ul>
+
+<h3>3.8.2. Cú pháp</h3>
+
+<pre><code>switch (biểu_thức) {
+    case giá_trị_1:
+        // khối lệnh 1
+        break;
+    case giá_trị_2:
+        // khối lệnh 2
+        break;
+    // ...
+    default:
+        // khối lệnh mặc định (khi không case nào khớp)
+        break;
+}</code></pre>
+
+<h3>3.8.3. Nguyên tắc hoạt động</h3>
+
+<ul>
+<li>Tính <code>biểu_thức</code> và so sánh với từng <code>case</code> từ trên xuống.</li>
+<li>Khi khớp → thực hiện từ câu lệnh đó đến khi gặp <code>break</code>.</li>
+<li>Nếu không khớp <code>case</code> nào → thực hiện <code>default</code> (nếu có).</li>
+<li><code>break</code> dùng để <strong>thoát khỏi switch</strong>. Nếu <strong>quên break</strong>, chương trình sẽ <strong>chạy tiếp các case sau</strong> (gọi là <em>fall-through</em>).</li>
+</ul>
+
+<h3>3.8.4. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> In tên thứ trong tuần.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int thu;
+    cout &lt;&lt; "Nhap thu (2-8): ";
+    cin &gt;&gt; thu;
+
+    switch (thu) {
+        case 2:
+            cout &lt;&lt; "Thu Hai" &lt;&lt; endl;
+            break;
+        case 3:
+            cout &lt;&lt; "Thu Ba" &lt;&lt; endl;
+            break;
+        case 4:
+            cout &lt;&lt; "Thu Tu" &lt;&lt; endl;
+            break;
+        case 5:
+            cout &lt;&lt; "Thu Nam" &lt;&lt; endl;
+            break;
+        case 6:
+            cout &lt;&lt; "Thu Sau" &lt;&lt; endl;
+            break;
+        case 7:
+            cout &lt;&lt; "Thu Bay" &lt;&lt; endl;
+            break;
+        case 8:
+            cout &lt;&lt; "Chu Nhat" &lt;&lt; endl;
+            break;
+        default:
+            cout &lt;&lt; "Thu khong hop le" &lt;&lt; endl;
+            break;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Máy tính đơn giản với phép toán.</p>
+
+<pre><code>double a, b;
+char phep;
+cout &lt;&lt; "Nhap a, phep toan, b: ";
+cin &gt;&gt; a &gt;&gt; phep &gt;&gt; b;
+
+switch (phep) {
+    case '+':
+        cout &lt;&lt; "Ket qua: " &lt;&lt; a + b &lt;&lt; endl;
+        break;
+    case '-':
+        cout &lt;&lt; "Ket qua: " &lt;&lt; a - b &lt;&lt; endl;
+        break;
+    case '*':
+        cout &lt;&lt; "Ket qua: " &lt;&lt; a * b &lt;&lt; endl;
+        break;
+    case '/':
+        if (b != 0) {
+            cout &lt;&lt; "Ket qua: " &lt;&lt; a / b &lt;&lt; endl;
+        } else {
+            cout &lt;&lt; "Loi: chia cho 0" &lt;&lt; endl;
+        }
+        break;
+    default:
+        cout &lt;&lt; "Phep toan khong hop le" &lt;&lt; endl;
+        break;
+}</code></pre>
+
+<h3>3.8.5. Trường hợp "fall-through" có chủ đích</h3>
+
+<p>Khi nhiều <code>case</code> cần thực hiện <strong>cùng một khối lệnh</strong>, có thể bỏ <code>break</code> ở các case đầu:</p>
+
+<pre><code>int thang;
+cin &gt;&gt; thang;
+
+switch (thang) {
+    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+        cout &lt;&lt; "31 ngay" &lt;&lt; endl;
+        break;
+    case 4: case 6: case 9: case 11:
+        cout &lt;&lt; "30 ngay" &lt;&lt; endl;
+        break;
+    case 2:
+        cout &lt;&lt; "28 hoac 29 ngay" &lt;&lt; endl;
+        break;
+    default:
+        cout &lt;&lt; "Thang khong hop le" &lt;&lt; endl;
+}</code></pre>
+
+<h3>3.8.6. So sánh switch và if…else if</h3>
+
+<ul>
+<li><strong>switch</strong>: gọn hơn khi có ≥ 4 nhánh so sánh cùng biến với hằng số. Hiệu năng có thể tốt hơn (trình biên dịch tối ưu bằng bảng nhảy).</li>
+<li><strong>if…else if</strong>: linh hoạt hơn — dùng được biểu thức phức tạp, so sánh khoảng giá trị, kiểu dữ liệu <code>float</code>, <code>string</code>.</li>
+<li>Cả hai đều có ưu/nhược điểm — chọn theo tình huống cụ thể.</li>
+</ul>
+
+<hr>
+
+<h2>3.9. Các lỗi thường gặp</h2>
+
+<ul>
+<li><strong>Dùng <code>=</code> thay vì <code>==</code></strong> — lỗi kinh điển. <code>if (a = 5)</code> vừa gán vừa kiểm tra, <strong>luôn đúng</strong>. Cách sửa: dùng <code>==</code> để so sánh.</li>
+<li><strong>Đặt dấu <code>;</code> ngay sau if</strong> — <code>if (x &gt; 0);</code> khiến câu lệnh điều kiện trở thành rỗng, khối lệnh phía sau <strong>luôn chạy bất kể điều kiện</strong>.</li>
+<li><strong>Quên <code>break</code> trong switch</strong> — chương trình sẽ "rơi" sang case kế tiếp, gây kết quả sai.</li>
+<li><strong>Sắp xếp điều kiện sai thứ tự</strong> — điều kiện rộng đứng trước khiến nhánh chặt phía sau <strong>không bao giờ chạy</strong>.</li>
+<li><strong>Nhầm toán tử logic</strong> — viết <code>x &lt; 5 &amp;&amp; x &gt; 10</code> (không bao giờ đúng), hoặc dùng <code>and/or</code> thay vì <code>&amp;&amp;/||</code> (Python-style).</li>
+<li><strong>Quên dấu ngoặc đơn sau if</strong> — <code>if n &gt; 0</code> là lỗi cú pháp. Phải là <code>if (n &gt; 0)</code>.</li>
+<li><strong>Dùng <code>switch</code> với biến không phải hằng số</strong> — <code>case x:</code> là sai, <code>case</code> phải là giá trị hằng như <code>case 5:</code>.</li>
+<li><strong>Quên thụt lề</strong> — code chạy được nhưng cực khó đọc và dễ sinh lỗi logic.</li>
+<li><strong>So sánh số thực với <code>==</code></strong> — <code>if (0.1 + 0.2 == 0.3)</code> thường trả về <code>false</code> do sai số dấu phẩy động. Nên dùng <code>fabs(a - b) &lt; 1e-9</code>.</li>
+</ul>
+
+<hr>
+
+<h2>3.10. Bài tập chương 3</h2>
+
+<h3>3.10.1. Bài tập trắc nghiệm</h3>
+
+<p><strong>Câu 1:</strong> Kết quả của biểu thức <code>5 &gt; 3 &amp;&amp; 2 &lt; 1</code> là:</p>
+<ul>
+<li>A. <code>true</code></li>
+<li>B. <code>false</code></li>
+<li>C. Lỗi biên dịch</li>
+<li>D. Không xác định</li>
+</ul>
+
+<p><strong>Câu 2:</strong> Trong câu lệnh <code>if…else if…else</code>, khi điều kiện <code>if</code> đầu tiên đúng thì:</p>
+<ul>
+<li>A. Tất cả các nhánh đều được kiểm tra</li>
+<li>B. Chỉ nhánh <code>else</code> được kiểm tra</li>
+<li>C. Các nhánh sau bị bỏ qua</li>
+<li>D. Chương trình dừng lại</li>
+</ul>
+
+<p><strong>Câu 3:</strong> Câu lệnh nào sau đây <strong>luôn in ra "A"</strong> bất kể giá trị <code>x</code>:</p>
+<ul>
+<li>A. <code>if (x &gt; 0) cout &lt;&lt; "A";</code></li>
+<li>B. <code>if (x = 5) cout &lt;&lt; "A";</code></li>
+<li>C. <code>if (x == 5) cout &lt;&lt; "A";</code></li>
+<li>D. <code>if (x != 5) cout &lt;&lt; "A";</code></li>
+</ul>
+
+<p><strong>Câu 4:</strong> Trong <code>switch</code>, nếu quên <code>break</code> ở một <code>case</code>:</p>
+<ul>
+<li>A. Chương trình báo lỗi biên dịch</li>
+<li>B. Chương trình bỏ qua các case còn lại</li>
+<li>C. Chương trình tiếp tục chạy các case phía dưới (fall-through)</li>
+<li>D. Chương trình kết thúc ngay</li>
+</ul>
+
+<p><strong>Câu 5:</strong> Kết quả của <code>!(3 &gt; 5 || 2 == 2)</code> là:</p>
+<ul>
+<li>A. <code>true</code></li>
+<li>B. <code>false</code></li>
+<li>C. Lỗi biên dịch</li>
+<li>D. Không xác định</li>
+</ul>
+
+<p><strong>Đáp án:</strong> 1-B, 2-C, 3-B, 4-C, 5-B.</p>
+
+<h3>3.10.2. Bài tập cơ bản</h3>
+
+<p><strong>Bài 1:</strong> Viết chương trình nhập một số nguyên <code>n</code>. In ra "n la so duong" nếu <code>n &gt; 0</code>, ngược lại in "n khong duong".</p>
+
+<p><strong>Bài 2:</strong> Viết chương trình nhập hai số <code>a</code>, <code>b</code>. In ra số lớn hơn.</p>
+
+<p><strong>Bài 3:</strong> Viết chương trình kiểm tra một số nguyên <code>n</code> là số chẵn hay số lẻ.</p>
+
+<p><strong>Bài 4:</strong> Viết chương trình nhập điểm trung bình (0 → 10) và xếp loại:</p>
+<ul>
+<li>≥ 8.0: Giỏi</li>
+<li>6.5 → &lt; 8.0: Khá</li>
+<li>5.0 → &lt; 6.5: Trung bình</li>
+<li>&lt; 5.0: Yếu</li>
+</ul>
+
+<p><strong>Bài 5:</strong> Viết chương trình nhập vào ba số <code>a</code>, <code>b</code>, <code>c</code>. In ra số lớn nhất và số nhỏ nhất.</p>
+
+<h3>3.10.3. Bài tập vận dụng</h3>
+
+<p><strong>Bài 6 (Phương trình bậc nhất):</strong> Nhập <code>a</code>, <code>b</code>. Giải và biện luận phương trình <code>ax + b = 0</code>:</p>
+<ul>
+<li>Nếu <code>a = 0</code> và <code>b = 0</code> → vô số nghiệm</li>
+<li>Nếu <code>a = 0</code> và <code>b ≠ 0</code> → vô nghiệm</li>
+<li>Nếu <code>a ≠ 0</code> → nghiệm <code>x = -b/a</code></li>
+</ul>
+
+<p><strong>Bài 7 (Tam giác):</strong> Nhập ba số <code>a</code>, <code>b</code>, <code>c</code>. Kiểm tra có tạo thành tam giác không. Nếu có, cho biết là tam giác đều, cân, vuông, hay thường.</p>
+
+<p><strong>Bài 8 (Năm nhuận):</strong> Nhập một năm, kiểm tra xem có phải năm nhuận không. Gợi ý: Năm nhuận nếu chia hết cho 400, hoặc chia hết cho 4 nhưng không chia hết cho 100.</p>
+
+<p><strong>Bài 9 (Tính tiền điện):</strong> Nhập số kWh tiêu thụ, tính tiền theo bậc thang:</p>
+<ul>
+<li>0 → 50 kWh: 1678 đ/kWh</li>
+<li>51 → 100 kWh: 1734 đ/kWh</li>
+<li>101 → 200 kWh: 2014 đ/kWh</li>
+<li>201 → 300 kWh: 2536 đ/kWh</li>
+<li>301 → 400 kWh: 2834 đ/kWh</li>
+<li>&gt; 400 kWh: 2927 đ/kWh</li>
+</ul>
+
+<p><strong>Bài 10 (Máy tính đơn giản):</strong> Nhập hai số <code>a</code>, <code>b</code> và một phép toán (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>). Thực hiện phép tính tương ứng (dùng <code>switch</code>). Xử lý trường hợp chia cho 0.</p>
+
+<p><strong>Bài 11 (Kiểm tra ký tự):</strong> Nhập một ký tự. Cho biết ký tự đó là chữ cái in hoa, chữ cái in thường, chữ số, hay ký tự khác.</p>
+
+<p><strong>Bài 12 (Xếp loại BMI):</strong> Nhập cân nặng (kg) và chiều cao (m). Tính BMI = cân nặng / chiều cao². Xếp loại:</p>
+<ul>
+<li>BMI &lt; 18.5: Gầy</li>
+<li>18.5 → &lt; 25: Bình thường</li>
+<li>25 → &lt; 30: Thừa cân</li>
+<li>≥ 30: Béo phì</li>
+</ul>
+
+<h3>3.10.4. Bài tập nâng cao</h3>
+
+<p><strong>Bài 13 (Tăng giây):</strong> Nhập giờ, phút, giây. Kiểm tra hợp lệ (giờ 0-23, phút 0-59, giây 0-59). Nếu hợp lệ, in ra giờ-phút-giây của <strong>1 giây sau</strong> (xử lý trường hợp giây = 59, phút = 59, giờ = 23).</p>
+
+<p><strong>Bài 14 (Số ngày trong tháng):</strong> Nhập tháng và năm. Cho biết tháng đó có bao nhiêu ngày (xử lý đúng tháng 2 năm nhuận). Dùng <code>switch … case</code>.</p>
+
+<p><strong>Bài 15 (Phương trình bậc hai):</strong> Nhập <code>a</code>, <code>b</code>, <code>c</code>. Giải phương trình <code>ax² + bx + c = 0</code>, biện luận đầy đủ các trường hợp:</p>
+<ul>
+<li><code>a = 0</code> → phương trình bậc nhất</li>
+<li><code>Δ = b² - 4ac &lt; 0</code> → vô nghiệm</li>
+<li><code>Δ = 0</code> → nghiệm kép <code>x = -b/(2a)</code></li>
+<li><code>Δ &gt; 0</code> → hai nghiệm phân biệt</li>
+</ul>
+
+<p><strong>Bài 16 (Oẳn tù tì):</strong> Nhập lựa chọn của 2 người chơi: <code>0</code> = Búa, <code>1</code> = Kéo, <code>2</code> = Bao. Xác định người thắng hoặc hòa.</p>
+
+<hr>
+
+<h2>3.11. Hướng dẫn giải một số bài tập tiêu biểu</h2>
+
+<p><strong>Bài 3 — Số chẵn/lẻ:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+
+    if (n % 2 == 0) {
+        cout &lt;&lt; n &lt;&lt; " la so chan" &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; n &lt;&lt; " la so le" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 5 — Tìm max, min của 3 số:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    double a, b, c;
+    cout &lt;&lt; "Nhap a, b, c: ";
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+
+    double max_val, min_val;
+
+    // Tim max
+    if (a &gt;= b &amp;&amp; a &gt;= c) max_val = a;
+    else if (b &gt;= a &amp;&amp; b &gt;= c) max_val = b;
+    else max_val = c;
+
+    // Tim min
+    if (a &lt;= b &amp;&amp; a &lt;= c) min_val = a;
+    else if (b &lt;= a &amp;&amp; b &lt;= c) min_val = b;
+    else min_val = c;
+
+    cout &lt;&lt; "Max = " &lt;&lt; max_val &lt;&lt; endl;
+    cout &lt;&lt; "Min = " &lt;&lt; min_val &lt;&lt; endl;
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 6 — Phương trình bậc nhất:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    double a, b;
+    cout &lt;&lt; "Nhap a, b: ";
+    cin &gt;&gt; a &gt;&gt; b;
+
+    if (a == 0) {
+        if (b == 0) {
+            cout &lt;&lt; "Phuong trinh vo so nghiem" &lt;&lt; endl;
+        } else {
+            cout &lt;&lt; "Phuong trinh vo nghiem" &lt;&lt; endl;
+        }
+    } else {
+        cout &lt;&lt; "Nghiem x = " &lt;&lt; -b / a &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 8 — Năm nhuận:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int nam;
+    cout &lt;&lt; "Nhap nam: ";
+    cin &gt;&gt; nam;
+
+    if ((nam % 400 == 0) || (nam % 4 == 0 &amp;&amp; nam % 100 != 0)) {
+        cout &lt;&lt; nam &lt;&lt; " la nam nhuan" &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; nam &lt;&lt; " khong phai nam nhuan" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 11 — Kiểm tra ký tự:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char ch;
+    cout &lt;&lt; "Nhap mot ky tu: ";
+    cin &gt;&gt; ch;
+
+    if (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') {
+        cout &lt;&lt; "Chu cai in thuong" &lt;&lt; endl;
+    } else if (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z') {
+        cout &lt;&lt; "Chu cai in hoa" &lt;&lt; endl;
+    } else if (ch &gt;= '0' &amp;&amp; ch &lt;= '9') {
+        cout &lt;&lt; "Chu so" &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; "Ky tu khac" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 14 — Số ngày trong tháng:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int thang, nam;
+    cout &lt;&lt; "Nhap thang, nam: ";
+    cin &gt;&gt; thang &gt;&gt; nam;
+
+    switch (thang) {
+        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+            cout &lt;&lt; "Thang " &lt;&lt; thang &lt;&lt; " co 31 ngay" &lt;&lt; endl;
+            break;
+        case 4: case 6: case 9: case 11:
+            cout &lt;&lt; "Thang " &lt;&lt; thang &lt;&lt; " co 30 ngay" &lt;&lt; endl;
+            break;
+        case 2: {
+            bool nhuan = (nam % 400 == 0) || (nam % 4 == 0 &amp;&amp; nam % 100 != 0);
+            cout &lt;&lt; "Thang 2 nam " &lt;&lt; nam
+                 &lt;&lt; " co " &lt;&lt; (nhuan ? 29 : 28) &lt;&lt; " ngay" &lt;&lt; endl;
+            break;
+        }
+        default:
+            cout &lt;&lt; "Thang khong hop le" &lt;&lt; endl;
+    }
+
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2>3.12. Tóm tắt chương</h2>
+
+<ul>
+<li>Câu lệnh điều kiện giúp chương trình <strong>rẽ nhánh</strong> — quyết định làm gì tùy vào dữ liệu/trạng thái.</li>
+<li><strong>Biểu thức điều kiện</strong> trả về <code>true</code>/<code>false</code>. Dùng toán tử so sánh (<code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>) và toán tử logic (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>).</li>
+<li>Phân biệt <strong><code>=</code> (gán)</strong> và <strong><code>==</code> (so sánh)</strong> — đây là lỗi phổ biến nhất.</li>
+<li><strong><code>if</code></strong>: chỉ thực hiện khi điều kiện đúng.</li>
+<li><strong><code>if…else</code></strong>: hai nhánh, luôn có đúng một nhánh được chạy.</li>
+<li><strong><code>if…else if…else</code></strong>: nhiều nhánh, xét tuần tự, thoát ngay khi gặp nhánh đúng đầu tiên. Sắp xếp điều kiện chặt → lỏng.</li>
+<li><strong>Nested if</strong>: <code>if</code> lồng trong <code>if</code> — dùng cho điều kiện phân cấp, nhưng nên hạn chế.</li>
+<li><strong>Toán tử ba ngôi <code>? :</code></strong>: viết gọn <code>if…else</code> khi mỗi nhánh là một biểu thức đơn giản.</li>
+<li><strong><code>switch … case</code></strong>: so khớp một biến với nhiều hằng số cụ thể. Nhớ <code>break</code> sau mỗi case (trừ khi cố ý fall-through).</li>
+<li>Luôn <strong>thụt lề đúng</strong>, dùng <strong><code>{ }</code></strong> ngay cả khi khối lệnh chỉ có một câu.</li>
+</ul>
+
+<hr>
+
+<h2>3.13. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Trang chi tiết về <code>if</code>, <code>switch</code>, toán tử điều kiện</li>
+<li><strong>cplusplus.com</strong> — Hướng dẫn cơ bản về cấu trúc điều khiển</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo — Chương 5</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup — Chương về Statements</li>
+<li>Sách: <em>"Effective C++"</em> — Scott Meyers</li>
+<li><strong>learncpp.com</strong> — Chương 4: Conditional Statements</li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 4 — Vòng lặp trong C++</em> — sẽ giới thiệu <code>for</code>, <code>while</code>, <code>do…while</code>, vòng lặp lồng nhau, và các kỹ thuật kiểm soát vòng lặp (<code>break</code>, <code>continue</code>).</p>
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

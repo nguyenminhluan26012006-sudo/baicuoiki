@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 1: Giới thiệu về C++</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+
+    <div class="chapter-progress-inner">
+        
+        <a href="trangchu.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">1</span>
+            <span class="step-label"> Trang chủ</span>
+        </a>
+         <div class="step-line"></div>
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+<h1>Chương 1: Giới thiệu về C++</h1>
+
+<h2>1.1. Tổng quan về ngôn ngữ lập trình C++</h2>
+
+<h3>1.1.1. Lịch sử hình thành và phát triển</h3>
+
+<p>C++ được phát triển bởi <strong>Bjarne Stroustrup</strong> tại phòng thí nghiệm Bell Labs (AT&T) vào năm <strong>1979</strong>, ban đầu với tên gọi <strong>"C with Classes"</strong> (C có thêm lớp). Đến năm <strong>1983</strong>, ngôn ngữ chính thức được đổi tên thành <strong>C++</strong>.</p>
+
+<p>Các cột mốc quan trọng:</p>
+
+<ul>
+<li>C++98 (1998): Chuẩn hóa đầu tiên (ISO/IEC 14882)</li>
+<li>C++03 (2003): Sửa lỗi, tinh chỉnh</li>
+<li>C++11 (2011): Auto, lambda, smart pointer, nullptr, range-based for</li>
+<li>C++14 (2014): Generic lambda, biến template</li>
+<li>C++17 (2017): if constexpr, structured bindings, filesystem</li>
+<li>C++20 (2020): Concepts, modules, coroutines, ranges</li>
+<li>C++23 (2023): std::expected, std::print, module hóa nâng cao</li>
+</ul>
+
+<h3>1.1.2. C++ là gì?</h3>
+
+<p><strong>C++</strong> là ngôn ngữ lập trình <strong>đa mẫu</strong> (multi-paradigm), kết hợp nhiều phong cách lập trình khác nhau:</p>
+
+<ul>
+<li><strong>Lập trình hướng thủ tục</strong> (Procedural Programming)</li>
+<li><strong>Lập trình hướng đối tượng</strong> (Object-Oriented Programming - OOP)</li>
+<li><strong>Lập trình tổng quát</strong> (Generic Programming) thông qua template</li>
+<li><strong>Lập trình hàm</strong> (Functional Programming)</li>
+</ul>
+
+<p>C++ được coi là ngôn ngữ <strong>"middle-level"</strong> — vừa có khả năng thao tác cấp thấp (quản lý bộ nhớ trực tiếp như C), vừa có các tính năng trừu tượng hóa cấp cao.</p>
+
+<h3>1.1.3. Đặc điểm nổi bật của C++</h3>
+
+<h4>a) Hiệu năng cao (Performance)</h4>
+<ul>
+<li>Biên dịch xuống mã máy (machine code) → chạy rất nhanh</li>
+<li>Không có garbage collector → kiểm soát tuyệt đối tài nguyên</li>
+<li>Được sử dụng rộng rãi trong game engines (Unreal Engine), hệ điều hành, trình duyệt, ứng dụng tài chính, AI/ML (TensorFlow, PyTorch backend)</li>
+</ul>
+
+<h4>b) Kiểm soát bộ nhớ</h4>
+<ul>
+<li>Cho phép quản lý bộ nhớ trực tiếp qua con trỏ (pointer)</li>
+<li>Cung cấp cả cấp phát tĩnh (stack) và động (heap)</li>
+<li>Từ C++11 có smart pointer giúp giảm rò rỉ bộ nhớ</li>
+</ul>
+
+<h4>c) Hướng đối tượng mạnh mẽ</h4>
+<ul>
+<li>Đóng gói (Encapsulation)</li>
+<li>Kế thừa (Inheritance)</li>
+<li>Đa hình (Polymorphism)</li>
+<li>Trừu tượng hóa (Abstraction)</li>
+</ul>
+
+<h4>d) Tính tương thích</h4>
+<ul>
+<li>Hỗ trợ hầu hết các nền tảng: Windows, Linux, macOS, embedded</li>
+<li>Có thể liên kết với mã C (C interop)</li>
+<li>Thư viện chuẩn phong phú (<strong>STL</strong> — Standard Template Library)</li>
+</ul>
+
+<h4>e) Biên dịch (Compiled language)</h4>
+<ul>
+<li>Mã nguồn → mã máy trước khi chạy → tăng tốc độ thực thi</li>
+</ul>
+
+<h3>1.1.4. Cấu trúc một chương trình C++</h3>
+
+<p>Một chương trình C++ điển hình gồm:</p>
+
+<pre>
+Chỉ thị tiền xử lý (#include)
+      ↓
+Khai báo using namespace (tùy chọn)
+      ↓
+Khai báo hàm / biến toàn cục
+      ↓
+Hàm main()  ← điểm bắt đầu thực thi
+</pre>
+
+<h3>1.1.5. Ứng dụng của C++</h3>
+
+<ul>
+<li><strong>Hệ điều hành</strong>: Windows, một phần macOS, Linux kernel (một phần), Chrome OS</li>
+<li><strong>Trình duyệt</strong>: Chrome (V8 engine), Firefox</li>
+<li><strong>Game engine</strong>: Unreal Engine, Unity (C++ core), Godot</li>
+<li><strong>Cơ sở dữ liệu</strong>: MySQL, MongoDB, PostgreSQL (một phần)</li>
+<li><strong>Tài chính</strong>: High-frequency trading systems</li>
+<li><strong>AI/ML</strong>: TensorFlow core, PyTorch core, OpenCV</li>
+<li><strong>Hệ thống nhúng</strong> (Embedded Systems), IoT, Robotics</li>
+<li><strong>Phần mềm đồ họa</strong>: Adobe Photoshop, AutoCAD, Blender</li>
+</ul>
+
+<h3>1.1.6. So sánh C++ với một số ngôn ngữ khác</h3>
+
+<ul>
+<li><strong>Hiệu năng</strong>: C++ rất cao, C rất cao, Java cao, Python trung bình</li>
+<li><strong>Quản lý bộ nhớ</strong>: C++ thủ công / smart pointer, C thủ công, Java tự động (GC), Python tự động (GC)</li>
+<li><strong>Hướng đối tượng</strong>: C++ có (đa mẫu), C không, Java có, Python có</li>
+<li><strong>Đa nền tảng</strong>: cả 4 ngôn ngữ đều có</li>
+<li><strong>Đường cong học</strong>: C++ khó, C khó, Java trung bình, Python dễ</li>
+</ul>
+
+<hr>
+
+<h2>1.2. Cài đặt môi trường lập trình C++</h2>
+
+<p>Để viết và chạy chương trình C++, cần <strong>2 thành phần chính</strong>:</p>
+
+<ol>
+<li><strong>Trình biên dịch (Compiler)</strong> — chuyển mã C++ → mã máy</li>
+<li><strong>Trình soạn thảo / IDE</strong> — viết mã nguồn</li>
+</ol>
+
+<h3>1.2.1. Các trình biên dịch phổ biến</h3>
+
+<ul>
+<li><strong>GCC / g++</strong> — Linux, macOS, Windows (MinGW). Phổ biến nhất, mã nguồn mở</li>
+<li><strong>Clang / clang++</strong> — macOS (mặc định), Linux. Nhanh, thông báo lỗi tốt</li>
+<li><strong>MSVC</strong> — Windows. Đi kèm Visual Studio</li>
+<li><strong>MinGW-w64</strong> — Windows. Bản GCC cho Windows</li>
+</ul>
+
+<h3>1.2.2. Cài đặt trên Windows</h3>
+
+<h4>Cách 1: Sử dụng Visual Studio (khuyến nghị cho người mới)</h4>
+
+<ol>
+<li>Truy cập: <a href="https://visualstudio.microsoft.com/downloads/">https://visualstudio.microsoft.com/downloads/</a></li>
+<li>Tải <strong>Visual Studio Community</strong> (miễn phí)</li>
+<li>Trong trình cài đặt, chọn workload <strong>"Desktop development with C++"</strong></li>
+<li>Nhấn Install và chờ hoàn tất</li>
+<li>Mở Visual Studio → <strong>Create a new project</strong> → <strong>Console App (C++)</strong></li>
+</ol>
+
+<h4>Cách 2: Sử dụng MinGW-w64 + VS Code</h4>
+
+<ol>
+<li>Tải <strong>MinGW-w64</strong> từ: <a href="https://www.mingw-w64.org/downloads/">https://www.mingw-w64.org/downloads/</a> (hoặc dùng <strong>MSYS2</strong> — khuyến nghị vì dễ cập nhật)</li>
+<li>Cài đặt và thêm đường dẫn <code>bin</code> (ví dụ: <code>C:\mingw64\bin</code>) vào biến môi trường <strong>PATH</strong></li>
+<li>Kiểm tra bằng lệnh:</li>
+</ol>
+
+<pre>g++ --version</pre>
+
+<ol start="4">
+<li>Tải <strong>Visual Studio Code</strong>: <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></li>
+<li>Cài extension <strong>C/C++</strong> (Microsoft) và <strong>C/C++ Extension Pack</strong></li>
+<li>Cài <strong>Code Runner</strong> (tùy chọn)</li>
+</ol>
+
+<h4>Cách 3: Sử dụng Dev-C++</h4>
+
+<ul>
+<li>Tải tại: <a href="https://www.bloodshed.net/">https://www.bloodshed.net/</a></li>
+<li>Đơn giản, phù hợp học sinh phổ thông</li>
+<li>Nhược điểm: lỗi thời, không cập nhật chuẩn C++ mới</li>
+</ul>
+
+<h3>1.2.3. Cài đặt trên Linux (Ubuntu/Debian)</h3>
+
+<pre>
+sudo apt update
+sudo apt install build-essential
+g++ --version
+</pre>
+
+<h3>1.2.4. Cài đặt trên macOS</h3>
+
+<p><strong>Bước 1:</strong> Cài Xcode Command Line Tools:</p>
+
+<pre>xcode-select --install</pre>
+
+<p><strong>Bước 2:</strong> Kiểm tra:</p>
+
+<pre>clang++ --version</pre>
+
+<p>Hoặc cài g++ qua Homebrew:</p>
+
+<pre>brew install gcc</pre>
+
+<h3>1.2.5. Biên dịch và chạy chương trình bằng dòng lệnh</h3>
+
+<p>Giả sử có file <code>hello.cpp</code>:</p>
+
+<pre>
+# Biên dịch (với chuẩn C++17)
+g++ -std=c++17 hello.cpp -o hello
+
+# Chạy trên Linux/macOS
+./hello
+
+# Chạy trên Windows
+hello.exe
+</pre>
+
+<p><strong>Giải thích các tùy chọn biên dịch:</strong></p>
+
+<ul>
+<li><code>-std=c++17</code>: Dùng chuẩn C++17</li>
+<li><code>-o hello</code>: Đặt tên file thực thi là <code>hello</code></li>
+<li><code>-Wall</code>: Hiển thị tất cả cảnh báo</li>
+<li><code>-Wextra</code>: Cảnh báo bổ sung</li>
+<li><code>-g</code>: Thêm thông tin debug</li>
+<li><code>-O2</code>: Tối ưu hóa code</li>
+</ul>
+
+<p><strong>Ví dụ lệnh đầy đủ:</strong></p>
+
+<pre>g++ -std=c++17 -Wall -Wextra hello.cpp -o hello</pre>
+
+<h3>1.2.6. Cài đặt trên IDE trực tuyến (không cần cài đặt)</h3>
+
+<p>Nếu không muốn cài đặt, có thể dùng các trình biên dịch online:</p>
+
+<ul>
+<li><strong>OnlineGDB</strong>: <a href="https://www.onlinegdb.com/online_c++_compiler">https://www.onlinegdb.com/online_c++_compiler</a></li>
+<li><strong>Programiz</strong>: <a href="https://www.programiz.com/cpp-programming/online-compiler/">https://www.programiz.com/cpp-programming/online-compiler/</a></li>
+<li><strong>Compiler Explorer</strong>: <a href="https://godbolt.org/">https://godbolt.org/</a> (xem mã assembly)</li>
+<li><strong>Replit</strong>: <a href="https://replit.com/">https://replit.com/</a></li>
+</ul>
+
+<hr>
+
+<h2>1.3. Viết chương trình đầu tiên — "Hello, World!"</h2>
+
+<h3>1.3.1. Chương trình đầu tiên</h3>
+
+<p>Tạo file <code>hello.cpp</code> với nội dung sau:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Kết quả khi chạy:</strong></p>
+
+<pre>Hello, World!</pre>
+
+<h3>1.3.2. Giải thích chi tiết từng dòng</h3>
+
+<p><strong>Dòng 1: <code>#include &lt;iostream&gt;</code></strong></p>
+
+<ul>
+<li>Đây là <strong>chỉ thị tiền xử lý</strong> (preprocessor directive)</li>
+<li>Yêu cầu trình biên dịch "chèn" nội dung của thư viện <code>iostream</code> vào chương trình</li>
+<li><code>iostream</code> = <strong>I</strong>nput/Output <strong>Stream</strong> — thư viện cung cấp các công cụ nhập/xuất dữ liệu</li>
+<li>Chứa định nghĩa của <code>cout</code>, <code>cin</code>, <code>cerr</code>, <code>endl</code>...</li>
+</ul>
+
+<p><strong>Dòng 2: <code>using namespace std;</code></strong></p>
+
+<ul>
+<li><code>std</code> = <strong>standard</strong> — không gian tên chuẩn của C++</li>
+<li><code>using namespace std;</code> cho phép dùng trực tiếp <code>cout</code> thay vì <code>std::cout</code></li>
+<li><strong>Lưu ý:</strong> Trong các dự án lớn, nên dùng <code>std::cout</code> để tránh xung đột tên</li>
+<li>Cách viết an toàn hơn: <code>using std::cout; using std::endl;</code></li>
+</ul>
+
+<p><strong>Dòng 4: <code>int main() { ... }</code></strong></p>
+
+<ul>
+<li><code>main()</code> là <strong>hàm đặc biệt</strong> — điểm bắt đầu thực thi của mọi chương trình C++</li>
+<li>Mọi chương trình C++ <strong>bắt buộc</strong> phải có hàm <code>main</code></li>
+<li><code>int</code> là kiểu trả về — trả về một số nguyên cho hệ điều hành</li>
+<li>Cặp <code>{ }</code> đánh dấu phần thân hàm</li>
+</ul>
+
+<p><strong>Dòng 5: <code>cout &lt;&lt; "Hello, World!" &lt;&lt; endl;</code></strong></p>
+
+<ul>
+<li><code>cout</code> = <strong>c</strong>haracter <strong>out</strong>put — luồng xuất chuẩn (màn hình)</li>
+<li><code>&lt;&lt;</code> là <strong>toán tử chèn</strong> (insertion operator), đẩy dữ liệu vào luồng</li>
+<li><code>"Hello, World!"</code> là <strong>chuỗi ký tự</strong> (string literal), đặt trong dấu nháy kép</li>
+<li><code>endl</code> = <strong>end line</strong> — xuống dòng và xả bộ đệm (flush buffer)</li>
+<li><code>;</code> kết thúc câu lệnh (bắt buộc trong C++)</li>
+</ul>
+
+<p><strong>Dòng 6: <code>return 0;</code></strong></p>
+
+<ul>
+<li>Trả về <code>0</code> cho hệ điều hành — báo hiệu chương trình <strong>kết thúc thành công</strong></li>
+<li>Giá trị khác 0 biểu thị lỗi</li>
+</ul>
+
+<h3>1.3.3. Biên dịch và chạy</h3>
+
+<pre>
+# Biên dịch
+g++ hello.cpp -o hello
+
+# Chạy
+./hello        # Linux/macOS
+hello.exe      # Windows
+</pre>
+
+<p>Hoặc với Visual Studio: nhấn <strong>Ctrl + F5</strong> (Start Without Debugging).</p>
+
+<h3>1.3.4. Các cách viết tương đương</h3>
+
+<p>Có nhiều cách viết cùng một chương trình. Dưới đây là một số biến thể:</p>
+
+<p><strong>Biến thể 1: Không dùng <code>using namespace</code></strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "Hello, World!" &lt;&lt; std::endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Biến thể 2: Dùng <code>\n</code> thay cho <code>endl</code></strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello, World!\n";
+    return 0;
+}</code></pre>
+
+<p><code>\n</code> nhanh hơn <code>endl</code> vì không xả bộ đệm. Chỉ nên dùng <code>endl</code> khi thực sự cần flush.</p>
+
+<p><strong>Biến thể 3: Trả về không tường minh (C++ cho phép)</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout &lt;&lt; "Hello, World!" &lt;&lt; endl;
+    // Không cần return 0; — mặc định main trả về 0
+}</code></pre>
+
+<p><strong>Biến thể 4: Dùng <code>printf</code> của C</strong></p>
+
+<pre><code>#include &lt;cstdio&gt;
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}</code></pre>
+
+<h3>1.3.5. Chương trình mở rộng — Nhập và xuất dữ liệu</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    string name;
+    int age;
+    
+    cout &lt;&lt; "Nhap ten cua ban: ";
+    getline(cin, name);          // Đọc cả dòng (có dấu cách)
+    
+    cout &lt;&lt; "Nhap tuoi: ";
+    cin &gt;&gt; age;                  // Đọc một số nguyên
+    
+    cout &lt;&lt; "\nXin chao " &lt;&lt; name &lt;&lt; "!" &lt;&lt; endl;
+    cout &lt;&lt; "Ban " &lt;&lt; age &lt;&lt; " tuoi." &lt;&lt; endl;
+    
+    return 0;
+}</code></pre>
+
+<p><strong>Kết quả mẫu:</strong></p>
+
+<pre>Nhap ten cua ban: Nguyen Van A
+Nhap tuoi: 20
+
+Xin chao Nguyen Van A!
+Ban 20 tuoi.</pre>
+
+<p><strong>Giải thích thêm:</strong></p>
+
+<ul>
+<li><code>cin &gt;&gt;</code> là <strong>toán tử trích xuất</strong> (extraction), đọc dữ liệu từ bàn phím</li>
+<li><code>getline(cin, name)</code> đọc toàn bộ dòng, bao gồm cả dấu cách (khác với <code>cin &gt;&gt;</code> chỉ đọc đến khoảng trắng đầu tiên)</li>
+<li><strong>Lỗi thường gặp:</strong> Khi dùng lẫn <code>cin &gt;&gt;</code> và <code>getline()</code>, cần <code>cin.ignore()</code> để xóa ký tự <code>\n</code> còn sót lại</li>
+</ul>
+
+<h3>1.3.6. Cấu trúc cơ bản của một chương trình C++</h3>
+
+<pre>
++-------------------------------------+
+|  #include &lt;thư viện&gt;                |  <- Chỉ thị tiền xử lý
++-------------------------------------+
+|  Khai báo using namespace           |  <- (tùy chọn)
++-------------------------------------+
+|  Khai báo biến/hằng toàn cục        |  <- (tùy chọn)
++-------------------------------------+
+|  Khai báo/hiện thực các hàm khác    |  <- (tùy chọn)
++-------------------------------------+
+|  int main() {                       |  <- Điểm bắt đầu
+|      // Các câu lệnh                |
+|      return 0;                      |
+|  }                                  |
++-------------------------------------+
+</pre>
+
+<hr>
+
+<h2>1.4. Các lỗi thường gặp của người mới</h2>
+
+<ul>
+<li><strong>iostream: No such file or directory</strong> — Sai tên thư viện. Cách sửa: dùng <code>#include &lt;iostream&gt;</code> (không có <code>.h</code>)</li>
+<li><strong>cout was not declared</strong> — Thiếu <code>#include &lt;iostream&gt;</code> hoặc <code>using namespace std;</code></li>
+<li><strong>expected ';'</strong> — Thiếu dấu chấm phẩy cuối câu lệnh. Thêm <code>;</code></li>
+<li><strong>undefined reference to 'main'</strong> — Không có hàm <code>main</code>. Thêm <code>int main() { ... }</code></li>
+<li><strong>permission denied</strong> (Linux) — Chưa cấp quyền thực thi. Dùng <code>chmod +x hello</code></li>
+<li><strong>Phím tắt chạy không hoạt động</strong> — Chưa cài compiler. Kiểm tra <code>g++ --version</code></li>
+</ul>
+
+<hr>
+
+<h2>1.5. Bài tập chương 1</h2>
+
+<p><strong>Bài 1:</strong> Viết chương trình in ra dòng chữ: <code>Toi dang hoc lap trinh C++</code>.</p>
+
+<p><strong>Bài 2:</strong> Viết chương trình in ra 5 dòng thông tin cá nhân (họ tên, tuổi, lớp, trường, sở thích), mỗi thông tin trên một dòng.</p>
+
+<p><strong>Bài 3:</strong> Viết chương trình nhập vào hai số nguyên, in ra tổng, hiệu, tích, thương của chúng.</p>
+
+<p><strong>Bài 4:</strong> Viết chương trình nhập vào tên và tuổi, in ra câu: <code>"Chao [ten], ban [tuoi] tuoi."</code></p>
+
+<p><strong>Bài 5:</strong> Tìm và sửa các lỗi trong đoạn code sau:</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std
+
+int main() {
+    cout &lt;&lt; "Hello" &lt;&lt; endl
+    return 0
+}</code></pre>
+
+<p><strong>Gợi ý:</strong> Có 3 lỗi — thiếu <code>;</code> sau <code>std</code>, thiếu <code>;</code> sau <code>endl</code>, thiếu <code>;</code> sau <code>return 0</code>.</p>
+
+<hr>
+
+<h2>1.6. Tóm tắt chương</h2>
+
+<ul>
+<li><strong>C++</strong> là ngôn ngữ lập trình đa mẫu, hiệu năng cao, được phát triển từ năm 1979 bởi Bjarne Stroustrup.</li>
+<li>C++ kết hợp lập trình <strong>hướng thủ tục</strong>, <strong>hướng đối tượng</strong>, <strong>tổng quát</strong> và <strong>hàm</strong>.</li>
+<li>Để lập trình C++, cần <strong>compiler</strong> (g++, clang++, MSVC) và <strong>editor/IDE</strong> (VS Code, Visual Studio, Dev-C++...).</li>
+<li>Chương trình C++ cơ bản cần: <code>#include &lt;iostream&gt;</code>, hàm <code>int main()</code>, và các câu lệnh kết thúc bằng <code>;</code>.</li>
+<li><code>cout &lt;&lt;</code> để xuất dữ liệu, <code>cin &gt;&gt;</code> để nhập dữ liệu, <code>endl</code> hoặc <code>\n</code> để xuống dòng.</li>
+<li>Mọi chương trình C++ <strong>phải có duy nhất một hàm <code>main()</code></strong> — điểm bắt đầu thực thi.</li>
+</ul>
+
+<hr>
+
+<h2>1.7. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Tài liệu chuẩn C++ đầy đủ nhất</li>
+<li><strong>cplusplus.com</strong> — Hướng dẫn cơ bản</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo</li>
+<li>Sách: <em>"Effective Modern C++"</em> — Scott Meyers</li>
+<li><strong>learncpp.com</strong> — Hướng dẫn học C++ miễn phí</li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 2 — Biến, Kiểu dữ liệu và Các toán tử trong C++</em> — sẽ đi sâu vào cách khai báo biến, các kiểu dữ liệu nguyên thủy, hằng số và toán tử.</p>
+
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

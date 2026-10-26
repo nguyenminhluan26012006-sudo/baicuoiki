@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Kiểm Tra Cuối Kỳ C++ Cơ Bản</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ĐỀ KIỂM TRA CUỐI KỲ MÔN: LẬP TRÌNH C++ CƠ BẢN</h1>
+    <p><strong>Thời gian làm bài:</strong> 75 phút (Không sử dụng tài liệu)</p>
+
+    <hr>
+
+    <h2>PHẦN I: TRẮC NGHIỆM (5.0 điểm)</h2>
+    <p><em>Khoanh tròn vào đáp án đúng nhất. Mỗi câu trả lời đúng được 0.5 điểm.</em></p>
+
+    <ol>
+        <li>
+            <p><strong>Câu 1 (Chương 1):</strong> Thư viện nào sau đây cần được khai báo để sử dụng lệnh <code>cout</code> và <code>cin</code> trong C++?</p>
+            <ul>
+                <li>A. &lt;stdio.h&gt;</li>
+                <li>B. &lt;math.h&gt;</li>
+                <li>C. &lt;iostream&gt;</li>
+                <li>D. &lt;conio.h&gt;</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 2 (Chương 2):</strong> Kiểu dữ liệu nào sau đây phù hợp nhất để lưu trữ một số thực (ví dụ: 3.14)?</p>
+            <ul>
+                <li>A. int</li>
+                <li>B. float</li>
+                <li>C. char</li>
+                <li>D. bool</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 3 (Chương 2):</strong> Kết quả của phép chia <code>int a = 5 / 2;</code> trong C++ là gì?</p>
+            <ul>
+                <li>A. 2.5</li>
+                <li>B. 2</li>
+                <li>C. 3</li>
+                <li>D. 2.0</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 4 (Chương 3):</strong> Biểu thức điều kiện nào dưới đây kiểm tra "x nằm trong khoảng từ 10 đến 20" (bao gồm cả 10 và 20)?</p>
+            <ul>
+                <li>A. 10 &lt; x &lt; 20</li>
+                <li>B. x &gt;= 10 || x &lt;= 20</li>
+                <li>C. x &gt;= 10 &amp;&amp; x &lt;= 20</li>
+                <li>D. x &gt;= 10 and 20</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 5 (Chương 3):</strong> Trong cấu trúc <code>switch-case</code>, nếu một trường hợp (case) không có lệnh <code>break;</code>, điều gì sẽ xảy ra?</p>
+            <ul>
+                <li>A. Chương trình báo lỗi.</li>
+                <li>B. Chương trình thoát khỏi switch-case.</li>
+                <li>C. Chương trình sẽ tiếp tục thực thi các lệnh ở case bên dưới nó.</li>
+                <li>D. Chương trình bị lặp vô hạn.</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 6 (Chương 4):</strong> Vòng lặp <code>for(int i = 1; i &lt;= 5; i++)</code> sẽ thực hiện khối lệnh bên trong bao nhiêu lần?</p>
+            <ul>
+                <li>A. 4 lần</li>
+                <li>B. 5 lần</li>
+                <li>C. 6 lần</li>
+                <li>D. Vô hạn lần</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 7 (Chương 4):</strong> Đoạn code sau in ra màn hình kết quả gì?</p>
+<pre><code>int s = 0;
+for(int i = 1; i &lt;= 3; i++) {
+    s += i;
+}
+cout &lt;&lt; s;</code></pre>
+            <ul>
+                <li>A. 3</li>
+                <li>B. 6</li>
+                <li>C. 0</li>
+                <li>D. 1</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 8 (Chương 5):</strong> Cho hàm có khai báo: <code>int TinhTong(int a, int b);</code>. Đâu là <em>kiểu trả về</em> của hàm?</p>
+            <ul>
+                <li>A. TinhTong</li>
+                <li>B. int</li>
+                <li>C. a, b</li>
+                <li>D. void</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 9 (Chương 6):</strong> Cho mảng một chiều <code>int A[5];</code>. Phần tử hợp lệ cuối cùng của mảng có chỉ số (index) là gì?</p>
+            <ul>
+                <li>A. 5</li>
+                <li>B. 4</li>
+                <li>C. 1</li>
+                <li>D. 0</li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Câu 10 (Chương 6):</strong> Khai báo chuỗi ký tự nào sau đây trong C++ là đúng?</p>
+            <ul>
+                <li>A. char str = "Hello";</li>
+                <li>B. string str = "Hello";</li>
+                <li>C. int str[] = "Hello";</li>
+                <li>D. char str[10] = "Hello";</li>
+            </ul>
+            <p><em>(Lưu ý: Cả B và D đều đúng về mặt cú pháp tùy theo cách dùng thư viện, nhưng D là mảng ký tự cơ bản. Hãy chọn D nếu học thuần mảng C, hoặc B nếu dùng &lt;string&gt;)</em></p>
+        </li>
+    </ol>
+
+    <hr>
+
+    <h2>PHẦN II: TỰ LUẬN - VIẾT CHƯƠNG TRÌNH (5.0 điểm)</h2>
+
+    <h3>Bài 1 (2.5 điểm) - Tổng hợp Chương 2, 3, 4:</h3>
+    <p>Viết chương trình nhập vào một số nguyên dương <code>n</code> từ bàn phím.</p>
+    <ol>
+        <li>Kiểm tra và in ra màn hình thông báo <code>n</code> có phải là <strong>số nguyên tố</strong> hay không? (Số nguyên tố là số lớn hơn 1 và chỉ chia hết cho 1 và chính nó).</li>
+        <li>Nếu <code>n</code> không phải là số nguyên tố, hãy in ra các ước số của <code>n</code>.</li>
+    </ol>
+
+    <h3>Bài 2 (2.5 điểm) - Tổng hợp Chương 5, 6:</h3>
+    <p>Viết chương trình thực hiện các yêu cầu sau:</p>
+    <ol>
+        <li>Viết một <strong>hàm</strong> nhập vào một mảng gồm <code>n</code> số nguyên (với <code>n</code> nhập từ bàn phím).</li>
+        <li>Viết một <strong>hàm</strong> xuất mảng vừa nhập ra màn hình.</li>
+        <li>Viết một <strong>hàm</strong> tính và trả về tổng các số chẵn có trong mảng.</li>
+    </ol>
+    <p><em>(Yêu cầu: Sử dụng hàm cho từng chức năng, khai báo nguyên mẫu hàm đầy đủ).</em></p>
+
+    <hr>
+    <hr>
+
+    <h2>ĐÁP ÁN VÀ BIỂU ĐIỂM DÀNH CHO GIÁO VIÊN</h2>
+    
+    <h3>Phần I: Trắc nghiệm (Mỗi câu 0.5đ)</h3>
+    <p>1. C | 2. B | 3. B | 4. C | 5. C | 6. B | 7. B | 8. B | 9. B | 10. D (Hoặc chấp nhận B)</p>
+
+    <h3>Phần II: Tự luận</h3>
+    <p><strong>Bài 1 (2.5 điểm):</strong></p>
+    <ul>
+        <li>Nhập đúng <code>n</code> (0.25đ)</li>
+        <li><strong>Ý 1: Kiểm tra số nguyên tố (1.25đ)</strong>
+            <ul>
+                <li>Xử lý điều kiện <code>n &lt; 2</code> không phải số nguyên tố (0.25đ)</li>
+                <li>Dùng vòng lặp for/while kiểm tra từ 2 đến sqrt(n) hoặc n/2 (0.5đ)</li>
+                <li>Dùng câu lệnh if kiểm tra chia hết, đặt cờ (flag) hoặc break (0.25đ)</li>
+                <li>In kết quả đúng (0.25đ)</li>
+            </ul>
+        </li>
+        <li><strong>Ý 2: In ước số nếu không phải số nguyên tố (1.0đ)</strong>
+            <ul>
+                <li>Dùng vòng lặp for từ 1 đến n (0.5đ)</li>
+                <li>Dùng <code>if (n % i == 0)</code> để in ước (0.5đ)</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p><strong>Bài 2 (2.5 điểm):</strong></p>
+    <ul>
+        <li><strong>Ý 1: Hàm nhập mảng (1.0đ)</strong>
+            <ul>
+                <li>Khai báo hàm đúng (vd: <code>void NhapMang(int a[], int &amp;n)</code>) (0.25đ)</li>
+                <li>Nhập n, sau đó dùng vòng lặp for để nhập từng phần tử (0.75đ)</li>
+            </ul>
+        </li>
+        <li><strong>Ý 2: Hàm xuất mảng (0.5đ)</strong>
+            <ul>
+                <li>Khai báo hàm đúng (vd: <code>void XuatMang(int a[], int n)</code>) (0.25đ)</li>
+                <li>Dùng vòng lặp for in các phần tử (0.25đ)</li>
+            </ul>
+        </li>
+        <li><strong>Ý 3: Hàm tính tổng số chẵn (1.0đ)</strong>
+            <ul>
+                <li>Khai báo hàm đúng (vd: <code>int TongChan(int a[], int n)</code>) (0.25đ)</li>
+                <li>Khởi tạo biến <code>tong = 0</code> (0.25đ)</li>
+                <li>Dùng vòng lặp duyệt mảng, kiểm tra <code>if (a[i] % 2 == 0)</code> thì cộng vào tổng (0.25đ)</li>
+                <li><code>return tong;</code> và gọi hàm trong <code>main()</code> để in kết quả (0.25đ)</li>
+            </ul>
+        </li>
+    </ul>
+    <p><em>*Lưu ý: Nếu sinh viên viết code chạy được nhưng không tách hàm (viết hết trong main) thì trừ 50% số điểm của bài 2.</em></p>
+     <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

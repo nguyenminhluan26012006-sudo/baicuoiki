@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 5: Hàm trong C++</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+
+    <div class="chapter-progress-inner">
+        <a href="trangchu.html" class="chapter-step" data-chapter="0">
+            <span class="step-number">1</span>
+            <span class="step-label">Trang chủ</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+<h1>Chương 5: Hàm trong C++</h1>
+
+<h2>5.1. Tổng quan về hàm</h2>
+
+<h3>5.1.1. Vì sao cần hàm?</h3>
+
+<p>Trong các chương trước, chương trình của chúng ta thường được viết <strong>toàn bộ bên trong <code>main()</code></strong>. Cách viết này chỉ phù hợp với các bài toán nhỏ. Khi chương trình lớn dần (hàng trăm, hàng nghìn dòng), việc dồn tất cả vào <code>main()</code> gây ra nhiều vấn đề:</p>
+
+<ul>
+<li><strong>Khó đọc</strong>: một khối lệnh khổng lồ, không biết đâu là phần nào.</li>
+<li><strong>Khó bảo trì</strong>: sửa một chỗ có thể ảnh hưởng nhiều nơi khác.</li>
+<li><strong>Lặp code</strong>: cùng một đoạn xử lý phải copy–paste nhiều lần.</li>
+<li><strong>Không tái sử dụng</strong> được cho chương trình khác.</li>
+</ul>
+
+<p><strong>Hàm</strong> (function) ra đời để giải quyết những vấn đề trên. Hàm cho phép <strong>gom một nhóm câu lệnh</strong> thực hiện một nhiệm vụ cụ thể thành một khối có tên, và <strong>gọi lại nhiều lần</strong> ở bất kỳ đâu trong chương trình.</p>
+
+<p>Ví dụ thực tế:</p>
+<ul>
+<li>Tính căn bậc hai → gọi <code>sqrt(x)</code> có sẵn, không cần viết lại thuật toán.</li>
+<li>Kiểm tra số nguyên tố → viết một lần, gọi nhiều lần cho các số khác nhau.</li>
+<li>In menu chương trình → viết hàm <code>inMenu()</code>, gọi mỗi khi cần.</li>
+</ul>
+
+<h3>5.1.2. Khái niệm hàm</h3>
+
+<p><strong>Hàm</strong> là một khối lệnh có tên, nhận dữ liệu đầu vào (tham số), thực hiện một công việc, và có thể trả về một giá trị cho nơi gọi.</p>
+
+<pre><code>// Ví dụ: hàm tính tổng hai số nguyên
+int tong(int a, int b) {
+    return a + b;
+}
+
+// Gọi hàm trong main
+int main() {
+    int kq = tong(3, 5);     // kq = 8
+    return 0;
+}</code></pre>
+
+<h3>5.1.3. Lợi ích của hàm</h3>
+
+<ul>
+<li><strong>Tái sử dụng mã (reusability)</strong>: viết một lần, dùng nhiều lần.</li>
+<li><strong>Chia để trị (divide and conquer)</strong>: chia bài toán lớn thành nhiều bài nhỏ dễ giải quyết.</li>
+<li><strong>Dễ đọc</strong>: tên hàm mô tả công việc, code gọn gàng hơn.</li>
+<li><strong>Dễ gỡ lỗi (debug)</strong>: lỗi khu trú trong một hàm, dễ tìm và sửa.</li>
+<li><strong>Tránh lặp code (DRY – Don't Repeat Yourself)</strong>: một đoạn logic chỉ viết một chỗ.</li>
+<li><strong>Dễ mở rộng</strong>: thêm chức năng mới chỉ cần thêm hàm, không đụng code cũ.</li>
+</ul>
+
+<h3>5.1.4. Vị trí của hàm trong chương trình</h3>
+
+<p>Một chương trình C++ điển hình có cấu trúc:</p>
+
+<pre>
+    #include ...
+    using namespace std;
+
+    // Khai báo (prototype) — nếu cần
+    int ham1(int a);
+    void ham2();
+
+    // Hàm main — điểm bắt đầu chương trình
+    int main() {
+        // gọi các hàm
+        return 0;
+    }
+
+    // Định nghĩa các hàm khác
+    int ham1(int a) { ... }
+    void ham2() { ... }
+</pre>
+
+<p>Trong C++, hàm có thể được định nghĩa <strong>trước hoặc sau <code>main()</code></strong>:</p>
+<ul>
+<li>Nếu định nghĩa <strong>trước <code>main()</code></strong> → không cần khai báo prototype.</li>
+<li>Nếu định nghĩa <strong>sau <code>main()</code></strong> → <strong>bắt buộc</strong> phải có prototype ở phía trên.</li>
+</ul>
+
+<hr>
+
+<h2>5.2. Cấu trúc của một hàm</h2>
+
+<h3>5.2.1. Cú pháp</h3>
+
+<pre><code>kieu_tra_ve ten_ham(danh_sach_tham_so) {
+    // thân hàm
+    return gia_tri;   // nếu kiểu trả về khác void
+}</code></pre>
+
+<p>Trong đó:</p>
+<ul>
+<li><code>kieu_tra_ve</code>: kiểu dữ liệu hàm trả về (<code>int</code>, <code>double</code>, <code>bool</code>, <code>void</code>, …)</li>
+<li><code>ten_ham</code>: tên hàm, đặt theo quy tắc định danh (chữ cái, chữ số, dấu _, không bắt đầu bằng số)</li>
+<li><code>danh_sach_tham_so</code>: các tham số đầu vào, cách nhau bởi dấu <code>,</code>; có thể rỗng</li>
+<li><code>return</code>: trả kết quả về cho nơi gọi — bắt buộc với hàm không phải <code>void</code></li>
+</ul>
+
+<h3>5.2.2. Các thành phần chi tiết</h3>
+
+<pre>
+    int          tong       (int a, int b)    { return a + b; }
+     │            │                │                  │
+     │            │                │                  └── thân hàm
+     │            │                └── danh sách tham số
+     │            └── tên hàm
+     └── kiểu trả về
+</pre>
+
+<h3>5.2.3. Ví dụ cơ bản</h3>
+
+<p><strong>Ví dụ 1:</strong> Hàm không trả về giá trị (void).</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void xinChao() {
+    cout &lt;&lt; "Hello World!" &lt;&lt; endl;
+}
+
+int main() {
+    xinChao();     // In: Hello World!
+    xinChao();     // In: Hello World!
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 2:</strong> Hàm có trả về giá trị.</p>
+
+<pre><code>double dienTichHinhTron(double r) {
+    return 3.14159 * r * r;
+}
+
+int main() {
+    double s = dienTichHinhTron(2.0);
+    cout &lt;&lt; "Dien tich: " &lt;&lt; s &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Ví dụ 3:</strong> Hàm có nhiều tham số.</p>
+
+<pre><code>int tinhTong(int a, int b, int c) {
+    return a + b + c;
+}
+
+int main() {
+    cout &lt;&lt; tinhTong(1, 2, 3) &lt;&lt; endl;   // 6
+    return 0;
+}</code></pre>
+
+<h3>5.2.4. Phân loại hàm theo kiểu trả về</h3>
+
+<ul>
+<li><strong>Hàm void</strong>: không trả về giá trị — dùng để in, nhập, thay đổi dữ liệu qua tham chiếu.</li>
+<li><strong>Hàm có trả về</strong>: trả về một giá trị cụ thể — dùng để tính toán, kiểm tra, tìm kiếm.</li>
+</ul>
+
+<p><strong>Lưu ý:</strong> Với hàm không phải <code>void</code>, <strong>mọi nhánh</strong> của hàm (kể cả trong <code>if…else</code>) đều phải có <code>return</code>. Nếu thiếu, chương trình có thể trả về giá trị rác.</p>
+
+<pre><code>// SAI — có nhánh không return
+int kiemTra(int x) {
+    if (x &gt; 0) return 1;
+    // thiếu return khi x &lt;= 0
+}
+
+// ĐÚNG
+int kiemTra(int x) {
+    if (x &gt; 0) return 1;
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2>5.3. Khai báo hàm (Function Prototype)</h2>
+
+<h3>5.3.1. Khái niệm</h3>
+
+<p><strong>Khai báo hàm</strong> (prototype) là dòng khai báo <strong>tên hàm, kiểu trả về, và danh sách kiểu tham số</strong> — nhưng <strong>không có thân hàm</strong>. Prototype giúp trình biên dịch biết trước "sẽ có một hàm như vậy" để kiểm tra cú pháp khi gọi hàm trước khi định nghĩa.</p>
+
+<h3>5.3.2. Cú pháp</h3>
+
+<pre><code>kieu_tra_ve ten_ham(kieu_tham_so_1, kieu_tham_so_2, ...);</code></pre>
+
+<p><strong>Chú ý:</strong> Prototype kết thúc bằng dấu <code>;</code> và <strong>không có thân hàm</strong>.</p>
+
+<h3>5.3.3. Ví dụ</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Prototype — khai báo trước
+int tong(int a, int b);
+double dienTich(double r);
+
+int main() {
+    cout &lt;&lt; tong(3, 5) &lt;&lt; endl;       // 8
+    cout &lt;&lt; dienTich(2.0) &lt;&lt; endl;    // 12.5664
+    return 0;
+}
+
+// Định nghĩa hàm — sau main
+int tong(int a, int b) {
+    return a + b;
+}
+
+double dienTich(double r) {
+    return 3.14159 * r * r;
+}</code></pre>
+
+<h3>5.3.4. Lưu ý quan trọng</h3>
+
+<ul>
+<li>Tên tham số trong prototype <strong>có thể bỏ qua</strong> — chỉ cần kiểu dữ liệu:
+<pre><code>int tong(int, int);   // Hợp lệ</code></pre>
+</li>
+<li>Prototype <strong>phải khớp</strong> với định nghĩa hàm về kiểu trả về và kiểu tham số.</li>
+<li>Nếu hàm chỉ dùng trong một file, có thể định nghĩa <strong>trước <code>main()</code></strong> để khỏi cần prototype.</li>
+</ul>
+
+<hr>
+
+<h2>5.4. Truyền tham số cho hàm</h2>
+
+<p>C++ cung cấp <strong>ba cách</strong> truyền tham số cho hàm. Việc chọn đúng cách rất quan trọng vì nó ảnh hưởng đến việc hàm có thể <strong>thay đổi biến gốc</strong> hay không.</p>
+
+<h3>5.4.1. Truyền theo giá trị (Pass by Value) — mặc định</h3>
+
+<p>Hàm nhận một <strong>bản sao</strong> của biến. Thay đổi trong hàm <strong>không ảnh hưởng</strong> đến biến gốc bên ngoài.</p>
+
+<pre><code>void tang(int x) {
+    x = x + 1;    // chỉ thay đổi bản sao
+    cout &lt;&lt; "Trong ham: x = " &lt;&lt; x &lt;&lt; endl;   // 6
+}
+
+int main() {
+    int a = 5;
+    tang(a);
+    cout &lt;&lt; "Trong main: a = " &lt;&lt; a &lt;&lt; endl;   // 5
+    return 0;
+}</code></pre>
+
+<p><strong>Ưu điểm:</strong> an toàn — hàm không thể vô tình làm hỏng dữ liệu gốc.<br>
+<strong>Nhược điểm:</strong> tốn thời gian sao chép nếu dữ liệu lớn (struct, mảng lớn, string dài).</p>
+
+<h3>5.4.2. Truyền theo tham chiếu (Pass by Reference) — dùng <code>&amp;</code></h3>
+
+<p>Hàm nhận <strong>chính biến gốc</strong> (không sao chép). Thay đổi trong hàm <strong>ảnh hưởng trực tiếp</strong> đến biến gốc.</p>
+
+<pre><code>void tang(int &amp;x) {     // dấu &amp; biểu thị tham chiếu
+    x = x + 1;          // sửa trực tiếp biến gốc
+}
+
+int main() {
+    int a = 5;
+    tang(a);
+    cout &lt;&lt; a &lt;&lt; endl;   // 6
+    return 0;
+}</code></pre>
+
+<p><strong>Ưu điểm:</strong> không sao chép — nhanh với dữ liệu lớn; cho phép hàm <strong>trả về nhiều giá trị</strong> qua tham số.<br>
+<strong>Nhược điểm:</strong> cần cẩn thận, tránh sửa ngoài ý muốn. Nếu không muốn thay đổi, dùng <code>const &amp;</code>.</p>
+
+<h3>5.4.3. Truyền theo con trỏ (Pass by Pointer) — dùng <code>*</code></h3>
+
+<p>Hàm nhận <strong>địa chỉ</strong> của biến. Truy cập và thay đổi giá trị gốc thông qua toán tử giải tham chiếu <code>*</code>.</p>
+
+<pre><code>void tang(int *x) {
+    (*x)++;              // tăng giá trị tại địa chỉ x trỏ tới
+}
+
+int main() {
+    int a = 5;
+    tang(&amp;a);            // truyền địa chỉ của a
+    cout &lt;&lt; a &lt;&lt; endl;   // 6
+    return 0;
+}</code></pre>
+
+<p><strong>Ưu điểm:</strong> có thể truyền <code>nullptr</code> để biểu thị "không có giá trị".<br>
+<strong>Nhược điểm:</strong> cú pháp phức tạp hơn, dễ nhầm với tham chiếu. Ít dùng trong code hiện đại, trừ khi cần tương tác mảng động, cấu trúc dữ liệu, API C.</p>
+
+<h3>5.4.4. So sánh ba cách truyền</h3>
+
+<pre>
++-------------------+-------------+---------------------+-----------------+
+|     Cách truyền   |  Cú pháp    |  Ảnh hưởng gốc?     |  Sao chép?      |
++-------------------+-------------+---------------------+-----------------+
+|  Theo giá trị     |  int x      |  Không              |  Có             |
+|  Theo tham chiếu  |  int &amp;x     |  Có                 |  Không          |
+|  Theo con trỏ     |  int *x     |  Có (qua *x)        |  Chỉ địa chỉ    |
++-------------------+-------------+---------------------+-----------------+
+</pre>
+
+<p><strong>Khuyến nghị:</strong></p>
+<ul>
+<li>Dùng <strong>truyền theo giá trị</strong> khi hàm không cần thay đổi biến gốc và dữ liệu nhỏ (<code>int</code>, <code>double</code>, <code>char</code>, <code>bool</code>).</li>
+<li>Dùng <strong>truyền theo tham chiếu</strong> khi cần thay đổi biến gốc, hoặc khi dữ liệu lớn (dùng <code>const &amp;</code> nếu không sửa).</li>
+<li>Hạn chế dùng <strong>con trỏ</strong> trừ khi có lý do đặc biệt.</li>
+</ul>
+
+<hr>
+
+<h2>5.5. Tham số mặc định (Default Arguments)</h2>
+
+<h3>5.5.1. Khái niệm</h3>
+
+<p>Có thể gán <strong>giá trị mặc định</strong> cho tham số trong prototype/định nghĩa hàm. Khi gọi hàm mà <strong>không truyền</strong> đối số đó, hàm sẽ dùng giá trị mặc định.</p>
+
+<h3>5.5.2. Cú pháp</h3>
+
+<pre><code>kieu_tra_ve ten_ham(tham_so_1, tham_so_2 = gia_tri_mac_dinh);</code></pre>
+
+<h3>5.5.3. Ví dụ</h3>
+
+<pre><code>double dienTich(int dai, int rong = 5) {
+    return dai * rong;
+}
+
+int main() {
+    cout &lt;&lt; dienTich(4) &lt;&lt; endl;        // 20 (dùng rong = 5)
+    cout &lt;&lt; dienTich(4, 3) &lt;&lt; endl;     // 12 (ghi đè mặc định)
+    return 0;
+}</code></pre>
+
+<h3>5.5.4. Quy tắc vàng</h3>
+
+<ul>
+<li><strong>Tham số có giá trị mặc định phải nằm bên phải</strong> các tham số không mặc định.
+<pre><code>// ĐÚNG
+void f(int a, int b = 0, int c = 1);
+
+// SAI — b có mặc định nhưng c thì không
+void f(int a, int b = 0, int c);    // LỖI biên dịch</code></pre>
+</li>
+<li>Không nên lạm dụng — dễ gây nhầm lẫn khi có nhiều tham số mặc định.</li>
+<li>Giá trị mặc định phải là <strong>hằng số biểu thức</strong> (literal, const, …), không phải biến.</li>
+</ul>
+
+<hr>
+
+<h2>5.6. Nạp chồng hàm (Function Overloading)</h2>
+
+<h3>5.6.1. Khái niệm</h3>
+
+<p><strong>Nạp chồng hàm</strong> cho phép <strong>nhiều hàm cùng tên</strong> nhưng <strong>khác danh sách tham số</strong> (khác số lượng hoặc khác kiểu). Trình biên dịch sẽ chọn hàm phù hợp dựa trên các đối số được truyền vào.</p>
+
+<h3>5.6.2. Ví dụ</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int tong(int a, int b) {
+    return a + b;
+}
+
+double tong(double a, double b) {
+    return a + b;
+}
+
+int tong(int a, int b, int c) {
+    return a + b + c;
+}
+
+int main() {
+    cout &lt;&lt; tong(2, 3) &lt;&lt; endl;           // 5   → bản int 2 tham số
+    cout &lt;&lt; tong(2.5, 3.1) &lt;&lt; endl;       // 5.6 → bản double
+    cout &lt;&lt; tong(1, 2, 3) &lt;&lt; endl;        // 6   → bản 3 tham số
+    return 0;
+}</code></pre>
+
+<h3>5.6.3. Quy tắc nạp chồng</h3>
+
+<ul>
+<li>Hàm phải <strong>khác nhau về danh sách tham số</strong>: khác số lượng, khác kiểu, hoặc khác thứ tự kiểu.</li>
+<li><strong>KHÔNG</strong> thể nạp chồng chỉ dựa vào <strong>kiểu trả về</strong>:
+<pre><code>// LỖI
+int    f(int x);
+double f(int x);    // trùng tham số → lỗi biên dịch</code></pre>
+</li>
+<li>Nạp chồng <strong>không phân biệt</strong> tham chiếu và giá trị (nếu chỉ khác <code>&amp;</code>):
+<pre><code>// LỖI — trình biên dịch không phân biệt được
+int f(int x);
+int f(int &amp;x);</code></pre>
+</li>
+<li>Cẩn thận khi có <strong>tham số mặc định</strong> và <strong>nạp chồng</strong> cùng lúc — có thể gây nhập nhằng (ambiguity).</li>
+</ul>
+
+<hr>
+
+<h2>5.7. Hàm đệ quy (Recursion)</h2>
+
+<h3>5.7.1. Khái niệm</h3>
+
+<p><strong>Đệ quy</strong> là kỹ thuật <strong>hàm gọi lại chính nó</strong>. Đây là cách tiếp cận tự nhiên cho các bài toán có cấu trúc lặp đi lặp lại với quy mô nhỏ dần (chia để trị, duyệt cây, hoán vị, …).</p>
+
+<h3>5.7.2. Cấu trúc của hàm đệ quy</h3>
+
+<p>Một hàm đệ quy <strong>bắt buộc</strong> phải có:</p>
+<ol>
+<li><strong>Điều kiện dừng</strong> (base case): trường hợp đơn giản nhất, trả về kết quả trực tiếp mà <strong>không gọi lại</strong> chính nó.</li>
+<li><strong>Bước đệ quy</strong> (recursive case): gọi lại chính hàm với bài toán <strong>nhỏ hơn</strong>.</li>
+</ol>
+
+<p><strong>Nếu thiếu điều kiện dừng → gọi mãi mãi → tràn stack (stack overflow).</strong></p>
+
+<h3>5.7.3. Ví dụ</h3>
+
+<p><strong>Ví dụ 1:</strong> Giai thừa <code>n!</code>.</p>
+
+<pre><code>long long giaiThua(int n) {
+    if (n == 0 || n == 1) return 1;    // điều kiện dừng
+    return n * giaiThua(n - 1);         // bước đệ quy
+}</code></pre>
+
+<p>Minh họa: <code>giaiThua(4)</code> = <code>4 * giaiThua(3)</code> = <code>4 * 3 * giaiThua(2)</code> = … = <code>4 * 3 * 2 * 1 = 24</code>.</p>
+
+<p><strong>Ví dụ 2:</strong> Số Fibonacci thứ n.</p>
+
+<pre><code>int fibo(int n) {
+    if (n &lt;= 1) return n;               // điều kiện dừng
+    return fibo(n - 1) + fibo(n - 2);   // bước đệ quy
+}</code></pre>
+
+<p><strong>Ví dụ 3:</strong> UCLN — thuật toán Euclid.</p>
+
+<pre><code>int ucln(int a, int b) {
+    if (b == 0) return a;               // điều kiện dừng
+    return ucln(b, a % b);              // bước đệ quy
+}</code></pre>
+
+<p><strong>Ví dụ 4:</strong> Đếm số chữ số của <code>n</code>.</p>
+
+<pre><code>int demChuSo(int n) {
+    if (n &lt; 10) return 1;               // điều kiện dừng
+    return 1 + demChuSo(n / 10);        // bước đệ quy
+}</code></pre>
+
+<h3>5.7.4. Ưu và nhược điểm của đệ quy</h3>
+
+<pre>
++---------------------------+----------------------------------+
+|        Ưu điểm            |         Nhược điểm               |
++---------------------------+----------------------------------+
+| Code ngắn gọn, dễ hiểu    | Tốn bộ nhớ stack mỗi lần gọi     |
+| Tự nhiên với bài đệ quy   | Chậm hơn vòng lặp (do overhead)  |
+| (cây, đồ thị, hoán vị)    | Dễ tràn stack nếu đệ quy sâu     |
+| Dễ chứng minh tính đúng   | Có thể tính lại nhiều lần        |
++---------------------------+----------------------------------+
+</pre>
+
+<p><strong>Khuyến nghị:</strong> dùng đệ quy khi bài toán có cấu trúc đệ quy tự nhiên, độ sâu nhỏ (≤ vài nghìn). Với bài toán đơn giản lặp lại nhiều lần (như Fibonacci), dùng vòng lặp hoặc quy hoạch động sẽ hiệu quả hơn.</p>
+
+<hr>
+
+<h2>5.8. Biến toàn cục, cục bộ và static</h2>
+
+<h3>5.8.1. Biến cục bộ (Local Variable)</h3>
+
+<p>Khai báo <strong>bên trong</strong> một hàm (hoặc một khối <code>{ }</code>). Chỉ dùng được trong phạm vi đó, và bị hủy khi ra khỏi phạm vi.</p>
+
+<pre><code>void hamA() {
+    int x = 10;          // cục bộ trong hamA
+    cout &lt;&lt; x;           // OK
+}
+
+void hamB() {
+    // cout &lt;&lt; x;        // LỖI — x không tồn tại ở đây
+}</code></pre>
+
+<h3>5.8.2. Biến toàn cục (Global Variable)</h3>
+
+<p>Khai báo <strong>ngoài tất cả các hàm</strong>. Dùng được ở mọi hàm trong file, tồn tại suốt chương trình, giá trị khởi tạo mặc định là 0.</p>
+
+<pre><code>int count = 0;           // biến toàn cục
+
+void tangCount() {
+    count++;             // truy cập trực tiếp
+}
+
+int main() {
+    tangCount();
+    tangCount();
+    cout &lt;&lt; count &lt;&lt; endl;   // 2
+    return 0;
+}</code></pre>
+
+<p><strong>Cảnh báo:</strong> Lạm dụng biến toàn cục khiến chương trình khó hiểu, khó debug (vì bất kỳ hàm nào cũng có thể sửa). <strong>Chỉ dùng khi thực sự cần</strong> (ví dụ: hằng số cấu hình, cờ trạng thái chung).</p>
+
+<h3>5.8.3. Biến static cục bộ</h3>
+
+<p>Là biến cục bộ nhưng <strong>tồn tại suốt chương trình</strong> (không bị hủy khi ra khỏi hàm) và <strong>chỉ khởi tạo một lần</strong>. Rất hữu ích để đếm số lần gọi hàm, hoặc lưu trạng thái giữa các lần gọi.</p>
+
+<pre><code>void dem() {
+    static int x = 0;    // chỉ khởi tạo lần gọi đầu
+    x++;
+    cout &lt;&lt; x &lt;&lt; endl;
+}
+
+int main() {
+    dem();   // 1
+    dem();   // 2
+    dem();   // 3
+    return 0;
+}</code></pre>
+
+<p><strong>So sánh:</strong></p>
+
+<pre>
++------------------+-------------------+----------------------+
+|   Loại biến      |  Phạm vi truy cập |  Thời gian tồn tại   |
++------------------+-------------------+----------------------+
+|  Cục bộ          |  Trong khối {}    |  Khi khối còn chạy   |
+|  Toàn cục        |  Cả file          |  Suốt chương trình   |
+|  Static cục bộ   |  Trong khối {}    |  Suốt chương trình   |
++------------------+-------------------+----------------------+
+</pre>
+
+<hr>
+
+<h2>5.9. Phạm vi hàm và từ khóa inline</h2>
+
+<h3>5.9.1. Phạm vi (Scope)</h3>
+
+<ul>
+<li>Biến được khai báo trong khối <code>{ }</code> chỉ tồn tại trong khối đó.</li>
+<li>Biến cục bộ <strong>che khuất</strong> (shadow) biến toàn cục cùng tên trong phạm vi của nó.</li>
+<li>Toán tử <code>::</code> (scope resolution) truy cập biến toàn cục khi bị che:
+<pre><code>int x = 100;            // toàn cục
+
+void f() {
+    int x = 5;          // cục bộ, che x toàn cục
+    cout &lt;&lt; x &lt;&lt; endl;   // 5
+    cout &lt;&lt; ::x &lt;&lt; endl;// 100 (toàn cục)
+}</code></pre>
+</li>
+</ul>
+
+<h3>5.9.2. Từ khóa inline</h3>
+
+<p><code>inline</code> là gợi ý với trình biên dịch rằng nên <strong>"nhúng" code của hàm</strong> vào nơi gọi thay vì sinh lệnh gọi hàm. Giúp <strong>tăng hiệu năng</strong> với các hàm <strong>nhỏ, gọi nhiều lần</strong> (giảm overhead của lời gọi hàm).</p>
+
+<pre><code>inline int binhPhuong(int x) {
+    return x * x;
+}</code></pre>
+
+<p><strong>Lưu ý:</strong> <code>inline</code> chỉ là <strong>gợi ý</strong> — trình biên dịch có quyền bỏ qua nếu thấy không hợp lý. Không nên lạm dụng với hàm lớn (làm phình code).</p>
+
+<hr>
+
+<h2>5.10. Hàm main và tham số dòng lệnh</h2>
+
+<h3>5.10.1. Cú pháp mở rộng của main</h3>
+
+<p>Hàm <code>main()</code> có thể nhận <strong>hai tham số</strong> để đọc dữ liệu từ dòng lệnh:</p>
+
+<pre><code>int main(int argc, char* argv[]) {
+    // argc: số lượng tham số (bao gồm tên chương trình)
+    // argv: mảng con trỏ, chứa các chuỗi tham số
+    return 0;
+}</code></pre>
+
+<h3>5.10.2. Ví dụ</h3>
+
+<p>Chạy chương trình: <code>./a.out 5 7</code></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+using namespace std;
+
+int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        cout &lt;&lt; "Su dung: ./a.out a b" &lt;&lt; endl;
+        return 1;
+    }
+    int a = atoi(argv[1]);   // chuyển chuỗi sang số
+    int b = atoi(argv[2]);
+    cout &lt;&lt; "Tong: " &lt;&lt; a + b &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p>Kết quả:</p>
+
+<pre>
+    argc = 3
+    argv[0] = "./a.out"
+    argv[1] = "5"
+    argv[2] = "7"
+    → In ra: Tong: 12
+</pre>
+
+<hr>
+
+<h2>5.11. Các lỗi thường gặp</h2>
+
+<ul>
+<li><strong>Quên prototype khi định nghĩa hàm sau <code>main()</code></strong> — chương trình báo lỗi "not declared in this scope". Cách sửa: khai báo prototype trước <code>main()</code>.</li>
+<li><strong>Thiếu <code>return</code> trong hàm có kiểu trả về khác void</strong> — chương trình trả về giá trị rác hoặc lỗi.</li>
+<li><strong>Không có <code>return</code> trong một nhánh của <code>if</code></strong> — tương tự trên, hàm trả về giá trị không xác định.</li>
+<li><strong>Nhầm lẫn tham chiếu và giá trị</strong> — quên dấu <code>&amp;</code> khiến hàm không sửa được biến gốc.</li>
+<li><strong>Đặt tham số mặc định sai vị trí</strong> — <code>void f(int a = 0, int b)</code> là lỗi cú pháp.</li>
+<li><strong>Nạp chồng chỉ khác kiểu trả về</strong> — lỗi biên dịch, không hợp lệ.</li>
+<li><strong>Đệ quy không có điều kiện dừng</strong> — tràn stack, chương trình crash.</li>
+<li><strong>Quên dấu <code>{ }</code></strong> khi thân hàm có nhiều câu lệnh — chỉ câu lệnh đầu tiên thuộc hàm, các câu lệnh sau nằm ngoài (thường trở thành câu lệnh rác trong <code>main</code>).</li>
+<li><strong>Quên dấu <code>;</code></strong> sau prototype — lỗi biên dịch.</li>
+<li><strong>Lạm dụng biến toàn cục</strong> — chương trình khó debug khi có lỗi.</li>
+<li><strong>Nhầm hàm đệ quy với vòng lặp vô hạn</strong> — đệ quy luôn cần điều kiện dừng, không có điều kiện dừng thì không khác gì vòng lặp vô hạn.</li>
+</ul>
+
+<hr>
+
+<h2>5.12. Bài tập chương 5</h2>
+
+<h3>5.12.1. Bài tập trắc nghiệm</h3>
+
+<p><strong>Câu 1:</strong> Kiểu trả về nào cho biết hàm <strong>không trả về giá trị</strong>?</p>
+<ul>
+<li>A. <code>int</code></li>
+<li>B. <code>void</code></li>
+<li>C. <code>null</code></li>
+<li>D. <code>empty</code></li>
+</ul>
+
+<p><strong>Câu 2:</strong> Truyền tham số <code>int &amp;x</code> là:</p>
+<ul>
+<li>A. Truyền theo giá trị</li>
+<li>B. Truyền theo tham chiếu</li>
+<li>C. Truyền con trỏ</li>
+<li>D. Không hợp lệ</li>
+</ul>
+
+<p><strong>Câu 3:</strong> Hàm nào sau đây <strong>nạp chồng hợp lệ</strong> với <code>int f(int a)</code>?</p>
+<ul>
+<li>A. <code>double f(int a)</code></li>
+<li>B. <code>int f(int a, int b)</code></li>
+<li>C. <code>int f(int b)</code></li>
+<li>D. Cả A và C</li>
+</ul>
+
+<p><strong>Câu 4:</strong> Hàm đệ quy <strong>bắt buộc</strong> phải có:</p>
+<ul>
+<li>A. Vòng lặp</li>
+<li>B. Điều kiện dừng</li>
+<li>C. Tham số mặc định</li>
+<li>D. Biến toàn cục</li>
+</ul>
+
+<p><strong>Câu 5:</strong> Kết quả đoạn code sau:</p>
+<pre><code>void f(int &amp;x) { x += 5; }
+int main() { int a = 3; f(a); cout &lt;&lt; a; }</code></pre>
+<ul>
+<li>A. 3</li>
+<li>B. 5</li>
+<li>C. 8</li>
+<li>D. Lỗi biên dịch</li>
+</ul>
+
+<p><strong>Câu 6:</strong> Khai báo <code>void f(int a = 1, int b)</code> có hợp lệ không?</p>
+<ul>
+<li>A. Hợp lệ</li>
+<li>B. Không hợp lệ — tham số mặc định phải nằm bên phải</li>
+<li>C. Chỉ hợp lệ trong C++11 trở lên</li>
+<li>D. Chỉ hợp lệ nếu <code>a</code> và <code>b</code> cùng kiểu</li>
+</ul>
+
+<p><strong>Câu 7:</strong> Hàm <code>static int x = 0;</code> khai báo trong một hàm có đặc điểm:</p>
+<ul>
+<li>A. Chỉ khởi tạo một lần, tồn tại suốt chương trình</li>
+<li>B. Khởi tạo mỗi lần gọi, bị hủy khi ra khỏi hàm</li>
+<li>C. Là biến toàn cục</li>
+<li>D. Không hợp lệ trong C++</li>
+</ul>
+
+<p><strong>Câu 8:</strong> Đệ quy sau có lỗi gì?</p>
+<pre><code>int giaiThua(int n) {
+    return n * giaiThua(n - 1);
+}</code></pre>
+<ul>
+<li>A. Không có lỗi</li>
+<li>B. Thiếu điều kiện dừng → tràn stack</li>
+<li>C. Thiếu kiểu trả về</li>
+<li>D. Sai cú pháp</li>
+</ul>
+
+<p><strong>Đáp án:</strong> 1-B, 2-B, 3-B, 4-B, 5-C, 6-B, 7-A, 8-B.</p>
+
+<h3>5.12.2. Bài tập cơ bản</h3>
+
+<p><strong>Bài 1:</strong> Viết hàm <code>int tong(int a, int b)</code> trả về tổng hai số nguyên. Gọi hàm trong <code>main</code> và in kết quả.</p>
+
+<p><strong>Bài 2:</strong> Viết hàm <code>void xinChao(string ten)</code> in ra "Xin chào, &lt;ten&gt;!". Gọi hàm với tên nhập từ bàn phím.</p>
+
+<p><strong>Bài 3:</strong> Viết hàm <code>int max3(int a, int b, int c)</code> trả về giá trị lớn nhất trong ba số.</p>
+
+<p><strong>Bài 4:</strong> Viết hàm <code>bool laSoChan(int n)</code> trả về <code>true</code> nếu <code>n</code> chẵn, ngược lại <code>false</code>.</p>
+
+<p><strong>Bài 5:</strong> Viết hàm <code>long long giaiThua(int n)</code> tính <code>n!</code> <strong>bằng vòng lặp</strong> và <strong>bằng đệ quy</strong>. So sánh kết quả với cùng đầu vào.</p>
+
+<p><strong>Bài 6:</strong> Viết hàm <code>int fibonacci(int n)</code> trả về số Fibonacci thứ <code>n</code>. In 20 số Fibonacci đầu tiên bằng cách gọi hàm.</p>
+
+<p><strong>Bài 7:</strong> Viết hàm <code>bool laSoNguyenTo(int n)</code> kiểm tra số nguyên tố. In các số nguyên tố &lt; 100.</p>
+
+<p><strong>Bài 8:</strong> Viết hàm <code>void hoanDoi(int &amp;a, int &amp;b)</code> hoán đổi giá trị hai biến. Kiểm tra kết quả trong <code>main</code>.</p>
+
+<p><strong>Bài 9:</strong> Viết hàm <code>double dienTichHCN(double dai, double rong = 10)</code> tính diện tích hình chữ nhật (tham số mặc định). Gọi hàm với 1 và 2 đối số.</p>
+
+<p><strong>Bài 10:</strong> Viết ba hàm nạp chồng tên <code>tong</code>:</p>
+<ul>
+<li><code>tong(int, int)</code></li>
+<li><code>tong(double, double)</code></li>
+<li><code>tong(int, int, int)</code></li>
+</ul>
+<p>Gọi thử và in kết quả.</p>
+
+<h3>5.12.3. Bài tập vận dụng</h3>
+
+<p><strong>Bài 11 (UCLN – BCNN):</strong> Viết hàm <code>int ucln(int a, int b)</code> bằng đệ quy Euclid và hàm <code>int bcnn(int a, int b)</code>. Áp dụng tìm UCLN, BCNN của 2 số nhập từ bàn phím.</p>
+
+<p><strong>Bài 12 (Lũy thừa nhanh):</strong> Viết hàm <code>long long luyThua(int a, int n)</code> tính <code>a^n</code> <strong>bằng đệ quy chia để trị</strong>:</p>
+
+<pre>
+    a^n  =  1                   nếu n = 0
+            (a^(n/2))^2         nếu n chẵn
+            a * (a^(n/2))^2     nếu n lẻ
+</pre>
+
+<p><strong>Bài 13 (Tổng phân số):</strong> Viết hàm <code>double tinhTong(int n)</code> tính:</p>
+
+<pre>
+    S = 1 + 1/2 + 1/3 + ... + 1/n
+</pre>
+
+<p><strong>Bài 14 (In ngược số):</strong> Viết hàm <code>void inDaoNguoc(int n)</code> in ngược các chữ số của <code>n</code> <strong>bằng đệ quy</strong>. Ví dụ: <code>1234</code> → <code>4 3 2 1</code>.</p>
+
+<p><strong>Bài 15 (Đếm chữ số):</strong> Viết hàm <code>int demChuSo(int n)</code> đếm số chữ số của <code>n</code> <strong>bằng đệ quy</strong>.</p>
+
+<p><strong>Bài 16 (Tổng chữ số):</strong> Viết hàm <code>int tongChuSo(int n)</code> tính tổng các chữ số của <code>n</code> <strong>bằng đệ quy</strong>.</p>
+
+<p><strong>Bài 17 (Palindrome):</strong> Viết hàm <code>bool laDoiXung(string s, int l, int r)</code> kiểm tra chuỗi đối xứng <strong>bằng đệ quy</strong>. Ví dụ: <code>"abba"</code> → <code>true</code>, <code>"abc"</code> → <code>false</code>.</p>
+
+<p><strong>Bài 18 (Thao tác mảng):</strong> Viết các hàm:</p>
+<ul>
+<li><code>void nhapMang(int a[], int &amp;n)</code></li>
+<li><code>void xuatMang(int a[], int n)</code></li>
+<li><code>int tongMang(int a[], int n)</code></li>
+<li><code>int maxMang(int a[], int n)</code></li>
+</ul>
+<p>Áp dụng cho mảng nhập từ bàn phím.</p>
+
+<p><strong>Bài 19 (Sắp xếp):</strong> Viết hàm <code>void sapXep(int a[], int n)</code> sắp xếp mảng tăng dần (dùng sắp xếp nổi bọt). Áp dụng và in kết quả.</p>
+
+<p><strong>Bài 20 (Menu chương trình):</strong> Viết chương trình dùng <strong>menu</strong> với các hàm sau (mỗi chức năng là 1 hàm):</p>
+<ol>
+<li>Nhập mảng</li>
+<li>Xuất mảng</li>
+<li>Tính tổng</li>
+<li>Tìm max/min</li>
+<li>Đếm số chẵn</li>
+<li>Thoát</li>
+</ol>
+
+<h3>5.12.4. Bài tập nâng cao</h3>
+
+<p><strong>Bài 21 (Tháp Hà Nội):</strong> Viết hàm đệ quy <code>void thapHaNoi(int n, char A, char B, char C)</code> in các bước chuyển <code>n</code> đĩa từ cột A sang cột C (dùng cột B làm trung gian).</p>
+
+<pre>
+    Ví dụ n = 2:
+    Chuyển đĩa 1 từ A sang B
+    Chuyển đĩa 2 từ A sang C
+    Chuyển đĩa 1 từ B sang C
+</pre>
+
+<p><strong>Bài 22 (Sinh hoán vị):</strong> Viết hàm đệ quy in tất cả hoán vị của mảng <code>{1, 2, ..., n}</code>. Ví dụ n = 3: 123, 132, 213, 231, 312, 321.</p>
+
+<p><strong>Bài 23 (Bài toán N-Queens):</strong> Viết hàm đệ quy đếm số cách đặt <code>N</code> quân hậu trên bàn cờ <code>N×N</code> sao cho không quân nào ăn nhau. Xuất một cách đặt.</p>
+
+<p><strong>Bài 24 (Tìm đường trong mê cung):</strong> Cho mê cung <code>N×M</code> (0 = đường đi, 1 = tường). Viết hàm đệ quy (quay lui) tìm đường từ <code>(0,0)</code> đến <code>(N-1,M-1)</code>.</p>
+
+<p><strong>Bài 25 (Tổ hợp chập k):</strong> Viết hàm đệ quy tính <code>C(n, k)</code> theo công thức Pascal:</p>
+
+<pre>
+    C(n,k)  =  1                          nếu k = 0 hoặc k = n
+               C(n-1,k-1) + C(n-1,k)      ngược lại
+</pre>
+
+<p>So sánh với cách tính bằng vòng lặp (dùng giai thừa).</p>
+
+<p><strong>Bài 26 (Tìm kiếm – Dùng hàm):</strong> Viết các hàm:</p>
+<ul>
+<li><code>int demX(int a[], int n, int x)</code> — đếm số lần xuất hiện của <code>x</code></li>
+<li><code>bool laTangDan(int a[], int n)</code> — kiểm tra mảng tăng dần</li>
+<li><code>int nhiPhan(int a[], int n, int x)</code> — tìm kiếm nhị phân (mảng đã sắp xếp)</li>
+</ul>
+
+<p><strong>Bài 27 (Chuyển cơ số):</strong> Viết hàm <code>void chuyenCoSo(int n, int base)</code> in biểu diễn của <code>n</code> ở cơ số <code>base</code> (2 ≤ base ≤ 16) <strong>bằng đệ quy</strong>. Ví dụ: n = 10, base = 2 → <code>1010</code>.</p>
+
+<p><strong>Bài 28 (Quản lý sinh viên):</strong> Viết chương trình với các hàm:</p>
+<ul>
+<li><code>void nhapSV(SinhVien &amp;sv)</code></li>
+<li><code>void xuatSV(SinhVien sv)</code></li>
+<li><code>double tinhDiemTB(SinhVien sv)</code></li>
+<li><code>void xepLoai(SinhVien sv)</code></li>
+<li><code>SinhVien timMax(SinhVien ds[], int n)</code></li>
+</ul>
+<p>Với <code>struct SinhVien { string ma, ten; double toan, ly, hoa; };</code></p>
+
+<p><strong>Bài 29 (Sàng Eratosthenes):</strong> Viết hàm <code>void sangNguyenTo(int n)</code> in ra tất cả số nguyên tố ≤ n dùng sàng Eratosthenes (mảng đánh dấu). So sánh hiệu năng với cách kiểm tra từng số.</p>
+
+<p><strong>Bài 30 (Sinh tổ hợp):</strong> Viết hàm đệ quy quay lui in tất cả tổ hợp chập <code>k</code> của <code>{1,...,n}</code>. Ví dụ n = 4, k = 2: 12, 13, 14, 23, 24, 34.</p>
+
+<hr>
+
+<h2>5.13. Hướng dẫn giải một số bài tập tiêu biểu</h2>
+
+<p><strong>Bài 3 — max3:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int max3(int a, int b, int c) {
+    int m = a;
+    if (b &gt; m) m = b;
+    if (c &gt; m) m = c;
+    return m;
+}
+
+int main() {
+    int a, b, c;
+    cout &lt;&lt; "Nhap a, b, c: ";
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+    cout &lt;&lt; "Max = " &lt;&lt; max3(a, b, c) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 5 — Giai thừa (vòng lặp &amp; đệ quy):</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Vòng lặp
+long long giaiThuaLP(int n) {
+    long long kq = 1;
+    for (int i = 2; i &lt;= n; i++) kq *= i;
+    return kq;
+}
+
+// Đệ quy
+long long giaiThuaDQ(int n) {
+    if (n == 0 || n == 1) return 1;
+    return n * giaiThuaDQ(n - 1);
+}
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: ";
+    cin &gt;&gt; n;
+    cout &lt;&lt; "Vong lap: " &lt;&lt; giaiThuaLP(n) &lt;&lt; endl;
+    cout &lt;&lt; "De quy:   " &lt;&lt; giaiThuaDQ(n) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 7 — Số nguyên tố:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+bool laSoNguyenTo(int n) {
+    if (n &lt; 2) return false;
+    for (int i = 2; i * i &lt;= n; i++)
+        if (n % i == 0) return false;
+    return true;
+}
+
+int main() {
+    cout &lt;&lt; "Cac so nguyen to &lt; 100: ";
+    for (int i = 2; i &lt; 100; i++)
+        if (laSoNguyenTo(i)) cout &lt;&lt; i &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 8 — Hoán đổi (pass by reference):</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void hoanDoi(int &amp;a, int &amp;b) {
+    int t = a;
+    a = b;
+    b = t;
+}
+
+int main() {
+    int x = 3, y = 7;
+    cout &lt;&lt; "Truoc: x = " &lt;&lt; x &lt;&lt; ", y = " &lt;&lt; y &lt;&lt; endl;
+    hoanDoi(x, y);
+    cout &lt;&lt; "Sau:   x = " &lt;&lt; x &lt;&lt; ", y = " &lt;&lt; y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 11 — UCLN &amp; BCNN:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int ucln(int a, int b) {
+    if (b == 0) return a;
+    return ucln(b, a % b);
+}
+
+int bcnn(int a, int b) {
+    return a / ucln(a, b) * b;
+}
+
+int main() {
+    int a, b;
+    cout &lt;&lt; "Nhap a, b: ";
+    cin &gt;&gt; a &gt;&gt; b;
+    cout &lt;&lt; "UCLN = " &lt;&lt; ucln(a, b) &lt;&lt; endl;
+    cout &lt;&lt; "BCNN = " &lt;&lt; bcnn(a, b) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 12 — Lũy thừa nhanh:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+long long luyThua(int a, int n) {
+    if (n == 0) return 1;
+    long long half = luyThua(a, n / 2);
+    if (n % 2 == 0) return half * half;
+    return (long long)a * half * half;
+}
+
+int main() {
+    int a, n;
+    cout &lt;&lt; "Nhap a, n: ";
+    cin &gt;&gt; a &gt;&gt; n;
+    cout &lt;&lt; a &lt;&lt; "^" &lt;&lt; n &lt;&lt; " = " &lt;&lt; luyThua(a, n) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 17 — Palindrome (đệ quy):</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool laDoiXung(string s, int l, int r) {
+    if (l &gt;= r) return true;
+    if (s[l] != s[r]) return false;
+    return laDoiXung(s, l + 1, r - 1);
+}
+
+int main() {
+    string s;
+    cout &lt;&lt; "Nhap chuoi: ";
+    cin &gt;&gt; s;
+    if (laDoiXung(s, 0, s.length() - 1))
+        cout &lt;&lt; "Doi xung" &lt;&lt; endl;
+    else
+        cout &lt;&lt; "Khong doi xung" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 21 — Tháp Hà Nội:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void thapHaNoi(int n, char A, char B, char C) {
+    if (n == 1) {
+        cout &lt;&lt; "Chuyen dia 1 tu " &lt;&lt; A &lt;&lt; " sang " &lt;&lt; C &lt;&lt; endl;
+        return;
+    }
+    thapHaNoi(n - 1, A, C, B);
+    cout &lt;&lt; "Chuyen dia " &lt;&lt; n &lt;&lt; " tu " &lt;&lt; A &lt;&lt; " sang " &lt;&lt; C &lt;&lt; endl;
+    thapHaNoi(n - 1, B, A, C);
+}
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap so dia: ";
+    cin &gt;&gt; n;
+    thapHaNoi(n, 'A', 'B', 'C');
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 27 — Chuyển cơ số:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void chuyenCoSo(int n, int base) {
+    if (n == 0) return;
+    chuyenCoSo(n / base, base);
+    int du = n % base;
+    if (du &lt; 10) cout &lt;&lt; du;
+    else cout &lt;&lt; (char)('A' + du - 10);
+}
+
+int main() {
+    int n, base;
+    cout &lt;&lt; "Nhap n, base: ";
+    cin &gt;&gt; n &gt;&gt; base;
+    if (n == 0) cout &lt;&lt; "0";
+    else chuyenCoSo(n, base);
+    cout &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2>5.14. Tóm tắt chương</h2>
+
+<ul>
+<li><strong>Hàm</strong> là khối lệnh có tên, thực hiện một nhiệm vụ cụ thể, có thể nhận tham số và trả về giá trị.</li>
+<li>Lợi ích: <strong>tái sử dụng, dễ đọc, dễ bảo trì, dễ gỡ lỗi</strong>.</li>
+<li>Cú pháp: <code>kieu_tra_ve ten_ham(danh_sach_tham_so) { ... return ...; }</code>.</li>
+<li><strong>Prototype</strong> cần có khi hàm được định nghĩa sau <code>main()</code>.</li>
+<li><strong>Truyền theo giá trị</strong>: hàm nhận bản sao, không ảnh hưởng biến gốc.</li>
+<li><strong>Truyền theo tham chiếu</strong> (<code>&amp;</code>): hàm nhận biến gốc, thay đổi được.</li>
+<li><strong>Truyền theo con trỏ</strong> (<code>*</code>): hàm nhận địa chỉ, thay đổi được qua <code>*</code>.</li>
+<li><strong>Tham số mặc định</strong> phải nằm bên phải; không nên lạm dụng.</li>
+<li><strong>Nạp chồng hàm</strong>: cùng tên, khác danh sách tham số.</li>
+<li><strong>Đệ quy</strong>: hàm gọi chính nó, cần <strong>điều kiện dừng</strong> + <strong>bước đệ quy</strong>.</li>
+<li><strong>Biến toàn cục</strong> dùng được mọi nơi; <strong>static cục bộ</strong> tồn tại suốt chương trình nhưng chỉ có phạm vi trong hàm.</li>
+<li><strong>inline</strong> gợi ý nhúng code — phù hợp hàm nhỏ, gọi nhiều.</li>
+<li>Luôn <strong>thụt lề đúng</strong>, dùng <strong><code>{ }</code></strong> ngay cả khi thân hàm ngắn, và <strong>return đầy đủ</strong> ở mọi nhánh.</li>
+</ul>
+
+<hr>
+
+<h2>5.15. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Mục "Functions", "Function declaration", "Default arguments"</li>
+<li><strong>cplusplus.com</strong> — Tutorials → Functions</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo — Chương 6: Functions</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup — Chương về Functions</li>
+<li>Sách: <em>"Effective C++"</em> — Scott Meyers — Mục về truyền tham số (Item 20, 21)</li>
+<li>Sách: <em>"Programming – Principles and Practice Using C++"</em> — Stroustrup — Chương 8: Functions</li>
+<li><strong>learncpp.com</strong> — Chương 2: Functions and Files, Chương 11: Function Overloading, Chương 12: Function Pointers, Chương 15: Recursion</li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 6 — Mảng và chuỗi trong C++</em> — sẽ giới thiệu mảng một chiều, mảng hai chiều, chuỗi ký tự (<code>char[]</code> và <code>std::string</code>), cùng các thao tác duyệt, tìm kiếm, sắp xếp cơ bản. Đây là nền tảng để xử lý tập dữ liệu lớn và kết hợp chặt chẽ với hàm.</p>
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>

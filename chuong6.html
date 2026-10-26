@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chương 6: Mảng và Chuỗi trong C++</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== THANH TRẠNG THÁI CHƯƠNG ===== -->
+    <div class="chapter-progress-inner">
+        <a href="trangchu.html" class="chapter-step" data-chapter="0">
+            <span class="step-number">1</span>
+            <span class="step-label">Trang chủ</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong1.html" class="chapter-step" data-chapter="1">
+            <span class="step-number">2</span>
+            <span class="step-label">Giới thiệu C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong2.html" class="chapter-step" data-chapter="2">
+            <span class="step-number">3</span>
+            <span class="step-label">Biến &amp; Kiểu dữ liệu</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong3.html" class="chapter-step" data-chapter="3">
+            <span class="step-number">4</span>
+            <span class="step-label">Câu lệnh điều kiện</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong4.html" class="chapter-step" data-chapter="4">
+            <span class="step-number">5</span>
+            <span class="step-label">Vòng lặp</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong5.html" class="chapter-step" data-chapter="5">
+            <span class="step-number">6</span>
+            <span class="step-label">Hàm trong C++</span>
+        </a>
+        <div class="step-line"></div>
+
+        <a href="chuong6.html" class="chapter-step" data-chapter="6">
+            <span class="step-number">7</span>
+            <span class="step-label">Mảng &amp; Chuỗi</span>
+        </a>
+    </div>
+</div>
+
+<h1>Chương 6: Mảng và Chuỗi trong C++</h1>
+
+<h2>6.1. Tổng quan về mảng</h2>
+
+<h3>6.1.1. Vì sao cần mảng?</h3>
+
+<p>Giả sử bạn cần lưu <strong>điểm của 30 sinh viên</strong>. Nếu dùng biến thường, bạn phải khai báo:</p>
+
+<pre><code>double diem1, diem2, diem3, ..., diem30;</code></pre>
+
+<p>Cách này có nhiều bất tiện:</p>
+
+<ul>
+<li><strong>Cồng kềnh</strong>: khai báo hàng chục, hàng trăm biến riêng lẻ.</li>
+<li><strong>Không linh hoạt</strong>: không thể dùng vòng lặp để duyệt 30 biến đó.</li>
+<li><strong>Không mở rộng được</strong>: nếu cần 100 hay 1000 sinh viên thì không thể viết tay.</li>
+<li><strong>Không truyền được vào hàm</strong> một cách gọn gàng.</li>
+</ul>
+
+<p><strong>Mảng</strong> (array) ra đời để giải quyết những vấn đề trên. Mảng cho phép <strong>gom nhiều phần tử cùng kiểu</strong> vào một tên duy nhất, truy cập thông qua <strong>chỉ số</strong>, và dễ dàng duyệt bằng vòng lặp.</p>
+
+<pre><code>double diem[30];      // Một mảng 30 số thực — gọn hơn nhiều!
+
+for (int i = 0; i &lt; 30; i++) {
+    cin &gt;&gt; diem[i];   // Duyệt bằng vòng lặp
+}</code></pre>
+
+<h3>6.1.2. Khái niệm mảng</h3>
+
+<p><strong>Mảng</strong> là một tập hợp các phần tử có <strong>cùng kiểu dữ liệu</strong>, được lưu trữ <strong>liên tiếp</strong> trong bộ nhớ, và truy cập thông qua <strong>chỉ số (index)</strong>.</p>
+
+<p><strong>Đặc điểm quan trọng:</strong></p>
+<ul>
+<li>Các phần tử có <strong>cùng kiểu dữ liệu</strong>.</li>
+<li>Các phần tử được lưu <strong>liên tiếp</strong> trong bộ nhớ.</li>
+<li>Chỉ số mảng trong C++ <strong>bắt đầu từ 0</strong>.</li>
+<li>Kích thước mảng là <strong>cố định</strong> sau khi khai báo (với mảng tĩnh).</li>
+</ul>
+
+<h3>6.1.3. Phân loại mảng</h3>
+
+<ul>
+<li><strong>Mảng một chiều</strong> (1D array): danh sách các phần tử.</li>
+<li><strong>Mảng hai chiều</strong> (2D array): bảng dữ liệu dạng hàng × cột (ma trận).</li>
+<li><strong>Mảng nhiều chiều</strong> (nD array): hiếm dùng, thường chỉ đến 3 chiều.</li>
+</ul>
+
+<h3>6.1.4. Vị trí của mảng trong chương trình</h3>
+
+<p>Mảng thường được khai báo <strong>trong <code>main()</code></strong> hoặc <strong>trong hàm</strong>, sau đó được truyền vào các hàm khác để xử lý:</p>
+
+<pre>
+    #include ...
+    using namespace std;
+
+    void nhapMang(int a[], int &amp;n);
+    void xuatMang(int a[], int n);
+
+    int main() {
+        int a[100], n;
+        nhapMang(a, n);
+        xuatMang(a, n);
+        return 0;
+    }
+
+    void nhapMang(int a[], int &amp;n) { ... }
+    void xuatMang(int a[], int n) { ... }
+</pre>
+
+<hr>
+
+<h2>6.2. Mảng một chiều</h2>
+
+<h3>6.2.1. Cú pháp khai báo</h3>
+
+<pre><code>kieu_du_lieu ten_mang[kich_thuoc];</code></pre>
+
+<p>Trong đó:</p>
+<ul>
+<li><code>kieu_du_lieu</code>: kiểu của từng phần tử (<code>int</code>, <code>double</code>, <code>char</code>, <code>bool</code>, …)</li>
+<li><code>ten_mang</code>: tên mảng, đặt theo quy tắc định danh</li>
+<li><code>kich_thuoc</code>: số phần tử, phải là <strong>hằng số nguyên dương</strong> (literal hoặc <code>const</code>)</li>
+</ul>
+
+<p><strong>Ví dụ:</strong></p>
+
+<pre><code>int a[5];           // Mảng 5 số nguyên
+double diem[30];    // Mảng 30 số thực
+char ten[50];       // Mảng 50 ký tự
+bool co[10];        // Mảng 10 giá trị logic
+
+const int MAX = 100;
+int b[MAX];         // Hợp lệ — MAX là hằng số</code></pre>
+
+<p><strong>Lưu ý:</strong> Kích thước mảng <strong>không được</strong> là biến thường:</p>
+
+<pre><code>int n = 10;
+int a[n];           // KHÔNG chuẩn C++ (một số compiler cho phép nhưng không nên dùng)</code></pre>
+
+<h3>6.2.2. Khởi tạo mảng</h3>
+
+<p><strong>Cách 1 — Khởi tạo đầy đủ:</strong></p>
+
+<pre><code>int a[5] = {1, 2, 3, 4, 5};</code></pre>
+
+<p><strong>Cách 2 — Khởi tạo một phần (các phần tử còn lại = 0):</strong></p>
+
+<pre><code>int a[5] = {1, 2};      // a = {1, 2, 0, 0, 0}</code></pre>
+
+<p><strong>Cách 3 — Khởi tạo tất cả bằng 0:</strong></p>
+
+<pre><code>int a[5] = {0};         // a = {0, 0, 0, 0, 0}</code></pre>
+
+<p><strong>Cách 4 — Không chỉ định kích thước (trình biên dịch tự đếm):</strong></p>
+
+<pre><code>int a[] = {10, 20, 30, 40};   // Kích thước = 4</code></pre>
+
+<p><strong>Cách 5 — Khởi tạo bằng danh sách (C++11 trở lên):</strong></p>
+
+<pre><code>int a[5] {1, 2, 3, 4, 5};</code></pre>
+
+<p><strong>Lưu ý quan trọng:</strong></p>
+<ul>
+<li>Không được gán trực tiếp <code>a = b</code> cho hai mảng — phải <strong>sao chép từng phần tử</strong>.</li>
+<li>Nếu khai báo mảng không khởi tạo (như <code>int a[5];</code>), các phần tử có <strong>giá trị rác</strong> (không xác định).</li>
+</ul>
+
+<h3>6.2.3. Truy cập phần tử</h3>
+
+<p>Cú pháp: <code>ten_mang[chi_so];</code> — với <code>chi_so</code> từ <code>0</code> đến <code>kich_thuoc - 1</code>.</p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a[5] = {10, 20, 30, 40, 50};
+
+    cout &lt;&lt; a[0] &lt;&lt; endl;   // 10
+    cout &lt;&lt; a[4] &lt;&lt; endl;   // 50
+    cout &lt;&lt; a[2] &lt;&lt; endl;   // 30
+
+    a[1] = 99;              // Gán giá trị mới
+    cout &lt;&lt; a[1] &lt;&lt; endl;   // 99
+    return 0;
+}</code></pre>
+
+<p><strong>Cảnh báo:</strong> Truy cập ngoài phạm vi (<code>a[5]</code>, <code>a[-1]</code>) là <strong>lỗi nghiêm trọng</strong> (undefined behavior) — có thể đọc/ghi đè vùng nhớ khác, gây crash hoặc lỗi khó lần.</p>
+
+<hr>
+
+<h2>6.3. Các thao tác cơ bản trên mảng một chiều</h2>
+
+<h3>6.3.1. Nhập mảng</h3>
+
+<pre><code>int a[100], n;
+cout &lt;&lt; "Nhap so phan tu: ";
+cin &gt;&gt; n;
+
+for (int i = 0; i &lt; n; i++) {
+    cout &lt;&lt; "a[" &lt;&lt; i &lt;&lt; "] = ";
+    cin &gt;&gt; a[i];
+}</code></pre>
+
+<h3>6.3.2. Xuất mảng</h3>
+
+<pre><code>for (int i = 0; i &lt; n; i++) {
+    cout &lt;&lt; a[i] &lt;&lt; " ";
+}
+cout &lt;&lt; endl;</code></pre>
+
+<h3>6.3.3. Tính tổng và trung bình</h3>
+
+<pre><code>int sum = 0;
+for (int i = 0; i &lt; n; i++) sum += a[i];
+double avg = (double)sum / n;
+
+cout &lt;&lt; "Tong = " &lt;&lt; sum &lt;&lt; endl;
+cout &lt;&lt; "Trung binh = " &lt;&lt; avg &lt;&lt; endl;</code></pre>
+
+<h3>6.3.4. Tìm giá trị lớn nhất / nhỏ nhất</h3>
+
+<pre><code>int maxVal = a[0], minVal = a[0];
+for (int i = 1; i &lt; n; i++) {
+    if (a[i] &gt; maxVal) maxVal = a[i];
+    if (a[i] &lt; minVal) minVal = a[i];
+}</code></pre>
+
+<p><strong>Lưu ý:</strong> phải gán <code>maxVal = a[0]</code> (không phải <code>0</code>) — vì mảng có thể toàn số âm.</p>
+
+<h3>6.3.5. Đếm phần tử thỏa điều kiện</h3>
+
+<pre><code>int demChan = 0, demLe = 0;
+for (int i = 0; i &lt; n; i++) {
+    if (a[i] % 2 == 0) demChan++;
+    else               demLe++;
+}</code></pre>
+
+<h3>6.3.6. Đảo ngược mảng</h3>
+
+<pre><code>for (int i = 0; i &lt; n / 2; i++) {
+    int tmp   = a[i];
+    a[i]      = a[n - 1 - i];
+    a[n - 1 - i] = tmp;
+}</code></pre>
+
+<p>Hoặc dùng hàm có sẵn (C++11): <code>reverse(a, a + n);</code> — cần <code>#include &lt;algorithm&gt;</code>.</p>
+
+<h3>6.3.7. Kiểm tra mảng đối xứng (palindrome)</h3>
+
+<pre><code>bool laDoiXung(int a[], int n) {
+    for (int i = 0; i &lt; n / 2; i++)
+        if (a[i] != a[n - 1 - i]) return false;
+    return true;
+}</code></pre>
+
+<h3>6.3.8. Xóa phần tử có giá trị x (dồn mảng)</h3>
+
+<pre><code>void xoaX(int a[], int &amp;n, int x) {
+    int k = 0;
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] != x) a[k++] = a[i];
+    n = k;
+}</code></pre>
+
+<h3>6.3.9. Chèn phần tử vào vị trí k</h3>
+
+<pre><code>void chenTaiViTri(int a[], int &amp;n, int k, int x) {
+    for (int i = n; i &gt; k; i--) a[i] = a[i - 1];
+    a[k] = x;
+    n++;
+}</code></pre>
+
+<hr>
+
+<h2>6.4. Truyền mảng vào hàm</h2>
+
+<h3>6.4.1. Đặc điểm</h3>
+
+<p>Khi truyền mảng vào hàm, C++ <strong>không sao chép toàn bộ mảng</strong> mà truyền <strong>con trỏ đến phần tử đầu</strong>. Do đó:</p>
+
+<ul>
+<li>Hàm có thể <strong>thay đổi trực tiếp nội dung mảng gốc</strong>.</li>
+<li>Không cần (và không nên) dùng <code>&amp;</code> cho mảng.</li>
+<li>Phải truyền <strong>kích thước mảng riêng</strong>, vì hàm không biết mảng dài bao nhiêu.</li>
+</ul>
+
+<h3>6.4.2. Cú pháp</h3>
+
+<pre><code>void tenHam(int a[], int n);         // cách phổ biến
+void tenHam(int a[100], int n);      // số 100 bị bỏ qua, chỉ để dễ đọc
+void tenHam(int *a, int n);          // tương đương</code></pre>
+
+<p><strong>Nếu không muốn hàm thay đổi mảng:</strong> thêm <code>const</code>:</p>
+
+<pre><code>void inMang(const int a[], int n);   // chỉ đọc, không sửa</code></pre>
+
+<h3>6.4.3. Ví dụ đầy đủ</h3>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void nhapMang(int a[], int &amp;n) {
+    cout &lt;&lt; "Nhap n: "; cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cout &lt;&lt; "a[" &lt;&lt; i &lt;&lt; "] = ";
+        cin &gt;&gt; a[i];
+    }
+}
+
+void xuatMang(const int a[], int n) {
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;
+}
+
+int tinhTong(const int a[], int n) {
+    int s = 0;
+    for (int i = 0; i &lt; n; i++) s += a[i];
+    return s;
+}
+
+int main() {
+    int a[100], n;
+    nhapMang(a, n);
+    xuatMang(a, n);
+    cout &lt;&lt; "Tong = " &lt;&lt; tinhTong(a, n) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Lưu ý quan trọng:</strong> Vì <code>n</code> cần được <strong>thay đổi</strong> bởi hàm <code>nhapMang</code>, ta truyền <code>int &amp;n</code> (tham chiếu). Nhưng <code>a[]</code> luôn là con trỏ, không cần <code>&amp;</code>.</p>
+
+<hr>
+
+<h2>6.5. Sắp xếp và tìm kiếm trên mảng</h2>
+
+<h3>6.5.1. Sắp xếp nổi bọt (Bubble Sort)</h3>
+
+<p><strong>Ý tưởng:</strong> Duyệt mảng nhiều lần; mỗi lần so sánh từng cặp phần tử kề nhau và đổi chỗ nếu sai thứ tự. Sau mỗi lượt, phần tử lớn nhất "nổi" về cuối mảng.</p>
+
+<pre><code>void bubbleSort(int a[], int n) {
+    for (int i = 0; i &lt; n - 1; i++)
+        for (int j = 0; j &lt; n - 1 - i; j++)
+            if (a[j] &gt; a[j + 1]) {
+                int tmp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = tmp;
+            }
+}</code></pre>
+
+<p><strong>Độ phức tạp:</strong> O(n²) — chậm với mảng lớn nhưng dễ hiểu, thích hợp để học.</p>
+
+<h3>6.5.2. Sắp xếp chọn (Selection Sort)</h3>
+
+<p><strong>Ý tưởng:</strong> Mỗi lượt, tìm phần tử nhỏ nhất trong phần chưa sắp xếp và đưa về đầu phần đó.</p>
+
+<pre><code>void selectionSort(int a[], int n) {
+    for (int i = 0; i &lt; n - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j &lt; n; j++)
+            if (a[j] &lt; a[minIdx]) minIdx = j;
+        swap(a[i], a[minIdx]);   // cần #include &lt;algorithm&gt; hoặc viết tay
+    }
+}</code></pre>
+
+<p><strong>Độ phức tạp:</strong> O(n²).</p>
+
+<h3>6.5.3. Sắp xếp chèn (Insertion Sort)</h3>
+
+<p><strong>Ý tưởng:</strong> Duyệt từng phần tử, "chèn" nó vào đúng vị trí trong phần đã sắp xếp phía trước. Rất hiệu quả với mảng gần như đã sắp xếp.</p>
+
+<pre><code>void insertionSort(int a[], int n) {
+    for (int i = 1; i &lt; n; i++) {
+        int key = a[i];
+        int j = i - 1;
+        while (j &gt;= 0 &amp;&amp; a[j] &gt; key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+}</code></pre>
+
+<h3>6.5.4. Tìm kiếm tuyến tính (Linear Search)</h3>
+
+<p><strong>Ý tưởng:</strong> Duyệt từ đầu đến cuối, so sánh từng phần tử với <code>x</code>.</p>
+
+<pre><code>int linearSearch(const int a[], int n, int x) {
+    for (int i = 0; i &lt; n; i++)
+        if (a[i] == x) return i;
+    return -1;   // không tìm thấy
+}</code></pre>
+
+<p><strong>Độ phức tạp:</strong> O(n). <strong>Áp dụng được</strong> cho mảng chưa sắp xếp.</p>
+
+<h3>6.5.5. Tìm kiếm nhị phân (Binary Search)</h3>
+
+<p><strong>Ý tưởng:</strong> So sánh <code>x</code> với phần tử giữa. Nếu bằng → tìm thấy. Nếu <code>x</code> nhỏ hơn → tìm nửa trái. Nếu lớn hơn → tìm nửa phải. Mỗi lần loại bỏ một nửa.</p>
+
+<p><strong>Yêu cầu:</strong> mảng phải <strong>đã được sắp xếp tăng dần</strong>.</p>
+
+<pre><code>int binarySearch(const int a[], int n, int x) {
+    int left = 0, right = n - 1;
+    while (left &lt;= right) {
+        int mid = (left + right) / 2;
+        if (a[mid] == x) return mid;
+        if (a[mid] &lt; x) left = mid + 1;
+        else            right = mid - 1;
+    }
+    return -1;
+}</code></pre>
+
+<p><strong>Độ phức tạp:</strong> O(log n) — nhanh hơn nhiều so với tìm tuyến tính khi mảng lớn.</p>
+
+<p><strong>So sánh:</strong></p>
+
+<pre>
++--------------------+-------------+----------------------+
+|   Thuật toán       |  Độ phức tạp|  Yêu cầu mảng        |
++--------------------+-------------+----------------------+
+|  Linear Search     |  O(n)       |  Không cần sắp xếp   |
+|  Binary Search     |  O(log n)   |  Phải sắp xếp trước  |
++--------------------+-------------+----------------------+
+</pre>
+
+<hr>
+
+<h2>6.6. Mảng hai chiều</h2>
+
+<h3>6.6.1. Khái niệm</h3>
+
+<p><strong>Mảng hai chiều</strong> là bảng dữ liệu dạng <strong>hàng × cột</strong>, thường dùng để biểu diễn <strong>ma trận</strong>, bảng điểm, bàn cờ, ảnh số, v.v.</p>
+
+<h3>6.6.2. Khai báo</h3>
+
+<pre><code>kieu_du_lieu ten_mang[so_hang][so_cot];</code></pre>
+
+<p><strong>Ví dụ:</strong></p>
+
+<pre><code>int a[3][4];              // Ma trận 3 hàng × 4 cột (12 phần tử)
+double diem[30][5];       // Bảng 30 sinh viên × 5 môn
+char banCo[8][8];         // Bàn cờ vua</code></pre>
+
+<h3>6.6.3. Khởi tạo</h3>
+
+<pre><code>// Đầy đủ
+int a[2][3] = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+// Một phần
+int b[2][3] = {{1, 2}, {4}};    // = {{1,2,0}, {4,0,0}}
+
+// Tất cả bằng 0
+int c[3][3] = {0};</code></pre>
+
+<h3>6.6.4. Truy cập phần tử</h3>
+
+<p>Cú pháp: <code>ten_mang[i][j];</code> — với <code>i</code> là chỉ số hàng, <code>j</code> là chỉ số cột (cả hai bắt đầu từ 0).</p>
+
+<pre><code>a[0][0] = 10;                 // Gán phần tử hàng 0, cột 0
+cout &lt;&lt; a[1][2] &lt;&lt; endl;      // Đọc phần tử hàng 1, cột 2</code></pre>
+
+<h3>6.6.5. Nhập / Xuất ma trận</h3>
+
+<pre><code>int a[100][100], m, n;
+cout &lt;&lt; "So hang, so cot: ";
+cin &gt;&gt; m &gt;&gt; n;
+
+// Nhập
+for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; n; j++)
+        cin &gt;&gt; a[i][j];
+
+// Xuất
+for (int i = 0; i &lt; m; i++) {
+    for (int j = 0; j &lt; n; j++)
+        cout &lt;&lt; a[i][j] &lt;&lt; " ";
+    cout &lt;&lt; endl;   // xuống dòng sau mỗi hàng
+}</code></pre>
+
+<h3>6.6.6. Một số bài toán tiêu biểu</h3>
+
+<p><strong>Tính tổng toàn ma trận:</strong></p>
+
+<pre><code>int tong = 0;
+for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; n; j++)
+        tong += a[i][j];</code></pre>
+
+<p><strong>Tổng đường chéo chính (ma trận vuông cấp n):</strong></p>
+
+<pre><code>int s = 0;
+for (int i = 0; i &lt; n; i++) s += a[i][i];</code></pre>
+
+<p><strong>Tổng đường chéo phụ:</strong></p>
+
+<pre><code>int s = 0;
+for (int i = 0; i &lt; n; i++) s += a[i][n - 1 - i];</code></pre>
+
+<p><strong>Cộng hai ma trận cùng kích thước:</strong></p>
+
+<pre><code>for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; n; j++)
+        C[i][j] = A[i][j] + B[i][j];</code></pre>
+
+<p><strong>Nhân hai ma trận</strong> (A: m×n, B: n×p, C: m×p):</p>
+
+<pre><code>for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; p; j++) {
+        C[i][j] = 0;
+        for (int k = 0; k &lt; n; k++)
+            C[i][j] += A[i][k] * B[k][j];
+    }</code></pre>
+
+<p><strong>Chuyển vị ma trận</strong> (A: m×n → B: n×m, với B[j][i] = A[i][j]):</p>
+
+<pre><code>for (int i = 0; i &lt; m; i++)
+    for (int j = 0; j &lt; n; j++)
+        B[j][i] = A[i][j];</code></pre>
+
+<hr>
+
+<h2>6.7. Chuỗi ký tự kiểu C (C-string)</h2>
+
+<h3>6.7.1. Khái niệm</h3>
+
+<p><strong>C-string</strong> là một <strong>mảng ký tự</strong> kết thúc bằng ký tự đặc biệt <code>'\0'</code> (null character, mã ASCII = 0). Đây là kiểu chuỗi truyền thống của C, vẫn còn dùng rộng rãi trong C++.</p>
+
+<h3>6.7.2. Khai báo và khởi tạo</h3>
+
+<pre><code>char s1[20];                        // Mảng 20 ký tự (rỗng)
+char s2[20] = "Hello";              // "Hello" (tự động thêm '\0')
+char s3[] = "Hello";                // Kích thước tự tính = 6 (5 ký tự + '\0')
+char s4[6] = {'H','e','l','l','o','\0'};   // Cách tường minh</code></pre>
+
+<p><strong>Lưu ý:</strong> <code>"Hello"</code> cần mảng <strong>ít nhất 6 ký tự</strong> (5 chữ + 1 ký tự kết thúc).</p>
+
+<h3>6.7.3. Nhập / Xuất</h3>
+
+<pre><code>char s[100];
+cin &gt;&gt; s;         // Đọc một từ (dừng ở khoảng trắng)
+cin.getline(s, 100);   // Đọc cả dòng (bao gồm khoảng trắng)
+cout &lt;&lt; s &lt;&lt; endl;</code></pre>
+
+<p><strong>Lưu ý:</strong> <code>cin &gt;&gt; s</code> <strong>không đọc được chuỗi có khoảng trắng</strong>. Muốn đọc cả câu, dùng <code>cin.getline(s, kich_thuoc);</code>.</p>
+
+<h3>6.7.4. Các hàm xử lý chuỗi (thư viện <code>&lt;cstring&gt;</code>)</h3>
+
+<pre>
++---------------------+---------------------------------------------+
+|  Hàm                |  Chức năng                                  |
++---------------------+---------------------------------------------+
+|  strlen(s)          |  Trả về độ dài chuỗi (không tính '\0')      |
+|  strcpy(dest, src)  |  Sao chép src sang dest                     |
+|  strncpy(dest,src,n)|  Sao chép tối đa n ký tự                    |
+|  strcat(dest, src)  |  Nối src vào cuối dest                      |
+|  strncat(dest,src,n)|  Nối tối đa n ký tự                         |
+|  strcmp(s1, s2)     |  So sánh chuỗi (<0, =0, >0)                 |
+|  strchr(s, c)       |  Tìm ký tự c trong s                        |
+|  strstr(s, sub)     |  Tìm chuỗi con sub trong s                  |
++---------------------+---------------------------------------------+
+</pre>
+
+<p><strong>Ví dụ:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main() {
+    char s1[100] = "Hello";
+    char s2[] = "World";
+
+    cout &lt;&lt; strlen(s1) &lt;&lt; endl;      // 5
+
+    strcat(s1, " ");                 // s1 = "Hello "
+    strcat(s1, s2);                  // s1 = "Hello World"
+    cout &lt;&lt; s1 &lt;&lt; endl;
+
+    if (strcmp("abc", "abd") &lt; 0)
+        cout &lt;&lt; "abc dung truoc abd" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<h3>6.7.5. Duyệt chuỗi</h3>
+
+<pre><code>char s[100] = "Hello";
+int len = strlen(s);
+
+// Đếm số nguyên âm
+int dem = 0;
+for (int i = 0; i &lt; len; i++) {
+    char c = tolower(s[i]);
+    if (c=='a'||c=='e'||c=='i'||c=='o'||c=='u') dem++;
+}
+cout &lt;&lt; "So nguyen am: " &lt;&lt; dem &lt;&lt; endl;</code></pre>
+
+<p>Cần <code>#include &lt;cctype&gt;</code> cho <code>tolower</code>, <code>toupper</code>, <code>isdigit</code>, <code>isalpha</code>, <code>isspace</code>.</p>
+
+<hr>
+
+<h2>6.8. Chuỗi <code>std::string</code> (khuyến nghị dùng)</h2>
+
+<h3>6.8.1. Khái niệm</h3>
+
+<p><code>std::string</code> là lớp chuỗi hiện đại của C++, <strong>an toàn và tiện lợi hơn C-string</strong>. Tự động quản lý bộ nhớ, hỗ trợ nhiều phép toán mạnh mẽ.</p>
+
+<h3>6.8.2. Khai báo và khởi tạo</h3>
+
+<pre><code>#include &lt;string&gt;
+
+string s1;                        // Chuỗi rỗng
+string s2 = "Hello";
+string s3("World");
+string s4 = s2;                   // Sao chép
+string s5(5, 'a');                // "aaaaa"
+string s6 = s2 + " " + s3;        // "Hello World"</code></pre>
+
+<h3>6.8.3. Nhập / Xuất</h3>
+
+<pre><code>string s;
+cin &gt;&gt; s;               // Đọc 1 từ
+getline(cin, s);        // Đọc cả dòng
+cout &lt;&lt; s &lt;&lt; endl;</code></pre>
+
+<p><strong>Lưu ý:</strong> Nếu trước <code>getline</code> có <code>cin &gt;&gt;</code>, phải xóa bộ đệm bằng <code>cin.ignore();</code> trước khi gọi <code>getline</code>.</p>
+
+<h3>6.8.4. Các thao tác phổ biến</h3>
+
+<pre>
++--------------------------+------------------------------------+
+|  Thao tác                |  Ví dụ                             |
++--------------------------+------------------------------------+
+|  Độ dài                  |  s.length() hoặc s.size()          |
+|  Truy cập ký tự          |  s[i] (không kiểm tra biên)        |
+|                          |  s.at(i) (có kiểm tra biên)        |
+|  Nối chuỗi               |  s1 + s2, s1 += s2                 |
+|  So sánh                 |  s1 == s2, s1 &lt; s2, ...            |
+|  Lấy chuỗi con           |  s.substr(pos, len)                |
+|  Tìm chuỗi con           |  s.find(sub) → vị trí hoặc npos    |
+|  Thay thế                |  s.replace(pos, len, newStr)       |
+|  Chèn                    |  s.insert(pos, str)                |
+|  Xóa                     |  s.erase(pos, len)                 |
+|  Xóa toàn bộ             |  s.clear()                         |
+|  Kiểm tra rỗng           |  s.empty()                         |
++--------------------------+------------------------------------+
+</pre>
+
+<p><strong>Ví dụ:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string s = "Hello World";
+
+    cout &lt;&lt; s.length() &lt;&lt; endl;         // 11
+    cout &lt;&lt; s.substr(0, 5) &lt;&lt; endl;     // "Hello"
+    cout &lt;&lt; s.find("World") &lt;&lt; endl;    // 6
+
+    s.replace(0, 5, "Hi");              // s = "Hi World"
+    s += "!";                           // s = "Hi World!"
+    cout &lt;&lt; s &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<h3>6.8.5. So sánh C-string và std::string</h3>
+
+<pre>
++--------------------------+----------------------+----------------------+
+|  Tiêu chí                |  char[] (C-string)   |  std::string         |
++--------------------------+----------------------+----------------------+
+|  Quản lý bộ nhớ          |  Tự làm              |  Tự động             |
+|  Kích thước              |  Cố định             |  Động (tự mở rộng)   |
+|  Nối chuỗi               |  strcat (nguy hiểm)  |  + , += (an toàn)    |
+|  So sánh                 |  strcmp              |  ==, &lt;, &gt;           |
+|  Độ dài                  |  strlen              |  .length()           |
+|  An toàn                 |  Thấp (dễ tràn)      |  Cao                 |
+|  Hiệu năng               |  Nhanh hơn chút      |  Chậm hơn chút       |
++--------------------------+----------------------+----------------------+
+</pre>
+
+<p><strong>Khuyến nghị:</strong> <strong>Luôn ưu tiên <code>std::string</code></strong> trừ khi có lý do đặc biệt (tương tác API C, tối ưu cực đoan).</p>
+
+<hr>
+
+<h2>6.9. Các lỗi thường gặp</h2>
+
+<ul>
+<li><strong>Truy cập ngoài phạm vi mảng</strong> — <code>a[n]</code> khi mảng có <code>n</code> phần tử (hợp lệ là <code>0..n-1</code>). Gây undefined behavior.</li>
+<li><strong>Khởi tạo mảng bằng biến thường</strong> — <code>int a[n];</code> với <code>n</code> là biến không phải hằng → không chuẩn C++.</li>
+<li><strong>Quên kích thước mảng khi truyền vào hàm</strong> — hàm không thể biết mảng dài bao nhiêu nếu không truyền thêm <code>n</code>.</li>
+<li><strong>Quên dấu <code>'\0'</code> khi khởi tạo C-string</strong> — <code>char s[5] = "Hello";</code> là lỗi (thiếu chỗ cho <code>'\0'</code>).</li>
+<li><strong>Dùng <code>cin &gt;&gt; s</code> để đọc câu có khoảng trắng</strong> — chỉ đọc được 1 từ. Dùng <code>getline</code>.</li>
+<li><strong>Quên <code>cin.ignore()</code> trước <code>getline</code></strong> khi trước đó có <code>cin &gt;&gt;</code> — ký tự newline còn sót trong bộ đệm khiến <code>getline</code> đọc dòng rỗng.</li>
+<li><strong>Gán mảng trực tiếp</strong> — <code>a = b;</code> cho hai mảng là lỗi. Phải sao chép từng phần tử hoặc dùng <code>memcpy</code>.</li>
+<li><strong>Nhầm <code>strlen</code> trả về số ký tự có thể chứa</strong> — nó trả về độ dài chuỗi thực tế, không phải kích thước mảng.</li>
+<li><strong>Sắp xếp nhầm hướng</strong> — <code>if (a[j] &gt; a[j+1])</code> sắp tăng; đảo dấu thành <code>&lt;</code> để sắp giảm.</li>
+<li><strong>Quên reset <code>sum = 0</code></strong> khi tính tổng nhiều lần — giá trị cũ còn tích lũy.</li>
+<li><strong>Khởi tạo <code>maxVal = 0</code></strong> thay vì <code>a[0]</code> — sai khi mảng toàn số âm.</li>
+<li><strong>Truyền mảng 2D vào hàm chỉ ghi <code>int a[][]</code></strong> — phải chỉ định số cột: <code>int a[][100]</code>.</li>
+</ul>
+
+<hr>
+
+<h2>6.10. Bài tập chương 6</h2>
+
+<h3>6.10.1. Bài tập trắc nghiệm</h3>
+
+<p><strong>Câu 1:</strong> Chỉ số mảng trong C++ bắt đầu từ đâu?</p>
+<ul>
+<li>A. 1</li>
+<li>B. 0</li>
+<li>C. -1</li>
+<li>D. Do người dùng tự định nghĩa</li>
+</ul>
+
+<p><strong>Câu 2:</strong> Khai báo <code>int a[5] = {1, 2};</code> — các phần tử còn lại có giá trị bao nhiêu?</p>
+<ul>
+<li>A. Rác</li>
+<li>B. 1 và 2</li>
+<li>C. 0</li>
+<li>D. Lỗi biên dịch</li>
+</ul>
+
+<p><strong>Câu 3:</strong> Khi truyền mảng vào hàm, C++ truyền theo cơ chế:</p>
+<ul>
+<li>A. Truyền giá trị (sao chép toàn mảng)</li>
+<li>B. Truyền tham chiếu (con trỏ đến phần tử đầu)</li>
+<li>C. Không cho phép truyền mảng</li>
+<li>D. Truyền hằng số</li>
+</ul>
+
+<p><strong>Câu 4:</strong> Đoạn code sau in ra gì?</p>
+<pre><code>int a[] = {5, 10, 15, 20};
+cout &lt;&lt; a[2];</code></pre>
+<ul>
+<li>A. 5</li>
+<li>B. 10</li>
+<li>C. 15</li>
+<li>D. 20</li>
+</ul>
+
+<p><strong>Câu 5:</strong> C-string kết thúc bằng ký tự nào?</p>
+<ul>
+<li>A. <code>'\n'</code></li>
+<li>B. <code>' '</code></li>
+<li>C. <code>'\0'</code></li>
+<li>D. <code>'EOF'</code></li>
+</ul>
+
+<p><strong>Câu 6:</strong> Thư viện nào cung cấp hàm <code>strlen</code>, <code>strcpy</code>, <code>strcmp</code>?</p>
+<ul>
+<li>A. <code>&lt;iostream&gt;</code></li>
+<li>B. <code>&lt;string&gt;</code></li>
+<li>C. <code>&lt;cstring&gt;</code></li>
+<li>D. <code>&lt;cctype&gt;</code></li>
+</ul>
+
+<p><strong>Câu 7:</strong> Để đọc cả câu có khoảng trắng vào <code>std::string</code>, dùng:</p>
+<ul>
+<li>A. <code>cin &gt;&gt; s;</code></li>
+<li>B. <code>getline(cin, s);</code></li>
+<li>C. <code>cin.getline(s, 100);</code></li>
+<li>D. Cả B và C đều đúng cho std::string</li>
+</ul>
+
+<p><strong>Câu 8:</strong> Đoạn code sau in ra gì?</p>
+<pre><code>char s[] = "Hello";
+cout &lt;&lt; strlen(s);</code></pre>
+<ul>
+<li>A. 4</li>
+<li>B. 5</li>
+<li>C. 6</li>
+<li>D. 100</li>
+</ul>
+
+<p><strong>Đáp án:</strong> 1-B, 2-C, 3-B, 4-C, 5-C, 6-C, 7-B, 8-B.</p>
+
+<h3>6.10.2. Bài tập cơ bản</h3>
+
+<p><strong>Bài 1:</strong> Viết chương trình nhập mảng gồm <code>n</code> số nguyên, xuất mảng vừa nhập.</p>
+
+<p><strong>Bài 2:</strong> Tính tổng và trung bình cộng các phần tử trong mảng.</p>
+
+<p><strong>Bài 3:</strong> Tìm giá trị lớn nhất và nhỏ nhất trong mảng cùng vị trí của chúng.</p>
+
+<p><strong>Bài 4:</strong> Đếm số phần tử chẵn và số phần tử lẻ trong mảng.</p>
+
+<p><strong>Bài 5:</strong> Đảo ngược mảng (không dùng hàm <code>reverse</code>) và in ra màn hình.</p>
+
+<p><strong>Bài 6:</strong> Tính tổng các phần tử ở vị trí chẵn (0, 2, 4, …) và vị trí lẻ.</p>
+
+<p><strong>Bài 7:</strong> Kiểm tra mảng có phải là <strong>mảng đối xứng</strong> hay không. Ví dụ: <code>{1, 2, 3, 2, 1}</code> → đối xứng.</p>
+
+<p><strong>Bài 8:</strong> Đếm số lần xuất hiện của một giá trị <code>x</code> trong mảng.</p>
+
+<p><strong>Bài 9:</strong> In các phần tử <strong>xuất hiện ít nhất 2 lần</strong> trong mảng.</p>
+
+<p><strong>Bài 10:</strong> Sắp xếp mảng tăng dần bằng thuật toán nổi bọt. In mảng trước và sau khi sắp xếp.</p>
+
+<h3>6.10.3. Bài tập vận dụng</h3>
+
+<p><strong>Bài 11:</strong> Sắp xếp mảng <strong>giảm dần</strong> bằng thuật toán chọn.</p>
+
+<p><strong>Bài 12:</strong> Cho mảng <code>a</code> và số nguyên <code>k</code>. Dịch chuyển mảng sang phải <code>k</code> vị trí (xoay vòng).<br>
+Ví dụ: <code>a = {1, 2, 3, 4, 5}</code>, <code>k = 2</code> → <code>{4, 5, 1, 2, 3}</code>.</p>
+
+<p><strong>Bài 13:</strong> Tìm phần tử lớn <strong>thứ hai</strong> trong mảng (không dùng sắp xếp).</p>
+
+<p><strong>Bài 14:</strong> Xóa tất cả phần tử có giá trị <code>x</code> khỏi mảng (dồn mảng, cập nhật <code>n</code>).</p>
+
+<p><strong>Bài 15:</strong> Chèn phần tử <code>x</code> vào vị trí <code>k</code> trong mảng.</p>
+
+<p><strong>Bài 16:</strong> Viết hàm tìm kiếm nhị phân. Yêu cầu sắp xếp mảng trước khi tìm.</p>
+
+<p><strong>Bài 17:</strong> Cho mảng <code>a</code> gồm <code>n</code> số nguyên. Tìm <strong>dãy con liên tiếp tăng dần dài nhất</strong>.<br>
+Ví dụ: <code>{1, 2, 3, 1, 2, 3, 4, 5, 2}</code> → dãy dài nhất là <code>{1, 2, 3, 4, 5}</code> (độ dài 5).</p>
+
+<p><strong>Bài 18:</strong> Đếm số lượng <strong>số nguyên tố</strong> trong mảng. In các số đó ra.</p>
+
+<p><strong>Bài 19:</strong> Trộn hai mảng đã sắp xếp tăng dần thành một mảng mới cũng đã sắp xếp.</p>
+
+<p><strong>Bài 20:</strong> Tìm <strong>phần tử xuất hiện nhiều nhất</strong> trong mảng (mode). Nếu có nhiều phần tử cùng tần số cao nhất, in tất cả.</p>
+
+<h3>6.10.4. Bài tập mảng hai chiều</h3>
+
+<p><strong>Bài 21:</strong> Nhập ma trận <code>m × n</code>, in ra màn hình dạng bảng có căn cột.</p>
+
+<p><strong>Bài 22:</strong> Tính tổng tất cả phần tử của ma trận.</p>
+
+<p><strong>Bài 23:</strong> Tìm phần tử lớn nhất và vị trí (hàng, cột) của nó.</p>
+
+<p><strong>Bài 24:</strong> Tính tổng đường chéo chính và đường chéo phụ (ma trận vuông).</p>
+
+<p><strong>Bài 25:</strong> Cộng hai ma trận cùng kích thước.</p>
+
+<p><strong>Bài 26:</strong> Nhân hai ma trận (kiểm tra điều kiện số cột A = số hàng B).</p>
+
+<p><strong>Bài 27:</strong> Tìm hàng có <strong>tổng lớn nhất</strong> trong ma trận.</p>
+
+<p><strong>Bài 28:</strong> Kiểm tra ma trận có phải <strong>ma trận đối xứng</strong> (<code>A[i][j] == A[j][i]</code> với mọi i, j) không.</p>
+
+<p><strong>Bài 29:</strong> Đếm số lượng số nguyên tố trong ma trận.</p>
+
+<p><strong>Bài 30:</strong> In các phần tử của ma trận theo hình xoắn ốc (spiral).</p>
+
+<h3>6.10.5. Bài tập chuỗi</h3>
+
+<p><strong>Bài 31:</strong> Nhập một chuỗi, đếm số ký tự (không tính khoảng trắng).</p>
+
+<p><strong>Bài 32:</strong> Đảo ngược chuỗi (không dùng <code>reverse</code>).</p>
+
+<p><strong>Bài 33:</strong> Kiểm tra chuỗi đối xứng (palindrome).</p>
+
+<p><strong>Bài 34:</strong> Đếm số từ trong một câu.</p>
+
+<p><strong>Bài 35:</strong> Đổi toàn bộ chữ thường thành chữ hoa và ngược lại.</p>
+
+<p><strong>Bài 36:</strong> Đếm số nguyên âm, phụ âm, chữ số trong chuỗi.</p>
+
+<p><strong>Bài 37:</strong> Chuẩn hóa chuỗi: xóa khoảng trắng thừa, viết hoa chữ cái đầu mỗi từ, các chữ còn lại viết thường.</p>
+
+<p><strong>Bài 38:</strong> Tìm từ dài nhất trong câu.</p>
+
+<p><strong>Bài 39:</strong> Đếm số lần xuất hiện của một ký tự <code>c</code> trong chuỗi.</p>
+
+<p><strong>Bài 40:</strong> Kiểm tra hai chuỗi có phải <strong>hoán vị của nhau</strong> (anagram) không. Ví dụ: <code>"listen"</code> và <code>"silent"</code>.</p>
+
+<h3>6.10.6. Bài tập nâng cao</h3>
+
+<p><strong>Bài 41 (Sàng Eratosthenes):</strong> Dùng mảng đánh dấu để in tất cả số nguyên tố ≤ <code>n</code>. So sánh hiệu năng với cách kiểm tra từng số.</p>
+
+<p><strong>Bài 42 (Đếm tần số):</strong> Đếm số lần xuất hiện của từng phần tử trong mảng bằng mảng đếm (nếu giá trị nhỏ) hoặc bằng sắp xếp + đếm.</p>
+
+<p><strong>Bài 43 (Dãy con có tổng lớn nhất):</strong> Tìm dãy con liên tiếp có tổng lớn nhất (thuật toán Kadane).</p>
+
+<p><strong>Bài 44 (Cặp có tổng bằng S):</strong> Tìm tất cả các cặp <code>(a[i], a[j])</code> có tổng bằng <code>S</code> cho trước (i &lt; j).</p>
+
+<p><strong>Bài 45 (Loại trùng):</strong> Loại bỏ các phần tử trùng nhau trong mảng, chỉ giữ một bản sao, giữ nguyên thứ tự xuất hiện.</p>
+
+<p><strong>Bài 46 (Quản lý sinh viên):</strong> Dùng <code>struct SinhVien { string ma, ten; double toan, ly, hoa; };</code>. Viết chương trình với menu: nhập danh sách, in danh sách, tìm SV có điểm TB cao nhất, sắp xếp theo điểm TB giảm dần.</p>
+
+<p><strong>Bài 47 (Ma trận xoắn ốc):</strong> Nhập ma trận <code>m×n</code>, in các phần tử theo hình xoắn ốc từ ngoài vào trong.</p>
+
+<p><strong>Bài 48 (Đường đi ngắn nhất):</strong> Cho ma trận chi phí <code>m×n</code> (chỉ đi phải / xuống), tìm đường đi từ <code>(0,0)</code> đến <code>(m-1,n-1)</code> có tổng chi phí nhỏ nhất (quy hoạch động).</p>
+
+<p><strong>Bài 49 (Chuỗi con chung dài nhất):</strong> Tìm độ dài chuỗi con chung dài nhất của hai chuỗi (LCS).</p>
+
+<p><strong>Bài 50 (Nén chuỗi):</strong> Nén chuỗi dạng <code>"aaabbc"</code> → <code>"a3b2c1"</code>. Giải nén ngược lại.</p>
+
+<hr>
+
+<h2>6.11. Hướng dẫn giải một số bài tập tiêu biểu</h2>
+
+<p><strong>Bài 3 — Tìm max, min:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Nhap n: "; cin &gt;&gt; n;
+    int a[100];
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
+
+    int maxV = a[0], minV = a[0];
+    int vtMax = 0, vtMin = 0;
+    for (int i = 1; i &lt; n; i++) {
+        if (a[i] &gt; maxV) { maxV = a[i]; vtMax = i; }
+        if (a[i] &lt; minV) { minV = a[i]; vtMin = i; }
+    }
+    cout &lt;&lt; "Max = " &lt;&lt; maxV &lt;&lt; " tai vi tri " &lt;&lt; vtMax &lt;&lt; endl;
+    cout &lt;&lt; "Min = " &lt;&lt; minV &lt;&lt; " tai vi tri " &lt;&lt; vtMin &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 7 — Kiểm tra mảng đối xứng:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+bool laDoiXung(int a[], int n) {
+    for (int i = 0; i &lt; n / 2; i++)
+        if (a[i] != a[n - 1 - i]) return false;
+    return true;
+}
+
+int main() {
+    int n; cin &gt;&gt; n;
+    int a[100];
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; a[i];
+
+    if (laDoiXung(a, n)) cout &lt;&lt; "Mang doi xung" &lt;&lt; endl;
+    else                 cout &lt;&lt; "Mang khong doi xung" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 12 — Xoay mảng phải k vị trí:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void xoayPhai(int a[], int n, int k) {
+    k = k % n;                      // tránh xoay thừa
+    int tmp[100];
+    for (int i = 0; i &lt; n; i++)
+        tmp[(i + k) % n] = a[i];
+    for (int i = 0; i &lt; n; i++) a[i] = tmp[i];
+}
+
+int main() {
+    int a[] = {1, 2, 3, 4, 5};
+    int n = 5, k = 2;
+    xoayPhai(a, n, k);
+    for (int i = 0; i &lt; n; i++) cout &lt;&lt; a[i] &lt;&lt; " ";
+    cout &lt;&lt; endl;   // 4 5 1 2 3
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 16 — Tìm kiếm nhị phân:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+int binarySearch(int a[], int n, int x) {
+    int left = 0, right = n - 1;
+    while (left &lt;= right) {
+        int mid = (left + right) / 2;
+        if (a[mid] == x) return mid;
+        if (a[mid] &lt; x)  left = mid + 1;
+        else             right = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    int a[] = {2, 4, 6, 8, 10, 12, 14};
+    int n = 7, x = 10;
+    int vt = binarySearch(a, n, x);
+    if (vt != -1) cout &lt;&lt; "Tim thay tai vi tri " &lt;&lt; vt &lt;&lt; endl;
+    else          cout &lt;&lt; "Khong tim thay" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 24 — Tổng đường chéo:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n;
+    cout &lt;&lt; "Cap ma tran: "; cin &gt;&gt; n;
+    int a[100][100];
+    for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; n; j++)
+            cin &gt;&gt; a[i][j];
+
+    int cheoChinh = 0, cheoPhu = 0;
+    for (int i = 0; i &lt; n; i++) {
+        cheoChinh += a[i][i];
+        cheoPhu   += a[i][n - 1 - i];
+    }
+    cout &lt;&lt; "Cheo chinh = " &lt;&lt; cheoChinh &lt;&lt; endl;
+    cout &lt;&lt; "Cheo phu   = " &lt;&lt; cheoPhu &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 26 — Nhân hai ma trận:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+void nhanMaTran(int A[][100], int B[][100], int C[][100], int m, int n, int p) {
+    for (int i = 0; i &lt; m; i++)
+        for (int j = 0; j &lt; p; j++) {
+            C[i][j] = 0;
+            for (int k = 0; k &lt; n; k++)
+                C[i][j] += A[i][k] * B[k][j];
+        }
+}
+
+int main() {
+    int m = 2, n = 3, p = 2;
+    int A[100][100] = {{1, 2, 3}, {4, 5, 6}};
+    int B[100][100] = {{1, 2}, {3, 4}, {5, 6}};
+    int C[100][100];
+
+    nhanMaTran(A, B, C, m, n, p);
+
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; p; j++)
+            cout &lt;&lt; C[i][j] &lt;&lt; " ";
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 33 — Kiểm tra chuỗi đối xứng:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool laPalindrome(string s) {
+    int l = 0, r = s.length() - 1;
+    while (l &lt; r) {
+        if (s[l] != s[r]) return false;
+        l++; r--;
+    }
+    return true;
+}
+
+int main() {
+    string s;
+    cout &lt;&lt; "Nhap chuoi: ";
+    getline(cin, s);
+    if (laPalindrome(s)) cout &lt;&lt; "Doi xung" &lt;&lt; endl;
+    else                 cout &lt;&lt; "Khong doi xung" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 34 — Đếm số từ trong câu:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+using namespace std;
+
+int demTu(string s) {
+    stringstream ss(s);
+    string word;
+    int dem = 0;
+    while (ss &gt;&gt; word) dem++;
+    return dem;
+}
+
+int main() {
+    string s;
+    cout &lt;&lt; "Nhap cau: ";
+    getline(cin, s);
+    cout &lt;&lt; "So tu: " &lt;&lt; demTu(s) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 37 — Chuẩn hóa chuỗi:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;cctype&gt;
+using namespace std;
+
+string chuanHoa(string s) {
+    stringstream ss(s);
+    string word, result = "";
+    while (ss &gt;&gt; word) {
+        word[0] = toupper(word[0]);
+        for (int i = 1; i &lt; (int)word.length(); i++)
+            word[i] = tolower(word[i]);
+        if (!result.empty()) result += " ";
+        result += word;
+    }
+    return result;
+}
+
+int main() {
+    string s;
+    cout &lt;&lt; "Nhap chuoi: ";
+    getline(cin, s);
+    cout &lt;&lt; "Chuan hoa: " &lt;&lt; chuanHoa(s) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<p><strong>Bài 40 — Kiểm tra hai chuỗi anagram:</strong></p>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+bool laAnagram(string s1, string s2) {
+    if (s1.length() != s2.length()) return false;
+    sort(s1.begin(), s1.end());
+    sort(s2.begin(), s2.end());
+    return s1 == s2;
+}
+
+int main() {
+    string a = "listen", b = "silent";
+    if (laAnagram(a, b)) cout &lt;&lt; "La anagram" &lt;&lt; endl;
+    else                 cout &lt;&lt; "Khong phai anagram" &lt;&lt; endl;
+    return 0;
+}</code></pre>
+
+<hr>
+
+<h2>6.12. Tóm tắt chương</h2>
+
+<ul>
+<li><strong>Mảng</strong> là tập hợp các phần tử <strong>cùng kiểu</strong>, lưu liên tiếp, truy cập qua <strong>chỉ số từ 0</strong>.</li>
+<li>Kích thước mảng là <strong>hằng số</strong> khi khai báo. Không khởi tạo → phần tử có giá trị rác.</li>
+<li>Khởi tạo một phần (<code>int a[5] = {1,2};</code>) → các phần tử còn lại = 0.</li>
+<li><strong>Truyền mảng vào hàm</strong>: truyền con trỏ, hàm có thể sửa mảng gốc — nhưng phải truyền <strong>kích thước riêng</strong>.</li>
+<li><strong>Bubble / Selection / Insertion Sort</strong>: O(n²), dễ hiểu, phù hợp học tập.</li>
+<li><strong>Linear Search</strong>: O(n), dùng cho mảng chưa sắp xếp.</li>
+<li><strong>Binary Search</strong>: O(log n), yêu cầu mảng <strong>đã sắp xếp</strong>.</li>
+<li><strong>Mảng hai chiều</strong>: <code>a[m][n]</code> — hàng × cột. Dùng cho ma trận, bảng điểm.</li>
+<li><strong>C-string</strong>: mảng <code>char</code> kết thúc <code>'\0'</code>. Hàm xử lý trong <code>&lt;cstring&gt;</code>.</li>
+<li><strong>std::string</strong>: an toàn, tiện lợi — <strong>khuyến nghị dùng</strong> thay C-string.</li>
+<li>Luôn kiểm tra <strong>chỉ số hợp lệ</strong> (0 → n-1) trước khi truy cập mảng.</li>
+<li>Khởi tạo <code>maxVal = a[0]</code> (không phải 0) để đúng khi mảng toàn âm.</li>
+<li>Đọc câu có khoảng trắng: dùng <code>getline(cin, s)</code> với <code>std::string</code>, hoặc <code>cin.getline(s, n)</code> với C-string.</li>
+</ul>
+
+<hr>
+
+<h2>6.13. Tài liệu tham khảo</h2>
+
+<ul>
+<li><strong>cppreference.com</strong> — Mục "Array", "std::array", "std::string", "C string"</li>
+<li><strong>cplusplus.com</strong> — Tutorials → Arrays, Pointers, Character Sequences, Strings</li>
+<li>Sách: <em>"C++ Primer"</em> (5th Edition) — Lippman, Lajoie, Moo — Chương 3: Strings, Vectors, and Arrays</li>
+<li>Sách: <em>"The C++ Programming Language"</em> — Bjarne Stroustrup — Chương về Arrays và Strings</li>
+<li>Sách: <em>"Effective C++"</em> — Scott Meyers — Mục về <code>std::string</code> thay C-string</li>
+<li>Sách: <em>"Programming – Principles and Practice Using C++"</em> — Stroustrup — Chương 17–20: Arrays, Vectors, Strings</li>
+<li><strong>learncpp.com</strong> — Chương 11: Arrays, Chương 17: Fixed-size arrays, Chương 22: std::string</li>
+<li><strong>Bài toán kinh điển:</strong> Kadane's Algorithm, Sàng Eratosthenes, Binary Search, LCS — có trên <strong>GeeksforGeeks</strong> và <strong>LeetCode</strong></li>
+</ul>
+
+<hr>
+
+<p><strong>Chương tiếp theo:</strong> <em>Chương 7 — Lập trình hướng đối tượng (OOP) trong C++</em> — sẽ giới thiệu khái niệm lớp (<code>class</code>), đối tượng (<code>object</code>), đóng gói (encapsulation), kế thừa (inheritance), đa hình (polymorphism), và các kỹ thuật xây dựng chương trình lớn, dễ mở rộng và bảo trì.</p>
+ <p align="center">
+        &copy; Khóa học Lập trình C++ Cơ bản | Email hỗ trợ: support@laptrinhweb.com
+    </p>
+<script src="script.js"></script>
+</body>
+</html>
